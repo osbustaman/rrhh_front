@@ -1,0 +1,7 @@
+.child_menu_container {
+    display: none; /* Inicialmente oculto */
+}
+
+.child_menu_container.visible {
+    display: block; /* Mostrar cuando se agrega la clase 'visible' */
+}

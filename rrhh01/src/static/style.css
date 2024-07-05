@@ -1,0 +1,22 @@
+.right_col_2{
+    min-height: 884px;
+}
+
+.nav_title{
+    border: 0;
+}
+
+.nav_item{
+    padding-left: 15px;
+}
+
+
+
+/* CSS para efecto del menu */
+.is_show {
+    display: none;
+}
+
+.not_show{
+    display: block;
+}
