@@ -1,7 +1,4 @@
 import { useGetMenu } from '../hooks/useGetMenu'
-import { useLocation } from 'react-router-dom';
-
-
 import '../static/style.css'
 
 export const MenuAdmin = () => {
@@ -10,7 +7,6 @@ export const MenuAdmin = () => {
         const type_client = 'admin';
         const user_id = 1;
         const getGetMenu = useGetMenu({ type_client, user_id });
-        console.log(getGetMenu);
         return getGetMenu
     }
 

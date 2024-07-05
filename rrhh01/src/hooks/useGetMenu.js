@@ -6,9 +6,7 @@ export const useGetMenu = ({ type_client, user_id }) => {
     const getMenu = () => {
 
         if(type_client === 'admin') {
-            console.log('admin', user_id)
         } else if(type_client === 'client') {
-            console.log('client', user_id)
         }
 
         return [

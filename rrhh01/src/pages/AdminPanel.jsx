@@ -2,10 +2,23 @@ import React, { useState } from 'react';
 import { Link, Outlet } from "react-router-dom";
 
 import { MenuAdmin } from "../components/MenuAdmin";
+import { BreadCrumbs } from "../components/BreadCrumbs";
+import { Title } from "../components/Title";
 
 import '../static/style.css'
 
 export const PanelControl = () => {
+
+  const [breadcrumbs, setBreadcrumbs] = useState([]);
+  const [title, setTitle] = useState([]);
+
+  const handleBreadcrumbUpdate = (newBreadcrumbs) => {
+    setBreadcrumbs(newBreadcrumbs);
+  };
+
+  const handleTitle = (newTitle) => {
+    setTitle(newTitle);
+  };
 
   return (
     <>
@@ -152,7 +165,7 @@ export const PanelControl = () => {
         <div className="">
                 <div className="page-title">
                     <div className="title_left">
-                        AQUI VA EL BREADCRUMBS
+                      <BreadCrumbs breadcrumbs={breadcrumbs} />
                     </div>
 
                     {/* <div className="title_right">
@@ -173,7 +186,7 @@ export const PanelControl = () => {
                         <div className="col-md-12">
                             <div className="x_panel">
                                 <div className="x_title">
-                                    <h2>Typography <small>different design elements</small></h2>
+                                  <Title title={title} />
                                     {/* <ul className="nav navbar-right panel_toolbox">
                                         <li><a className="collapse-link"><i className="fa fa-chevron-up"></i></a>
                                         </li>
@@ -190,7 +203,7 @@ export const PanelControl = () => {
                                     <div className="clearfix"></div>
                                 </div>
                                 <div className="x_content">
-                                  <Outlet />
+                                  <Outlet context={{ handleBreadcrumbUpdate, handleTitle }} />
                                 </div>
                             </div>
                         </div>
@@ -212,5 +225,7 @@ export const PanelControl = () => {
       </div>
       </div>
     </>
-  )
+  );
+
+  
 }

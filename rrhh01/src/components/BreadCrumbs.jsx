@@ -1,13 +1,12 @@
-import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
-export const BreadcrumbExample = ({ dict_bread_crumb }) => {
+export const BreadCrumbs = ({ breadcrumbs }) => {
     return (
-        <Breadcrumb>
-                { 
-                    dict_bread_crumb.map( (bread_crumb, index) => (
-                        <Breadcrumb.Item key={index}>{bread_crumb.bread}</Breadcrumb.Item>
-                    ))
-                }
-        </Breadcrumb>
+        <nav aria-label="breadcrumb">
+            <ol className="breadcrumb">
+                {breadcrumbs.map((crumb, index) => (
+                    <li key={index} className="breadcrumb-item">{crumb.bread}</li>
+                ))}
+            </ol>
+        </nav>
     );
 }
