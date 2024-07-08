@@ -1,3 +1,6 @@
+
+import { Link } from 'react-router-dom';
+
 export const MenuTitle = ({ list_buttons }) => {
     return (
         <>
@@ -5,9 +8,9 @@ export const MenuTitle = ({ list_buttons }) => {
 
                 {list_buttons.map((button, index) => (
                     <li key={index}>
-                        <a className="btn btn-app">
+                        <Link to={button.path} className="btn btn-app">
                             <i className={button.icon}></i> {button.label}
-                        </a>
+                        </Link>
                     </li>
                 ))}
 
@@ -15,4 +18,3 @@ export const MenuTitle = ({ list_buttons }) => {
         </>
     )
 }
-

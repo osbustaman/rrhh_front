@@ -6,6 +6,7 @@ import { TableDinamyc } from '../../components/datatable/TableDinamyc';
 export const ListCustomer = () => {
     const { handleBreadcrumbUpdate } = useOutletContext();
     const { handleTitle } = useOutletContext();
+    const { handleBtn } = useOutletContext();
 
     const dict_bread_crumb = [
         { "bread": "clientes" },
@@ -14,9 +15,20 @@ export const ListCustomer = () => {
 
     const dict_title = { "tittle": "Lista de clientes" };
 
+    const list_buttons = [
+        {
+            "icon": "fa fa-plus-circle",
+            "label": "Agregar cliente",
+            "action": "admin-panel/add-customer",
+            "action_params": "",
+            "url": "",
+            }
+    ];
+
     useEffect(() => {
         handleBreadcrumbUpdate(dict_bread_crumb);
         handleTitle(dict_title);
+        handleBtn(list_buttons);
         // El arreglo vacío asegura que el efecto se ejecute solo una vez
     }, []);
 

@@ -12,6 +12,7 @@ export const PanelControl = () => {
 
   const [breadcrumbs, setBreadcrumbs] = useState([]);
   const [title, setTitle] = useState([]);
+  const [btn, setBtn] = useState([]);
 
   const handleBreadcrumbUpdate = (newBreadcrumbs) => {
     setBreadcrumbs(newBreadcrumbs);
@@ -21,15 +22,9 @@ export const PanelControl = () => {
     setTitle(newTitle);
   };
 
-  const list_buttons = [
-          {
-            "icon": "fa fa-plus-circle",
-            "label": "Agregar cliente",
-            "action": "",
-            "action_params": "",
-            "url": "",
-          }
-  ];
+  const handleBtn = (newBtn) => {
+    setBtn(newBtn);
+  };
 
   return (
     <>
@@ -37,8 +32,7 @@ export const PanelControl = () => {
       <div className="main_container">
         <div className="col-md-3 left_col menu_fixed">
           <div className="left_col scroll-view">
-            
-            
+
             <div className="navbar nav_title nav_title_2">
               <a href="#" className="site_title"><i className="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
             </div>
@@ -186,12 +180,12 @@ export const PanelControl = () => {
                                 <div className="x_title">
                                   <Title title={title} />
 
-                                  <MenuTitle list_buttons={list_buttons} />  
+                                  <MenuTitle list_buttons={btn} />  
 
                                     <div className="clearfix"></div>
                                 </div>
                                 <div className="x_content">
-                                  <Outlet context={{ handleBreadcrumbUpdate, handleTitle }} />
+                                  <Outlet context={{ handleBreadcrumbUpdate, handleTitle, handleBtn }} />
                                 </div>
                             </div>
                         </div>
