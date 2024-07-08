@@ -20,9 +20,22 @@ export const ListCustomer = () => {
         // El arreglo vacío asegura que el efecto se ejecute solo una vez
     }, []);
 
+    const config_table = {
+        input_search: true,
+        input_button_group: true,
+        buttons_list: [
+            { 
+                "class_": "Left" ,
+                "type_": "/customer",
+                "name_button": "Nuevo cliente",
+                "icon": "fa fa-plus"
+            }
+        ]
+    };
+
     return (
         <>
-            <TableDinamyc />
+            <TableDinamyc input_search={ config_table } />
         </>
     );
 };
