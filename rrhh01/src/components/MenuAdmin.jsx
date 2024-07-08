@@ -41,13 +41,13 @@ export const MenuAdmin = () => {
                     <ul className="nav side-menu">
 
                         {list_menu().map((item) => (
-                            <li id={item.id}>
+                            <li key={`5W9Cyweb_${item.id}`} id={item.id}>
                                 <a onClick={() => handleToggle(item.on_clic)}>
                                     <i className={item.icon}></i> {item.text} <span className="fa fa-chevron-down"></span>
                                 </a>
                                 <ul className="nav child_menu" id={item.id_ul}>
                                     {item.items.map((key, index) => (
-                                        <li key={key.id}><a href={key.href}>{key.text}</a></li>
+                                        <li key={`V4Vgjykv_${index}_${key.id}`}><a href={key.href}>{key.text}</a></li>
                                     ))}
                                 </ul>
                             </li>
