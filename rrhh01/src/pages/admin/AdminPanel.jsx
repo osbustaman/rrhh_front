@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Link, Outlet } from "react-router-dom";
 
-import { MenuAdmin } from "../components/MenuAdmin";
-import { BreadCrumbs } from "../components/BreadCrumbs";
-import { Title } from "../components/Title";
+import { MenuAdmin } from "../../components/MenuAdmin";
+import { BreadCrumbs } from "../../components/BreadCrumbs";
+import { Title } from "../../components/Title";
+import { MenuTitle } from "../../components/menu_title/MenuTitle";
 
-import '../static/style.css'
+import '../../static/style.css'
 
 export const PanelControl = () => {
 
@@ -19,6 +20,16 @@ export const PanelControl = () => {
   const handleTitle = (newTitle) => {
     setTitle(newTitle);
   };
+
+  const list_buttons = [
+          {
+            "icon": "fa fa-plus-circle",
+            "label": "Agregar cliente",
+            "action": "",
+            "action_params": "",
+            "url": "",
+          }
+  ];
 
   return (
     <>
@@ -161,45 +172,22 @@ export const PanelControl = () => {
 
         <div className="right_col right_col_2" role="main">
 
-
         <div className="">
                 <div className="page-title">
                     <div className="title_left">
                       <BreadCrumbs breadcrumbs={breadcrumbs} />
                     </div>
 
-                    {/* <div className="title_right">
-                        <div className="col-md-5 col-sm-5   form-group pull-right top_search">
-                            <div className="input-group">
-                                <input type="text" className="form-control" placeholder="Search for..."></input>
-                                <span className="input-group-btn">
-                                    <button className="btn btn-secondary" type="button">Go!</button>
-                                </span>
-                            </div>
-                        </div>
-                    </div> */}
-
                     <div className="clearfix"></div>
-
 
                     <div className="row">
                         <div className="col-md-12">
                             <div className="x_panel">
                                 <div className="x_title">
                                   <Title title={title} />
-                                    {/* <ul className="nav navbar-right panel_toolbox">
-                                        <li><a className="collapse-link"><i className="fa fa-chevron-up"></i></a>
-                                        </li>
-                                        <li className="dropdown">
-                                            <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i className="fa fa-wrench"></i></a>
-                                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a className="dropdown-item" href="#">Settings 1</a>
-                                                <a className="dropdown-item" href="#">Settings 2</a>
-                                            </div>
-                                        </li>
-                                        <li><a className="close-link"><i className="fa fa-close"></i></a>
-                                        </li>
-                                    </ul> */}
+
+                                  <MenuTitle list_buttons={list_buttons} />  
+
                                     <div className="clearfix"></div>
                                 </div>
                                 <div className="x_content">
@@ -211,8 +199,6 @@ export const PanelControl = () => {
                 </div>
             </div>
 
-          
-          
         </div>
 
         <footer>

@@ -1,8 +1,8 @@
 import { ProtectedRoute } from "./ProtectedRoute";
-import { PanelControl } from "../pages/AdminPanel";
-import { Login } from "../pages/Login";
-import { NewCustomer } from "../pages/NewCustomer";
-import { ListCustomer } from "../pages/ListCustomer";
+import { PanelControl } from "../pages/admin/AdminPanel";
+import { Login } from "../pages/admin/Login";
+import { NewCustomer } from "../pages/admin/NewCustomer";
+import { ListCustomer } from "../pages/admin/ListCustomer";
 
 import { NotFound } from "../components/NotFound";
 

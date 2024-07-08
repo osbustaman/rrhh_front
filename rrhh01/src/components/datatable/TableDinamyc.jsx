@@ -14,7 +14,28 @@ export const TableDinamyc = ({ config_table }) => {
         return () => clearTimeout(timeout);
     }, []);
 
-    const { input_search, input_button_group, buttons_list, columns, data } = config_table;
+    const { selectable_rows, fixed_header_scroll_height, input_search, input_button_group, buttons_list, data } = config_table;
+
+    const headers_list = Object.keys(data[0]);
+
+    const columns = [];
+
+    headers_list.map((key, value) => {
+
+        const transformString = (str) => {
+            return str
+                .split('_')
+                .map(palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1))
+                .join(' ');
+        }
+
+        columns.push({
+            name: transformString(key),
+            selector: row => row[key],
+            sortable: true,
+            grow: 2,
+        });
+    });
 
     const paginationComponentOptions = {
         rowsPerPageText: 'Filas por página',
@@ -24,15 +45,20 @@ export const TableDinamyc = ({ config_table }) => {
     };
 
     const inputSearch = <InputTable search_input={input_search} input_button_group={input_button_group} buttons_list={buttons_list}/>;
-    
+
     return (
-		<DataTable 
+        <DataTable 
             columns={columns} 
             data={rows} 
             progressPending={pending} 
             actions={[inputSearch]}
+            fixedHeader
+            fixedHeaderScrollHeight={fixed_header_scroll_height}
             pagination
-            //selectableRows
+            paginationComponentOptions={paginationComponentOptions} 
+            selectableRows={selectable_rows}
             dense />
-	);
+    );
+
+    
 }

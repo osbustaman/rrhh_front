@@ -1,10 +1,8 @@
-export const InputTable = ({ input_search, input_button_group, buttons_list }) => {
-    
-    console.log(buttons_list);
+export const InputTable = ({ search_input, input_button_group, buttons_list }) => {
 
     return (
         <>
-            {input_search && (
+            {search_input && (
             <div className="col-md-6 col-sm-6 form-group has-feedback">
                 <input type="text" className="form-control has-feedback-left" id="inputSuccess2" placeholder="buscar..." />
                 <span className="fa fa-search form-control-feedback left" aria-hidden="true"></span>

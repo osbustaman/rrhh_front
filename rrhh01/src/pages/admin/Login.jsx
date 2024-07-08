@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import '../static/vendors/nprogress/nprogress.css';
-import '../static/vendors/animate.css/animate.min.css';
-import '../static/build/css/custom.min.css';
+import '../../static/vendors/nprogress/nprogress.css';
+import '../../static/vendors/animate.css/animate.min.css';
+import '../../static/build/css/custom.min.css';
 
 
 export const Login = () => {
