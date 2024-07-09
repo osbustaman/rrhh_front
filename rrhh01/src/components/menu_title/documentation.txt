@@ -1,0 +1,9 @@
+    const list_buttons = [
+        {
+            "icon": "fa fa-plus-circle",
+            "label": "Agregar cliente",
+            "action": "add-customer",
+            "action_params": "",
+            "url": "",
+            }
+    ];

@@ -10,6 +10,8 @@ export const MenuAdmin = () => {
         return getGetMenu
     }
 
+    console.log(list_menu());
+
     const handleToggle = (item) => {
         const item_menu = `item_${item}`;
         const ul_menu = `ul_${item}`;
@@ -24,6 +26,8 @@ export const MenuAdmin = () => {
         // Close other open items
         const openItems = document.querySelectorAll('.active');
         openItems.forEach((openItem) => {
+            console.log(openItem.id);
+            console.log(item_menu);
             if (openItem.id !== item_menu) {
                 openItem.classList.remove('active');
                 const openUl = document.getElementById(`ul_${openItem.id.replace('item_', '')}`);
