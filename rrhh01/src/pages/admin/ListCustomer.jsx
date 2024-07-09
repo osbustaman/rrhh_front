@@ -19,7 +19,7 @@ export const ListCustomer = () => {
         {
             "icon": "fa fa-plus-circle",
             "label": "Agregar cliente",
-            "action": "admin-panel/add-customer",
+            "action": "add-customer",
             "action_params": "",
             "url": "",
             }
