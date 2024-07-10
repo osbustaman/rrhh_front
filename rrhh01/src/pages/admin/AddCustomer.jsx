@@ -4,6 +4,7 @@ import { useOutletContext } from 'react-router-dom';
 import { Tabs } from '../../components/tabs/Tabs';
 import { TableDinamyc } from '../../components/datatable/TableDinamyc';
 import { Forms } from '../../components/forms/Forms';
+import { Modal } from '../../components/modal/Modal';
 
 export const AddCustomer = () => {
     const { handleBreadcrumbUpdate } = useOutletContext();
@@ -21,23 +22,27 @@ export const AddCustomer = () => {
         {
             "icon": "fa fa-save",
             "label": "Guardar cliente",
-            "action": "",
+            "action": "#",
             "action_params": "",
             "url": "",
+            "extra": ""
         },{
             "icon": "fa fa-user",
             "label": "Agregar usuario",
-            "action": "",
+            "action": "#",
             "action_params": "",
             "url": "",
+            "extra": "data-toggle='modal' data-target='.bs-example-modal-lg'",
         },{
             "icon": "fa fa-reply",
             "label": "Volver",
             "action": "list-customer",
             "action_params": "",
             "url": "",
+            "extra": ""
         }
     ];
+
 
     useEffect(() => {
         handleBreadcrumbUpdate(dict_bread_crumb);
@@ -98,8 +103,8 @@ export const AddCustomer = () => {
                 acciones: ''
             }
         ]
-
     };
+
 
     const config_form = {
         number_row: 3,
@@ -256,11 +261,12 @@ export const AddCustomer = () => {
 		]
 	}
 
-    
+
     return (
         <>
             <div className="x_content">
                 <Tabs create_tab={create_tab} />
+                <Modal />
             </div>
         </>
     )

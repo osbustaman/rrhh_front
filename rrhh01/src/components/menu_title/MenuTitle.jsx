@@ -6,7 +6,7 @@ export const MenuTitle = ({ list_buttons }) => {
 
                 {list_buttons.map((button, index) => (
                     <li key={`v4JiIbQl_${index}`}>
-                        <a href={button.action} className="btn btn-app">
+                        <a href={button.action} className="btn btn-app"> 
                             <i className={button.icon}></i> {button.label}
                         </a>
                     </li>
