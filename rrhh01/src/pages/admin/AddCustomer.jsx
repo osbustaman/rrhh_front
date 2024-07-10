@@ -3,6 +3,7 @@ import { useOutletContext } from 'react-router-dom';
 
 import { Tabs } from '../../components/tabs/Tabs';
 import { TableDinamyc } from '../../components/datatable/TableDinamyc';
+import { Forms } from '../../components/forms/Forms';
 
 export const AddCustomer = () => {
     const { handleBreadcrumbUpdate } = useOutletContext();
@@ -107,7 +108,7 @@ export const AddCustomer = () => {
 				active: true,
 				name: 'data_customer',
 				label: 'Datos del cliente',
-				content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book"
+				content: <Forms />
 			},{
 				active: false,
 				name: 'list_users',
