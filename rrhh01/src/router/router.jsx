@@ -24,6 +24,7 @@ export const router = createBrowserRouter([
         children: [
             { path: 'list-customer', element: <ListCustomer /> },
             { path: 'add-customer', element: <AddCustomer /> },
+            //{ path: 'edit-customer/:id', element: <UserDetails /> }
             // Añade más rutas aquí si es necesario
         ]
     },
