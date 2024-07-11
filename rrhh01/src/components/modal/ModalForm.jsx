@@ -1,5 +1,5 @@
 
-export const Modal = ({ config_modal }) => {
+export const ModalForm = ({ config_modal }) => {
     return (
         <>
             <div className="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" style={{display: 'none'}}>
@@ -14,8 +14,8 @@ export const Modal = ({ config_modal }) => {
                             { config_modal.body }
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary">Save changes</button>
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button type="button" className="btn btn-primary">Guardar</button>
                         </div>
                     </div>
                 </div>

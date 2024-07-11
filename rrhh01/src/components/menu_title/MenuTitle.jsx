@@ -1,14 +1,36 @@
 export const MenuTitle = ({ list_buttons }) => {
 
+    console.log(list_buttons);
+
+    const renderInput = (button) => {
+
+        switch (button.action_params) {
+            case "modal":
+                return (
+                    <>
+                        <a href={button.action} className="btn btn-app" data-toggle='modal' data-target='.bs-example-modal-lg'> 
+                            <i className={button.icon}></i> {button.label}
+                        </a>
+                        {button.extra}
+                    </>
+                );
+            
+            default:
+                return (
+                    <a href={button.action} className="btn btn-app"> 
+                        <i className={button.icon}></i> {button.label}
+                    </a>
+                );
+            }
+    }
+
     return (
         <>
             <ul className="nav navbar-right panel_toolbox">
 
                 {list_buttons.map((button, index) => (
                     <li key={`v4JiIbQl_${index}`}>
-                        <a href={button.action} className="btn btn-app"> 
-                            <i className={button.icon}></i> {button.label}
-                        </a>
+                        {renderInput(button)}
                     </li>
                 ))}
 

@@ -4,7 +4,7 @@ import { useOutletContext } from 'react-router-dom';
 import { Tabs } from '../../components/tabs/Tabs';
 import { TableDinamyc } from '../../components/datatable/TableDinamyc';
 import { Forms } from '../../components/forms/Forms';
-import { Modal } from '../../components/modal/Modal';
+import { ModalForm } from '../../components/modal/ModalForm';
 
 export const AddCustomer = () => {
     const { handleBreadcrumbUpdate } = useOutletContext();
@@ -24,15 +24,54 @@ export const AddCustomer = () => {
             "label": "Guardar cliente",
             "action": "#",
             "action_params": "",
-            "url": "",
-            "extra": ""
+            "url": ""
         },{
             "icon": "fa fa-user",
             "label": "Agregar usuario",
             "action": "#",
-            "action_params": "",
+            "action_params": "modal",
             "url": "",
-            "extra": "data-toggle='modal' data-target='.bs-example-modal-lg'",
+            "extra": <ModalForm 
+                        config_modal={{
+                            title: 'Agregar Usuario Administrativo',
+                            body: <Forms config_form={{
+                                number_row: 4,
+                                position_form: 'vertical', // vertical or horizontal
+                                inputs: [
+                                    {
+                                        label: 'Usuario',
+                                        required: true,
+                                        type: 'text',
+                                    },{
+                                        label: 'Email',
+                                        required: true,
+                                        type: 'text',
+                                        evento: {
+                                            name: 'onBlur',
+                                            action: 'validateEmail',
+                                            params: 'email',
+                                            message: {
+                                                error: 'El email del administrador ingresado no es válido',
+                                                success: 'El email del administrador ingresado es válido'
+                                            }
+                                        }
+                                    },{
+                                        label: 'Contraseña',
+                                        required: true,
+                                        type: 'text',
+                                    },{
+                                        label: 'Nombre',
+                                        required: true,
+                                        type: 'text',
+                                    },{
+                                        label: 'Apellido',
+                                        required: true,
+                                        type: 'text',
+                                    },
+                                ]
+                            }}  />
+                        }}
+                        />
         },{
             "icon": "fa fa-reply",
             "label": "Volver",
@@ -266,7 +305,6 @@ export const AddCustomer = () => {
         <>
             <div className="x_content">
                 <Tabs create_tab={create_tab} />
-                <Modal />
             </div>
         </>
     )

@@ -5,7 +5,7 @@ export const Tabs = ({ create_tab }) => {
 		<>
 			<div className="x_content">
 
-				<ul className="nav nav-tabs bar_tabs" id={create_tab.name} role="tablist">
+				<ul className="nav nav-tabs bar_tabs" id={create_tab.name}>
 
 				{create_tab.list_tabs.map((tab, index) => (
 					<li className="nav-item" key={index}>
