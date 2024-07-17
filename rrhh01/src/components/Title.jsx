@@ -1,8 +1,8 @@
 export const Title = ({ title }) => {
-    const { tittle } = title;
+    const titulo = title;
     return (
         <>
-            <h2>{ tittle }</h2>
+            <h2>{ titulo }</h2>
         </>
     )
 }

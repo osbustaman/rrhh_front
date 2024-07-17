@@ -20,7 +20,7 @@ export const useGetMenu = ({ type_client, user_id }) => {
                     {
                         "id":"dashboard",
                         "text": "Dashboard",
-                        "href": "#"
+                        "url": "/home/dashboard"
                     }
                 ]
             },{
@@ -33,7 +33,11 @@ export const useGetMenu = ({ type_client, user_id }) => {
                     {
                         "id":"list-customer",
                         "text": "Lista clientes",
-                        "href": "/admin-panel/list-customer"
+                        "url": "/home/list-customers"
+                    },{
+                        "id":"list-customer",
+                        "text": "Otros",
+                        "url": "#"
                     },
                 ]
             }

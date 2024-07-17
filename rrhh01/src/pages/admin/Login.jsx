@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+
+import { useLoginAdmin } from '../../hooks/useLoginAdmin';
+
 import '../../static/vendors/nprogress/nprogress.css';
 import '../../static/vendors/animate.css/animate.min.css';
 import '../../static/build/css/custom.min.css';
@@ -17,12 +20,7 @@ export const Login = () => {
         setPassword(event.target.value);
     }
 
-    const fechLogin = () => {
-
-
-        console.log(username, password);
-        console.log(!username, !password);
-
+    const send_login = async () => {
 
         if (!username || !password) {
             $.alert({
@@ -32,7 +30,18 @@ export const Login = () => {
             return;
         }else{
 
-            window.location.href = '/admin-panel';
+            const { getFechLogin } = useLoginAdmin({ username, password });
+            const response = await getFechLogin();
+            const { error, status } = response;
+
+            if (status) {
+                window.location.href = '/home';
+            }else{
+                $.alert({
+                    title: 'Error!',
+                    content: error,
+                });
+            }
         }
     }
 
@@ -70,7 +79,7 @@ export const Login = () => {
                                 />
                             </div>
                             <div>
-                                <a className="btn btn-default submit" onClick={ fechLogin }>Log in</a>
+                                <a className="btn btn-default submit" onClick={ send_login }>Log in</a>
                                 <a className="reset_pass" href="#">Lost your password?</a>
                             </div>
 

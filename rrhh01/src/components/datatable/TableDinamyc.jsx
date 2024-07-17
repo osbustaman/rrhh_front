@@ -33,7 +33,7 @@ export const TableDinamyc = ({ config_table }) => {
             name: transformString(key),
             selector: row => row[key],
             sortable: true,
-            grow: 2,
+            //grow: 2,
         });
     });
 
@@ -44,12 +44,12 @@ export const TableDinamyc = ({ config_table }) => {
         selectAllRowsItemText: 'Todos',
     };
 
-    const inputSearch = <InputTable search_input={input_search} input_button_group={input_button_group} buttons_list={buttons_list}/>;
+    const inputSearch = <InputTable key="1cE5l5BV1Rx7JI1" search_input={input_search} input_button_group={input_button_group} buttons_list={buttons_list}/>;
 
     return (
         <DataTable 
             columns={columns} 
-            data={rows} 
+            data={rows.map(item => ({ ...item, key: item.id }))} 
             progressPending={pending} 
             actions={[inputSearch]}
             fixedHeader
@@ -59,6 +59,4 @@ export const TableDinamyc = ({ config_table }) => {
             selectableRows={selectable_rows}
             dense />
     );
-
-    
 }

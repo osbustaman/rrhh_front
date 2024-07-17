@@ -1,9 +1,8 @@
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom"
 
 import { useGetMenu } from '../hooks/useGetMenu'
-import '../static/style.css'
 
-export const MenuAdmin = () => {
+export const Menu = () => {
 
     const list_menu = () => {
         const type_client = 'admin';
@@ -30,12 +29,13 @@ export const MenuAdmin = () => {
             console.log(item_menu);
             if (openItem.id !== item_menu) {
                 openItem.classList.remove('active');
-                // const openUl = document.getElementById(`ul_${openItem.id.replace('item_', '')}`);
-                // openUl.classList.remove('is_show');
-                // openUl.style.display = 'none';
+                const openUl = document.getElementById(`ul_${openItem.id.replace('item_', '')}`);
+                openUl.classList.remove('is_show');
+                openUl.style.display = 'none';
             }
         });
     }
+
 
     return (
         <>
@@ -44,6 +44,7 @@ export const MenuAdmin = () => {
                     <h3>General</h3>
                     <ul className="nav side-menu">
 
+                        
                         {list_menu().map((item) => (
                             <li key={`5W9Cyweb_${item.id}`} id={item.id}>
                                 <a onClick={() => handleToggle(item.on_clic)}>
@@ -59,6 +60,8 @@ export const MenuAdmin = () => {
                             </li>
                         ))}
 
+
+ 
                     </ul>
                 </div>
                 <div className="menu_section">

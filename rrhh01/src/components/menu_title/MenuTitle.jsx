@@ -1,6 +1,6 @@
-export const MenuTitle = ({ list_buttons }) => {
+import { Link } from "react-router-dom";
 
-    console.log(list_buttons);
+export const MenuTitle = ({ list_buttons }) => {
 
     const renderInput = (button) => {
 
@@ -17,9 +17,7 @@ export const MenuTitle = ({ list_buttons }) => {
             
             default:
                 return (
-                    <a href={button.action} className="btn btn-app"> 
-                        <i className={button.icon}></i> {button.label}
-                    </a>
+                    <Link to={button.action} className="btn btn-app"><i className={button.icon}></i> {button.label}</Link>
                 );
             }
     }

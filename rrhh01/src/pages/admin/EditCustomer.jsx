@@ -1,22 +1,21 @@
 import React, { useEffect, useState, useContext } from 'react';
 
 import { Tabs } from '../../components/tabs/Tabs';
+import { TableDinamyc } from '../../components/datatable/TableDinamyc';
 import { Forms } from '../../components/forms/Forms';
-
-
+import { ModalForm } from '../../components/modal/ModalForm';
 
 import { AppContext } from '../../providers/AppProvider';
 
-
-export const AddCustomer = () => {
+export const EditCustomer = () => {
     const { updateBreadcrumbs, updateTitulo, updateButtons } = useContext(AppContext);
     
     const dict_bread_crumb = [
         { "bread": "clientes" },
-        { "bread": "nuevo cliente" }
+        { "bread": "editar cliente" }
     ];
     
-    const dict_title = { "tittle": "Agregar nuevo cliente" };
+    const dict_title = { "tittle": "Editar cliente" };
 
     const list_buttons = [
         {
@@ -25,6 +24,53 @@ export const AddCustomer = () => {
             "action": "#",
             "action_params": "",
             "url": ""
+        },{
+            "icon": "fa fa-user",
+            "label": "Agregar usuario",
+            "action": "#",
+            "action_params": "modal",
+            "url": "",
+            "extra": <ModalForm 
+                        config_modal={{
+                            title: 'Agregar Usuario Administrativo',
+                            body: <Forms config_form={{
+                                number_row: 4,
+                                position_form: 'vertical', // vertical or horizontal
+                                inputs: [
+                                    {
+                                        label: 'Usuario',
+                                        required: true,
+                                        type: 'text',
+                                    },{
+                                        label: 'Email',
+                                        required: true,
+                                        type: 'text',
+                                        evento: {
+                                            name: 'onBlur',
+                                            action: 'validateEmail',
+                                            params: 'email',
+                                            message: {
+                                                error: 'El email del administrador ingresado no es válido',
+                                                success: 'El email del administrador ingresado es válido'
+                                            }
+                                        }
+                                    },{
+                                        label: 'Contraseña',
+                                        required: true,
+                                        type: 'text',
+                                    },{
+                                        label: 'Nombre',
+                                        required: true,
+                                        type: 'text',
+                                    },{
+                                        label: 'Apellido',
+                                        required: true,
+                                        type: 'text',
+                                    },
+                                ]
+                            }}  />
+                        }}
+                        />
         },{
             "icon": "fa fa-reply",
             "label": "Volver",
@@ -41,6 +87,61 @@ export const AddCustomer = () => {
         updateTitulo(dict_title.tittle);
         updateButtons(list_buttons);
     }, []);
+
+
+    const config_table = {
+        selectable_rows: false,
+        fixed_header_scroll_height: '300px',
+        input_search: true,
+        input_button_group: false,
+        buttons_list: [],
+        "data" : [
+            {
+                id: 1,
+                nombre: 'Beetlejuice',
+                rut: '1988',
+                base_datos: '',
+                fecha_creacion: '',
+                cliente_activo: '',
+                acciones: ''
+            },
+            {
+                id: 2,
+                nombre: 'Beetlejuice',
+                rut: '1988',
+                base_datos: '',
+                fecha_creacion: '',
+                cliente_activo: '',
+                acciones: ''
+            },{
+                id: 3,
+                nombre: 'Beetlejuice',
+                rut: '1988',
+                base_datos: '',
+                fecha_creacion: '',
+                cliente_activo: '',
+                acciones: ''
+            },
+            {
+                id: 4,
+                nombre: 'Beetlejuice',
+                rut: '1988',
+                base_datos: '',
+                fecha_creacion: '',
+                cliente_activo: '',
+                acciones: ''
+            },{
+                id: 5,
+                nombre: 'Beetlejuice',
+                rut: '1988',
+                base_datos: '',
+                fecha_creacion: '',
+                cliente_activo: '',
+                acciones: ''
+            }
+        ]
+    };
+
 
     const config_form = {
         number_row: 3,
@@ -183,6 +284,16 @@ export const AddCustomer = () => {
 				name: 'data_customer',
 				label: 'Datos del Cliente',
 				content: <Forms config_form={config_form} />
+			},{
+				active: false,
+				name: 'list_users',
+				label: 'Usuarios Administrativos',
+				content: <TableDinamyc config_table={ config_table } />
+			},{
+				active: false,
+				name: 'details_ser',
+				label: 'Detalles Cliente',
+				content: 'Aqui debe ir la info detallada del cliente con opcion de enviarla por correo'
 			}
 		]
 	}

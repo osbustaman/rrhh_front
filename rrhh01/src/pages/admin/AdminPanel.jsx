@@ -5,10 +5,11 @@ import { MenuAdmin } from "../../components/MenuAdmin";
 import { BreadCrumbs } from "../../components/BreadCrumbs";
 import { Title } from "../../components/Title";
 import { MenuTitle } from "../../components/menu_title/MenuTitle";
+import { ImageUser } from "./ImageUser";
 
 import '../../static/style.css'
 
-export const PanelControl = () => {
+export const PanelControl = ({ children }) => {
 
     const [breadcrumbs, setBreadcrumbs] = useState([]);
     const [title, setTitle] = useState([]);
@@ -34,7 +35,7 @@ export const PanelControl = () => {
                         <div className="left_col scroll-view">
 
                             <div className="navbar nav_title nav_title_2">
-                                <a href="#" className="site_title"><i className="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+                                <a href="#" className="site_title"><i className="fa fa-paw"></i> <span>Solvix</span></a>
                             </div>
 
                             <div className="clearfix"></div>
@@ -42,11 +43,11 @@ export const PanelControl = () => {
 
                             <div className="profile clearfix">
                                 <div className="profile_pic">
-                                    <img src="images/img.jpg" alt="..." className="img-circle profile_img"></img>
+                                    <ImageUser route={'../../static/image/'} name={`${localStorage.getItem('username')}.jpg`} icon={true}/>
                                 </div>
                                 <div className="profile_info">
-                                    <span>Welcome,</span>
-                                    <h2>John Doe</h2>
+                                    <span>Bienvenido,</span>
+                                    <h2>{`${localStorage.getItem('first_name')} ${localStorage.getItem('last_name')}`}</h2>
                                 </div>
                             </div>
 
@@ -82,16 +83,12 @@ export const PanelControl = () => {
                                 <ul className=" navbar-right">
                                     <li className="nav-item dropdown open nav_item">
                                         <a href="#" className="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                                            <img src="images/img.jpg" alt=""></img>John Doe
+                                            <ImageUser route={'../../static/image/'} name={`${localStorage.getItem('username')}.jpg`} icon={false}/>
+                                            {`${localStorage.getItem('first_name')} ${localStorage.getItem('last_name')}`}
                                         </a>
                                         <div className="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                                            <a className="dropdown-item" href="#"> Profile</a>
-                                            <a className="dropdown-item" href="#">
-                                                <span className="badge bg-red pull-right">50%</span>
-                                                <span>Settings</span>
-                                            </a>
-                                            <a className="dropdown-item" href="#">Help</a>
-                                            <a className="dropdown-item" href="#"><i className="fa fa-sign-out pull-right"></i> Log Out</a>
+                                            <a className="dropdown-item" href="#"> Configuración</a>
+                                            <a className="dropdown-item" href="#"><i className="fa fa-sign-out pull-right"></i> Cerrar Sesión</a>
                                         </div>
                                     </li>
 
@@ -186,6 +183,7 @@ export const PanelControl = () => {
                                             </div>
                                             <div className="x_content">
                                                 <Outlet context={{ handleBreadcrumbUpdate, handleTitle, handleBtn }} />
+                                    
                                             </div>
                                         </div>
                                     </div>
