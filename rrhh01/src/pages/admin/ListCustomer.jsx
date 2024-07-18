@@ -89,7 +89,7 @@ export const ListCustomer = () => {
 
     return (
         <>
-            <TableDinamyc config_table={ data_config_table } />
+            {/* <TableDinamyc config_table={ data_config_table } /> */}
         </>
     );
 };

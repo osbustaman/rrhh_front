@@ -40,6 +40,15 @@ export const AddCustomer = () => {
         updateBreadcrumbs(dict_bread_crumb);
         updateTitulo(dict_title.tittle);
         updateButtons(list_buttons);
+
+
+        const get_countries = async () => {
+            const response = await fetch('http://localhost:8000/list-commune');
+            const data = await response.json();
+            console.log(data);
+        }
+
+
     }, []);
 
     const config_form = {
