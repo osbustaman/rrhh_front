@@ -3,13 +3,14 @@ import React, { useEffect, useState, useContext } from 'react';
 import { AppContext } from '../../providers/AppProvider';
 import { TableDinamyc } from '../../components/datatable/TableDinamyc';
 import { SmallButtons } from "../../components/buttons/SmallButtons";
-import { useListCustomers } from '../../hooks/useListCustomers';
+import { useFechApi } from '../../hooks/useFechApi';
 import { InputTable } from '../../components/datatable/InputTable';
 
 export const ListCustomer = () => {
 
     const host_url = import.meta.env.VITE_API_URL;
 
+    const { getDataApi } = useFechApi();
     const [data, setData] = useState([]);
     const [pending, setPending] = useState(true);
     const { updateBreadcrumbs, updateTitulo, updateButtons } = useContext(AppContext);
@@ -34,8 +35,8 @@ export const ListCustomer = () => {
     const url = `${host_url}/listado-clientes`;
 
     const showData = async () => {
-        const response = await fetch(url)
-        const { customers } = await response.json()
+
+        const customers = await getDataApi(url);
         const list_data = []
 
         customers.map((customer, index) => {
