@@ -1,59 +1,16 @@
-const config_table = {
-        selectable_rows: false,
-        fixed_header_scroll_height: '300px', // es para ver el alto
-        input_search: true,
-        input_button_group: false,
-        buttons_list: [],
-        "data" : [
-            {
-                id: 1,
-                nombre: 'Beetlejuice',
-                rut: '1988',
-                base_datos: '',
-                fecha_creacion: '',
-                cliente_activo: '',
-                acciones: ''
-            },
-            {
-                id: 2,
-                nombre: 'Beetlejuice',
-                rut: '1988',
-                base_datos: '',
-                fecha_creacion: '',
-                cliente_activo: '',
-                acciones: ''
-            },{
-                id: 3,
-                nombre: 'Beetlejuice',
-                rut: '1988',
-                base_datos: '',
-                fecha_creacion: '',
-                cliente_activo: '',
-                acciones: ''
-            },
-            {
-                id: 4,
-                nombre: 'Beetlejuice',
-                rut: '1988',
-                base_datos: '',
-                fecha_creacion: '',
-                cliente_activo: '',
-                acciones: ''
-            },{
-                id: 5,
-                nombre: 'Beetlejuice',
-                rut: '1988',
-                base_datos: '',
-                fecha_creacion: '',
-                cliente_activo: '',
-                acciones: ''
-            }
-        ]
+import { TableDinamyc } from '../../components/datatable/TableDinamyc';
 
+if(data.length > 0){
+    const data_table = data;
+    const config_table = {
+        loading: true,
+        search_input: true,
     };
-
     return (
         <>
-            <TableDinamyc config_table={ config_table } />
+            <TableDinamyc data_in_table={data_table} config_table={config_table} />
         </>
-    );
+    )
+}else{
+    console.log('...')
+}

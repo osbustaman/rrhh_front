@@ -4,7 +4,6 @@ import { AppContext } from '../../providers/AppProvider';
 import { TableDinamyc } from '../../components/datatable/TableDinamyc';
 import { SmallButtons } from "../../components/buttons/SmallButtons";
 import { useFechApi } from '../../hooks/useFechApi';
-import { InputTable } from '../../components/datatable/InputTable';
 
 export const ListCustomer = () => {
 
@@ -12,7 +11,6 @@ export const ListCustomer = () => {
 
     const { getDataApi } = useFechApi();
     const [data, setData] = useState([]);
-    const [pending, setPending] = useState(true);
     const { updateBreadcrumbs, updateTitulo, updateButtons } = useContext(AppContext);
 
     const dict_bread_crumb = [
@@ -31,11 +29,10 @@ export const ListCustomer = () => {
             "url": "",
             }
     ];
-
+    
     const url = `${host_url}/listado-clientes`;
-
+    
     const showData = async () => {
-
         const customers = await getDataApi(url);
         const list_data = []
 
@@ -74,57 +71,18 @@ export const ListCustomer = () => {
         updateTitulo(dict_title.tittle);
         updateButtons(list_buttons);
         showData()
-
-        const timeout = setTimeout(() => {
-            setPending(false);
-            }, 2000);
-            return () => clearTimeout(timeout);
     }, [])
 
-    // ******** DATA TABLE CONFIGURATION ********
-    let headers_list = [];
-    let columns = [];
+
     if(data.length > 0){
-        
-        headers_list = Object.keys(data[0]);
-        headers_list.map((key, value) => {
-            const transformString = (str) => {
-                return str
-                    .split('_')
-                    .map(palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1))
-                    .join(' ');
-            }
-    
-            columns.push({
-                name: transformString(key),
-                selector: row => row[key],
-                sortable: true
-            });
-        });
-        
-        const paginationComponentOptions = {
-            rowsPerPageText: 'Filas por página',
-            rangeSeparatorText: 'de',
-            selectAllRowsItem: true,
-            selectAllRowsItemText: 'Todos',
+        const data_table = data;
+        const config_table = {
+            loading: true,
+            search_input: true,
         };
-
-        const inputSearch = <InputTable key="1cE5l5BV1Rx7JI1" search_input={true} input_button_group={false} buttons_list={[]}/>;
-
         return (
             <>
-                <DataTable
-                    columns={columns}
-                    data={data.map(item => ({ ...item, key: item.id }))} 
-                    actions={[inputSearch]}
-                    progressPending={pending} 
-                    pagination
-                    fixedHeader
-                    fixedHeaderScrollHeight="600px"
-                    noHeader
-                    noDataComponent="No hay datos"
-                    paginationComponentOptions={paginationComponentOptions} 
-                />
+                <TableDinamyc data_in_table={data_table} config_table={config_table} />
             </>
         )
     }else{

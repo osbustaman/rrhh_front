@@ -1,27 +1,51 @@
 import { useState, useEffect, useMemo } from "react";
 import DataTable from 'react-data-table-component';
-import { InputTable } from './InputTable';
 
-export const TableDinamyc = ({ config_table }) => {
+import './style.css';
 
-    const [pending, setPending] = useState(true);
-    const [rows, setRows] = useState([]);
+/**
+ * A dynamic table component.
+ *
+ * @component
+ * @param {Object[]} data_in_table - The data to be displayed in the table.
+ * @param {Object} config_table - The configuration options for the table.
+ * @param {boolean} config_table.loading - Indicates whether the table is in a loading state.
+ * @param {string} config_table.search_input - The search input value for the table.
+ * @returns {JSX.Element} The rendered table component.
+ */
+export const TableDinamyc = ({ data_in_table, config_table }) => {
+
+    const [search, setSearch] = useState('');
+    const [filteredData, setFilteredData] = useState([]);
+
+    const { loading, search_input } = config_table;
+    const [pending, setPending] = useState(loading);
     useEffect(() => {
+
+        const filtered = data_in_table.filter(item => {
+            return Object.values(item).some(value =>
+                value.toString().toLowerCase().includes(search.toLowerCase())
+            );
+        });
+        setFilteredData(filtered);
+
         const timeout = setTimeout(() => {
-        setRows(data);
-        setPending(false);
+            setPending(false);
         }, 2000);
-        return () => clearTimeout(timeout);
+        //return () => clearTimeout(timeout);
     }, []);
 
-    const { selectable_rows, fixed_header_scroll_height, input_search, input_button_group, buttons_list, data } = config_table;
+    if(data_in_table.length === 0) {
+        return (
+            <div className="alert alert-info" role="alert">
+                No hay datos
+            </div>
+        )
+    }
 
-    const headers_list = Object.keys(data[0]);
-
-    const columns = [];
-
+    let columns = [];
+    let headers_list = Object.keys(data_in_table[0]);
     headers_list.map((key, value) => {
-
         const transformString = (str) => {
             return str
                 .split('_')
@@ -32,8 +56,7 @@ export const TableDinamyc = ({ config_table }) => {
         columns.push({
             name: transformString(key),
             selector: row => row[key],
-            sortable: true,
-            //grow: 2,
+            sortable: true
         });
     });
 
@@ -44,19 +67,31 @@ export const TableDinamyc = ({ config_table }) => {
         selectAllRowsItemText: 'Todos',
     };
 
-    const inputSearch = <InputTable key="1cE5l5BV1Rx7JI1" search_input={input_search} input_button_group={input_button_group} buttons_list={buttons_list}/>;
 
     return (
-        <DataTable 
-            columns={columns} 
-            data={rows.map(item => ({ ...item, key: item.id }))} 
-            progressPending={pending} 
-            actions={[inputSearch]}
-            fixedHeader
-            fixedHeaderScrollHeight={fixed_header_scroll_height}
-            pagination
-            paginationComponentOptions={paginationComponentOptions} 
-            selectableRows={selectable_rows}
-            dense />
-    );
+        <>
+
+            <div className="col-md-3 col-sm-3 form-group has-feedback text-left align-self-end"> {/* Add 'text-right' class */}
+                <input 
+                    type="text" 
+                    className="form-control has-feedback-left" 
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="buscar..." />
+                <span className="fa fa-search form-control-feedback left" aria-hidden="true"></span>
+            </div>
+            
+            <DataTable
+                columns={columns}
+                data={filteredData.map(item => ({ ...item, key: item.id }))}
+                progressPending={pending}
+                pagination
+                fixedHeader
+                fixedHeaderScrollHeight="600px"
+                noHeader
+                noDataComponent="No hay datos"
+                paginationComponentOptions={paginationComponentOptions}
+            />
+        </>
+    )
 }

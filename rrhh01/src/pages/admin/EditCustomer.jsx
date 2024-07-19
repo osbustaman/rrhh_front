@@ -7,7 +7,13 @@ import { ModalForm } from '../../components/modal/ModalForm';
 
 import { AppContext } from '../../providers/AppProvider';
 
+
+import { useFechApi } from '../../hooks/useFechApi';
+
 export const EditCustomer = () => {
+
+    const host_url = import.meta.env.VITE_API_URL;
+
     const { updateBreadcrumbs, updateTitulo, updateButtons } = useContext(AppContext);
     
     const dict_bread_crumb = [
@@ -81,65 +87,33 @@ export const EditCustomer = () => {
         }
     ];
 
+    const { getDataApi } = useFechApi();
+    const [data, setData] = useState([]);
+
+    const list_countries = [];
+
+
+    const showData = async () => {
+        const get_countries = await getDataApi(`${host_url}/list-countries`);
+        //const get_regions = await getDataApi(`list-region`);
+        //const get_communes = await getDataApi(`list-commune`);
+        console.log("get_countries: ", get_countries);
+    }
 
     useEffect(() => {
         updateBreadcrumbs(dict_bread_crumb);
         updateTitulo(dict_title.tittle);
         updateButtons(list_buttons);
+        showData();
     }, []);
 
 
+
+
+    const data_table = [];
     const config_table = {
-        selectable_rows: false,
-        fixed_header_scroll_height: '300px',
-        input_search: true,
-        input_button_group: false,
-        buttons_list: [],
-        "data" : [
-            {
-                id: 1,
-                nombre: 'Beetlejuice',
-                rut: '1988',
-                base_datos: '',
-                fecha_creacion: '',
-                cliente_activo: '',
-                acciones: ''
-            },
-            {
-                id: 2,
-                nombre: 'Beetlejuice',
-                rut: '1988',
-                base_datos: '',
-                fecha_creacion: '',
-                cliente_activo: '',
-                acciones: ''
-            },{
-                id: 3,
-                nombre: 'Beetlejuice',
-                rut: '1988',
-                base_datos: '',
-                fecha_creacion: '',
-                cliente_activo: '',
-                acciones: ''
-            },
-            {
-                id: 4,
-                nombre: 'Beetlejuice',
-                rut: '1988',
-                base_datos: '',
-                fecha_creacion: '',
-                cliente_activo: '',
-                acciones: ''
-            },{
-                id: 5,
-                nombre: 'Beetlejuice',
-                rut: '1988',
-                base_datos: '',
-                fecha_creacion: '',
-                cliente_activo: '',
-                acciones: ''
-            }
-        ]
+        loading: true,
+        search_input: true,
     };
 
 
@@ -288,7 +262,7 @@ export const EditCustomer = () => {
 				active: false,
 				name: 'list_users',
 				label: 'Usuarios Administrativos',
-				content: <TableDinamyc config_table={ config_table } />
+				content: <TableDinamyc data_in_table={data_table} config_table={config_table} />
 			},{
 				active: false,
 				name: 'details_ser',
