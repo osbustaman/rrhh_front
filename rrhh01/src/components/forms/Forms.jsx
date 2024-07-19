@@ -1,15 +1,14 @@
-
 import { InputText } from './InputText';
 
-export const Forms = ({config_form}) => {
+export const Forms = ({ config_form }) => {
+
+    const { id_form } = config_form;
 
     return (
         <>
-            <div className="row">
-                <InputText config_input={config_form}/>
-            </div>
+            <form className={`row`} id={`${id_form}`}>
+                <InputText config_input={config_form} />
+            </form>
         </>
     )
 }
-
-

@@ -108,7 +108,7 @@ export const App = () => {
                                                         {({ breadcrumbs,titulo, buttons }) => (
                                                             <>
                                                                 <Title title={titulo} />
-                                                                <MenuTitle list_buttons={buttons} />
+                                                                <MenuTitle list_buttons={buttons}/>
                                                             </>
                                                         )}
                                                     </AppContext.Consumer>
