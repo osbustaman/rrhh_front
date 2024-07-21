@@ -26,10 +26,13 @@ export const InputText = ({ config_input }) => {
         // Prepara el objeto de propiedades del evento de manera condicional
         const eventProps = key.evento ? { [key.evento.name]: (e) => handleEvent(key, e) } : {};
 
+        
+        const name_input = key.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g, "_")
+
         switch (key.type) {
             case "select":
                 return (
-                    <select id={key.id} className="form-control" name={key.label.toLowerCase().replace(/ /g, "_")} required={!!key.required}>
+                    <select id={key.id} className="form-control" name={name_input} required={!!key.required}>
                         <option>{key.text_default}</option>
                         {key.options.map((option) => (
                             <option key={option.value} value={option.value}>{option.label}</option>
@@ -44,9 +47,10 @@ export const InputText = ({ config_input }) => {
                 return (
                     <Select
                         id={key.id}
-                        name={key.label.toLowerCase().replace(/ /g, "_")}
+                        name={name_input}
                         options={key.options}
                         placeholder={key.text_default}
+                        required={!!key.required}
                         onChange={handleChange}
                         getOptionLabel={(option) => option.label}
                         getOptionValue={(option) => option.value}
@@ -58,7 +62,7 @@ export const InputText = ({ config_input }) => {
                         type="checkbox"
                         id={key.id}
                         className="form-check-input"
-                        name={key.label.toLowerCase().replace(/ /g, "_")}
+                        name={name_input}
                         required={!!key.required}
                         {...eventProps}
                     />
@@ -69,7 +73,7 @@ export const InputText = ({ config_input }) => {
                         type="date"
                         id={key.id}
                         className="form-control"
-                        name={key.label.toLowerCase().replace(/ /g, "_")}
+                        name={name_input}
                         required={!!key.required}
                         {...eventProps}
                     />
@@ -81,7 +85,7 @@ export const InputText = ({ config_input }) => {
                         type="text"
                         id={key.id}
                         className="form-control"
-                        name={key.label.toLowerCase().replace(/ /g, "_")}
+                        name={name_input}
                         required={!!key.required}
                         {...eventProps}
                     />
@@ -93,10 +97,10 @@ export const InputText = ({ config_input }) => {
         <>
             {config_input.inputs.map((key, index) => (
                 <div
-                    key={key.label.toLowerCase().replace(/ /g, "_") + index}
+                    key={key.name.toLowerCase().replace(/ /g, "_") + index}
                     className={`${position_form === 'vertical' ? '' : 'item form-group mb-2'} mb-2 col-md-${number_row}`}
                 >
-                    <label htmlFor={key.label.toLowerCase().replace(/ /g, "_")}>{`${key.label}`} :</label>
+                    <label htmlFor={key.name.toLowerCase().replace(/ /g, "_")} id={`label_${key.name.toLowerCase().replace(/ /g, "_")}`}>{`${key.label}`} :</label>
                     {renderInput(key)}
                 </div>
             ))}

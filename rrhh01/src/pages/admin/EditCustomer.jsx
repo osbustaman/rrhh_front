@@ -1,18 +1,20 @@
 import React, { useEffect, useState, useContext } from 'react';
-
 import { Tabs } from '../../components/tabs/Tabs';
 import { TableDinamyc } from '../../components/datatable/TableDinamyc';
 import { Forms } from '../../components/forms/Forms';
 import { ModalForm } from '../../components/modal/ModalForm';
-
 import { AppContext } from '../../providers/AppProvider';
-
-
 import { useFechApi } from '../../hooks/useFechApi';
+import { useValidateForm } from '../../hooks/useValidateForm';
+
 
 export const EditCustomer = () => {
 
-    const host_url = import.meta.env.VITE_API_URL;
+    const { getDataApi } = useFechApi();
+    const { validateForm } = useValidateForm();
+    const [countries, setCountries] = useState([]);
+    const [regions, setRegions] = useState([]);
+    const [communes, setCommunes] = useState([]);
 
     const { updateBreadcrumbs, updateTitulo, updateButtons } = useContext(AppContext);
     
@@ -23,11 +25,17 @@ export const EditCustomer = () => {
     
     const dict_title = { "tittle": "Editar cliente" };
 
+    const send_form = async (form, url) => {
+        console.log('form: ', form);
+        console.log('add-customers: ', url);
+    };
+
     const list_buttons = [
         {
             "icon": "fa fa-save",
             "label": "Guardar cliente",
-            "action": "#",
+            "action": true,
+            "def": (event) => { send_form('form_customer', 'add-customers'); },
             "action_params": "",
             "url": ""
         },{
@@ -46,10 +54,12 @@ export const EditCustomer = () => {
                                     {
                                         label: 'Usuario',
                                         required: true,
+                                        name: 'cus_name',
                                         type: 'text',
                                     },{
                                         label: 'Email',
                                         required: true,
+                                        name: 'cus_name',
                                         type: 'text',
                                         evento: {
                                             name: 'onBlur',
@@ -63,14 +73,17 @@ export const EditCustomer = () => {
                                     },{
                                         label: 'Contraseña',
                                         required: true,
+                                        name: 'cus_name',
                                         type: 'text',
                                     },{
                                         label: 'Nombre',
                                         required: true,
+                                        name: 'cus_name',
                                         type: 'text',
                                     },{
                                         label: 'Apellido',
                                         required: true,
+                                        name: 'cus_name',
                                         type: 'text',
                                     },
                                 ]
@@ -80,35 +93,58 @@ export const EditCustomer = () => {
         },{
             "icon": "fa fa-reply",
             "label": "Volver",
-            "action": "/home/list-customers",
+            "action": false,
+            "def": "",
             "action_params": "",
-            "url": "",
+            "url": "/home/list-customers",
             "extra": ""
         }
     ];
 
-    const { getDataApi } = useFechApi();
-    const [data, setData] = useState([]);
+    const data_country = async () => {
+        const data = await getDataApi(`list-countries`);
+        let list_countries = [];
+        data.map((country) => {
+            list_countries.push({
+                value: country.cou_id,
+                label: country.cou_name
+            });
+        });
+        setCountries(list_countries);   
+    }
 
-    const list_countries = [];
+    const data_region = async () => {
+        const data = await getDataApi(`list-region`);
+        let list_region = [];
+        data.map((region) => {
+            list_region.push({
+                value: region.re_id,
+                label: region.re_name
+            });
+        });
+        setRegions(list_region);   
+    }
 
-
-    const showData = async () => {
-        const get_countries = await getDataApi(`${host_url}/list-countries`);
-        //const get_regions = await getDataApi(`list-region`);
-        //const get_communes = await getDataApi(`list-commune`);
-        console.log("get_countries: ", get_countries);
+    const data_communes = async () => {
+        const data = await getDataApi(`list-commune`);
+        let list_commune = [];
+        data.map((commune) => {
+            list_commune.push({
+                value: commune.com_id,
+                label: commune.com_name
+            });
+        });
+        setCommunes(list_commune);   
     }
 
     useEffect(() => {
         updateBreadcrumbs(dict_bread_crumb);
         updateTitulo(dict_title.tittle);
         updateButtons(list_buttons);
-        showData();
+        data_country();
+        data_region();
+        data_communes();
     }, []);
-
-
-
 
     const data_table = [];
     const config_table = {
@@ -116,18 +152,20 @@ export const EditCustomer = () => {
         search_input: true,
     };
 
-
     const config_form = {
         number_row: 3,
+        id_form: 'form_customer',
         position_form: 'vertical', // vertical or horizontal
         inputs: [
             {
                 label: 'Nombre Cliente',
                 required: true,
+                name: 'cus_name',
                 type: 'text',
             },{
                 label: 'Rut Cliente',
                 required: true,
+                name: 'cus_identifier',
                 type: 'text',
                 evento: {
                     name: 'onBlur',
@@ -141,6 +179,7 @@ export const EditCustomer = () => {
             },{
                 label: 'Email Cliente',
                 required: true,
+                name: 'cus_email',
                 type: 'text',
                 evento: {
                     name: 'onBlur',
@@ -154,10 +193,12 @@ export const EditCustomer = () => {
             },{
                 label: 'Nombre Representante',
                 required: true,
+                name: 'cus_representative_name',
                 type: 'text',
             },{
                 label: 'Rut Representante',
                 required: true,
+                name: 'cus_representative_rut',
                 type: 'text',
                 evento: { // Evento a ejecutar opcional
                     name: 'onBlur', // Evento a ejecutar (onBlur, onChange, etc.)
@@ -171,6 +212,7 @@ export const EditCustomer = () => {
             },{
                 label: 'Email Representante',
                 required: true,
+                name: 'cus_representative_mail',
                 type: 'text',
                 evento: {
                     name: 'onBlur',
@@ -183,72 +225,48 @@ export const EditCustomer = () => {
                 }
             },{
                 label: 'Nombre Base de Datos',
-                required: false,
+                required: true,
+                name: 'cus_name_bd',
                 type: 'text',
             },{
                 label: 'Fecha Creación',
-                required: false,
+                required: true,
+                name: 'cus_date_in',
                 type: 'date',
             },{
                 label: 'Fecha Término',
                 required: false,
+                name: 'cus_date_out',
                 type: 'date',
             },{
                 label: 'Cantidad Usuarios',
                 required: true,
+                name: 'cus_number_users',
                 type: 'number', 
             },{
                 label: 'Pais',
                 required: true,
+                name: 'country_id',
                 type: 'select_autocomplete',
-                options: [
-                    {
-                        value: '1',
-                        label: 'Chile'
-                    },{
-                        value: '2',
-                        label: 'Argentina'
-                    },{
-                        value: '3',
-                        label: 'Perú'
-                    },{
-                        value: '4',
-                        label: 'Colombia'
-                    }
-                ],
+                options: countries,
                 text_default: '-- Seleccione --'
             },{
                 label: 'Regiones',
                 required: true,
+                name: 'region_id',
                 type: 'select_autocomplete', // text, number, email, password, select, checkbox, radio, date
-                options: [ // solo en el caso que sea Select
-                    {
-                        value: '1',
-                        label: 'Arica y Parinacota'
-                    },{
-                        value: '2',
-                        label: 'Antofagasta'
-                    }
-                ],
+                options: regions,
                 text_default: '-- Seleccione --'
             },{
                 label: 'Comunas',
                 required: true,
+                name: 'commune_id',
                 type: 'select_autocomplete', // text, number, email, password, select, checkbox, radio, date, select_autocomplete
-                options: [ // solo en el caso que sea Select
-                    {
-                        value: '1',
-                        label: 'Maipú'
-                    },{
-                        value: '2',
-                        label: 'Quinta Normal'
-                    }
-                ],
+                options: communes,
                 text_default: '-- Seleccione --'
             }
         ]
     };
-
 
     const create_tab = {
 		name: 'tab_cliente',
@@ -271,7 +289,6 @@ export const EditCustomer = () => {
 			}
 		]
 	}
-
 
     return (
         <>

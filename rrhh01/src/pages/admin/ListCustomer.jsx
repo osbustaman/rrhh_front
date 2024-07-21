@@ -5,9 +5,14 @@ import { TableDinamyc } from '../../components/datatable/TableDinamyc';
 import { SmallButtons } from "../../components/buttons/SmallButtons";
 import { useFechApi } from '../../hooks/useFechApi';
 
+/**
+ * Renders a list of customers.
+ *
+ * @component
+ * @returns {JSX.Element} The ListCustomer component.
+ */
 export const ListCustomer = () => {
 
-    const host_url = import.meta.env.VITE_API_URL;
 
     const { getDataApi } = useFechApi();
     const [data, setData] = useState([]);
@@ -31,12 +36,9 @@ export const ListCustomer = () => {
             }
     ];
     
-    const url = `${host_url}/listado-clientes`;
-    
     const showData = async () => {
-        const customers = await getDataApi(url);
-        const list_data = []
-
+        const customers = await getDataApi('listado-clientes');
+        let list_data = []
         customers.map((customer, index) => {
             list_data.push({
                 id: customer.cus_id,

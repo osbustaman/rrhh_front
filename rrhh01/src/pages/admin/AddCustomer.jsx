@@ -1,13 +1,22 @@
 import React, { useEffect, useState, useContext } from 'react';
-
 import { Tabs } from '../../components/tabs/Tabs';
 import { Forms } from '../../components/forms/Forms';
 import { AppContext } from '../../providers/AppProvider';
+import { useFechApi } from '../../hooks/useFechApi';
+import { useValidateForm } from '../../hooks/useValidateForm';
 
+/**
+ * AddCustomer component is responsible for rendering the form to add a new customer.
+ * It fetches data from APIs to populate dropdown options and handles form submission.
+ *
+ * @returns {JSX.Element} The rendered AddCustomer component.
+ */
 export const AddCustomer = () => {
 
-    const host_url = import.meta.env.VITE_API_URL;
+    
 
+    const { getDataApi } = useFechApi();
+    const { validateForm } = useValidateForm();
     const [countries, setCountries] = useState([]);
     const [regions, setRegions] = useState([]);
     const [communes, setCommunes] = useState([]);
@@ -21,16 +30,27 @@ export const AddCustomer = () => {
     
     const dict_title = { "tittle": "Agregar nuevo cliente" };
 
+    const send_form = async (form, url) => {
+        const { error, status } = await validateForm(form, url);
 
-    const handleSaveCustomer = (id_form) => {
-        const form = document.getElementById(id_form);
-        if (form) {
-            const formData = new FormData(form);
-            const formObject = {};
-            formData.forEach((value, key) => {
-                formObject[key] = value;
+        if (error) {
+            $.alert({
+                title: 'Error al guardar el cliente',
+                content: status,    
             });
-            console.log(formObject);
+
+        } else {
+            $.confirm({
+                title: 'Datos guardados exitosamente!',
+                content: 'Para continuar, haga clic en el botón confirmar.',
+                buttons: {
+                    confirmar: function () {
+
+                        const { cus_id } = status;
+                        window.location.href = `edit-customer/${cus_id}`;
+                    }
+                }
+            });
         }
     };
 
@@ -39,7 +59,7 @@ export const AddCustomer = () => {
             "icon": "fa fa-save",
             "label": "Guardar cliente",
             "action": true,
-            "def": (event) => { handleSaveCustomer('form_customer'); },
+            "def": (event) => { send_form('form_customer', 'add-customers'); },
             "action_params": "",
             "url": ""
         },{
@@ -49,15 +69,11 @@ export const AddCustomer = () => {
             "def": "",
             "action_params": "",
             "url": "/home/list-customers",
-            "extra": ""
         }
     ];
 
     const data_country = async () => {
-
-        const response = await fetch(`${host_url}/list-countries`);
-        const data = await response.json();
-        
+        const data = await getDataApi(`list-countries`);
         let list_countries = [];
         data.map((country) => {
             list_countries.push({
@@ -65,16 +81,12 @@ export const AddCustomer = () => {
                 label: country.cou_name
             });
         });
-
         setCountries(list_countries);   
     }
 
 
     const data_region = async () => {
-
-        const response = await fetch(`${host_url}/list-region`);
-        const data = await response.json();
-        
+        const data = await getDataApi(`list-region`);
         let list_region = [];
         data.map((region) => {
             list_region.push({
@@ -82,16 +94,12 @@ export const AddCustomer = () => {
                 label: region.re_name
             });
         });
-
         setRegions(list_region);   
     }
 
 
     const data_communes = async () => {
-
-        const response = await fetch(`${host_url}/list-commune`);
-        const data = await response.json();
-        
+        const data = await getDataApi(`list-commune`);
         let list_commune = [];
         data.map((commune) => {
             list_commune.push({
@@ -99,16 +107,13 @@ export const AddCustomer = () => {
                 label: commune.com_name
             });
         });
-
         setCommunes(list_commune);   
     }
-
 
     useEffect(() => {
         updateBreadcrumbs(dict_bread_crumb);
         updateTitulo(dict_title.tittle);
         updateButtons(list_buttons);
-
         data_country();
         data_region();
         data_communes();
@@ -123,10 +128,12 @@ export const AddCustomer = () => {
             {
                 label: 'Nombre Cliente',
                 required: true,
+                name: 'cus_name',
                 type: 'text',
             },{
                 label: 'Rut Cliente',
                 required: true,
+                name: 'cus_identifier',
                 type: 'text',
                 evento: {
                     name: 'onBlur',
@@ -140,6 +147,7 @@ export const AddCustomer = () => {
             },{
                 label: 'Email Cliente',
                 required: true,
+                name: 'cus_email',
                 type: 'text',
                 evento: {
                     name: 'onBlur',
@@ -153,10 +161,12 @@ export const AddCustomer = () => {
             },{
                 label: 'Nombre Representante',
                 required: true,
+                name: 'cus_representative_name',
                 type: 'text',
             },{
                 label: 'Rut Representante',
                 required: true,
+                name: 'cus_representative_rut',
                 type: 'text',
                 evento: { // Evento a ejecutar opcional
                     name: 'onBlur', // Evento a ejecutar (onBlur, onChange, etc.)
@@ -170,6 +180,7 @@ export const AddCustomer = () => {
             },{
                 label: 'Email Representante',
                 required: true,
+                name: 'cus_representative_mail',
                 type: 'text',
                 evento: {
                     name: 'onBlur',
@@ -182,35 +193,42 @@ export const AddCustomer = () => {
                 }
             },{
                 label: 'Nombre Base de Datos',
-                required: false,
+                required: true,
+                name: 'cus_name_bd',
                 type: 'text',
             },{
                 label: 'Fecha Creación',
-                required: false,
+                required: true,
+                name: 'cus_date_in',
                 type: 'date',
             },{
                 label: 'Fecha Término',
                 required: false,
+                name: 'cus_date_out',
                 type: 'date',
             },{
                 label: 'Cantidad Usuarios',
                 required: true,
+                name: 'cus_number_users',
                 type: 'number', 
             },{
                 label: 'Pais',
                 required: true,
+                name: 'country_id',
                 type: 'select_autocomplete',
                 options: countries,
                 text_default: '-- Seleccione --'
             },{
                 label: 'Regiones',
                 required: true,
+                name: 'region_id',
                 type: 'select_autocomplete', // text, number, email, password, select, checkbox, radio, date
                 options: regions,
                 text_default: '-- Seleccione --'
             },{
                 label: 'Comunas',
                 required: true,
+                name: 'commune_id',
                 type: 'select_autocomplete', // text, number, email, password, select, checkbox, radio, date, select_autocomplete
                 options: communes,
                 text_default: '-- Seleccione --'
