@@ -1,4 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { useParams } from 'react-router-dom';
+
 import { Tabs } from '../../components/tabs/Tabs';
 import { TableDinamyc } from '../../components/datatable/TableDinamyc';
 import { Forms } from '../../components/forms/Forms';
@@ -101,6 +103,18 @@ export const EditCustomer = () => {
         }
     ];
 
+    const { id } = useParams();
+
+    const getDataCustomers = async (id_customer) => {
+        
+        const data = await getDataApi(`get-data-customer/${id_customer}`);
+
+        console.log(data);
+
+
+    }
+
+
     const data_country = async () => {
         const data = await getDataApi(`list-countries`);
         let list_countries = [];
@@ -144,6 +158,7 @@ export const EditCustomer = () => {
         data_country();
         data_region();
         data_communes();
+        getDataCustomers(id);
     }, []);
 
     const data_table = [];
