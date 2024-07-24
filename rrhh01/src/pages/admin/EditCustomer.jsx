@@ -27,9 +27,13 @@ export const EditCustomer = () => {
     
     const dict_title = { "tittle": "Editar cliente" };
 
+    
+
     const send_form = async (form, url) => {
         console.log('form: ', form);
         console.log('add-customers: ', url);
+
+
     };
 
     const list_buttons = [
@@ -105,11 +109,23 @@ export const EditCustomer = () => {
 
     const { id } = useParams();
 
+    const [cusName, setCusName] = useState("");
+    const [cusIdentifier, seCusIdentifier] = useState("");
+    const [cusEmail, setCusEmail] = useState("");
+    const [cusRepresentativeName, setCusRepresentativeName] = useState("");
+
     const getDataCustomers = async (id_customer) => {
         
         const data = await getDataApi(`get-data-customer/${id_customer}`);
+        const { cus_name, cus_identifier, cus_email, cus_representative_name } = data;
 
-        console.log(data);
+        console.log(data, cus_identifier);
+        console.log(cus_name, cus_identifier, cus_email, cus_representative_name);
+
+        setCusName(cus_name);
+        seCusIdentifier(cus_identifier);
+        setCusEmail(cus_email);
+        setCusRepresentativeName(cus_representative_name);
 
 
     }
