@@ -12,8 +12,10 @@ import { useValidateForm } from '../../hooks/useValidateForm';
 
 export const EditCustomer = () => {
 
+    const { id } = useParams();
+
     const { getDataApi } = useFechApi();
-    const { validateForm } = useValidateForm();
+    const { validateForm, validateUpdateForm } = useValidateForm();
     const [countries, setCountries] = useState([]);
     const [regions, setRegions] = useState([]);
     const [communes, setCommunes] = useState([]);
@@ -27,21 +29,31 @@ export const EditCustomer = () => {
     
     const dict_title = { "tittle": "Editar cliente" };
 
-    
-
     const send_form = async (form, url) => {
-        console.log('form: ', form);
-        console.log('add-customers: ', url);
+        const { error, status } = await validateUpdateForm(form, url);
 
+        if (error) {
+            $.alert({
+                title: 'Error al guardar el cliente',
+                content: status,    
+            });
+            return false;
+        }else{
+            $.alert({
+                title: 'Datos actualizados exitosamente!',
+                content: 'Para continuar, haga clic en el botón ok.',
+            });
+            return false;
+        }
 
     };
 
     const list_buttons = [
         {
-            "icon": "fa fa-save",
-            "label": "Guardar cliente",
+            "icon": "fa fa-edit",
+            "label": "Editar cliente",
             "action": true,
-            "def": (event) => { send_form('form_customer', 'add-customers'); },
+            "def": (event) => { send_form('form_customer', `update-data-customer/${id}/`); },
             "action_params": "",
             "url": ""
         },{
@@ -107,29 +119,53 @@ export const EditCustomer = () => {
         }
     ];
 
-    const { id } = useParams();
-
     const [cusName, setCusName] = useState("");
-    const [cusIdentifier, seCusIdentifier] = useState("");
+    const [cusIdentifier, setCusIdentifier] = useState("");
     const [cusEmail, setCusEmail] = useState("");
     const [cusRepresentativeName, setCusRepresentativeName] = useState("");
+    const [cusRepresentativeRut, setCusRepresentativeRut] = useState("");
+    const [cusRepresentativeMail, setCusRepresentativeMail] = useState("");
+    const [cusNameBd, setCusNameBd] = useState("");
+    const [cusDateIn, setCusDateIn] = useState("");
+    const [cusDateOut, setCusDateOut] = useState("");
+    const [cusNumberUsers, setCusNumberUsers] = useState("");
+    const [cusCountry, setCusCountry] = useState("");
+    const [cusRegion, setCusRegion] = useState("");
+    const [cusCommune, setCusCommune] = useState("");
 
     const getDataCustomers = async (id_customer) => {
         
         const data = await getDataApi(`get-data-customer/${id_customer}`);
-        const { cus_name, cus_identifier, cus_email, cus_representative_name } = data;
 
-        console.log(data, cus_identifier);
-        console.log(cus_name, cus_identifier, cus_email, cus_representative_name);
+        const { 
+            cus_name
+            , cus_identifier
+            , cus_email
+            , cus_representative_name
+            , cus_representative_rut
+            , cus_representative_mail
+            , cus_name_bd
+            , cus_date_in
+            , cus_date_out
+            , cus_number_users
+            , country_id
+            , region_id
+            , commune_id } = data;
 
         setCusName(cus_name);
-        seCusIdentifier(cus_identifier);
+        setCusIdentifier(cus_identifier);
         setCusEmail(cus_email);
         setCusRepresentativeName(cus_representative_name);
-
-
+        setCusRepresentativeRut(cus_representative_rut);
+        setCusRepresentativeMail(cus_representative_mail);
+        setCusNameBd(cus_name_bd);
+        setCusDateIn(cus_date_in);
+        setCusDateOut(cus_date_out);
+        setCusNumberUsers(cus_number_users);
+        setCusCountry(country_id);
+        setCusRegion(region_id);
+        setCusCommune(commune_id);
     }
-
 
     const data_country = async () => {
         const data = await getDataApi(`list-countries`);
@@ -186,18 +222,22 @@ export const EditCustomer = () => {
     const config_form = {
         number_row: 3,
         id_form: 'form_customer',
-        position_form: 'vertical', // vertical or horizontal
+        position_form: 'vertical',
         inputs: [
             {
                 label: 'Nombre Cliente',
                 required: true,
                 name: 'cus_name',
                 type: 'text',
+                value: cusName,
+                setValue: setCusName
             },{
                 label: 'Rut Cliente',
                 required: true,
                 name: 'cus_identifier',
                 type: 'text',
+                value: cusIdentifier,
+                setValue: setCusIdentifier,
                 evento: {
                     name: 'onBlur',
                     action: 'validateRut',
@@ -212,6 +252,8 @@ export const EditCustomer = () => {
                 required: true,
                 name: 'cus_email',
                 type: 'text',
+                value: cusEmail,
+                setValue: setCusEmail,
                 evento: {
                     name: 'onBlur',
                     action: 'validateEmail',
@@ -226,11 +268,15 @@ export const EditCustomer = () => {
                 required: true,
                 name: 'cus_representative_name',
                 type: 'text',
+                value: cusRepresentativeName,
+                setValue: setCusRepresentativeName,
             },{
                 label: 'Rut Representante',
                 required: true,
                 name: 'cus_representative_rut',
                 type: 'text',
+                value: cusRepresentativeRut,
+                setValue: setCusRepresentativeRut,
                 evento: { // Evento a ejecutar opcional
                     name: 'onBlur', // Evento a ejecutar (onBlur, onChange, etc.)
                     action: 'validateRut', // Acción a ejecutar
@@ -245,6 +291,8 @@ export const EditCustomer = () => {
                 required: true,
                 name: 'cus_representative_mail',
                 type: 'text',
+                value: cusRepresentativeMail,
+                setValue: setCusRepresentativeMail,
                 evento: {
                     name: 'onBlur',
                     action: 'validateEmail',
@@ -259,42 +307,56 @@ export const EditCustomer = () => {
                 required: true,
                 name: 'cus_name_bd',
                 type: 'text',
+                value: cusNameBd,
+                setValue: setCusNameBd
             },{
                 label: 'Fecha Creación',
                 required: true,
                 name: 'cus_date_in',
                 type: 'date',
+                value: cusDateIn,
+                setValue: setCusDateIn
             },{
                 label: 'Fecha Término',
                 required: false,
                 name: 'cus_date_out',
                 type: 'date',
+                value: cusDateOut,
+                setValue: setCusDateOut
             },{
                 label: 'Cantidad Usuarios',
                 required: true,
                 name: 'cus_number_users',
-                type: 'number', 
+                type: 'number',
+                value: cusNumberUsers,
+                setValue: setCusNumberUsers
             },{
                 label: 'Pais',
                 required: true,
                 name: 'country_id',
                 type: 'select_autocomplete',
                 options: countries,
-                text_default: '-- Seleccione --'
+                text_default: '-- Seleccione --',
+                value: cusCountry,
+                setValue: setCusCountry
             },{
                 label: 'Regiones',
                 required: true,
                 name: 'region_id',
-                type: 'select_autocomplete', // text, number, email, password, select, checkbox, radio, date
+                type: 'select_autocomplete',
                 options: regions,
-                text_default: '-- Seleccione --'
+                text_default: '-- Seleccione --',
+                value: cusRegion,
+                setValue: setCusRegion
             },{
                 label: 'Comunas',
                 required: true,
                 name: 'commune_id',
-                type: 'select_autocomplete', // text, number, email, password, select, checkbox, radio, date, select_autocomplete
+                type: 'select_autocomplete',
                 options: communes,
-                text_default: '-- Seleccione --'
+                text_default: '-- Seleccione --',
+                value: cusCommune,
+                setValue: setCusCommune
             }
         ]
     };

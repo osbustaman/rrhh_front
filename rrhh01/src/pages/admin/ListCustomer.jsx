@@ -1,4 +1,3 @@
-import DataTable from "react-data-table-component"
 import React, { useEffect, useState, useContext } from 'react';
 import { AppContext } from '../../providers/AppProvider';
 import { TableDinamyc } from '../../components/datatable/TableDinamyc';
@@ -40,13 +39,14 @@ export const ListCustomer = () => {
         const customers = await getDataApi('listado-clientes');
         let list_data = []
         customers.map((customer, index) => {
+
             list_data.push({
                 id: customer.cus_id,
                 nombre: customer.cus_name,
-                rut: customer.cus_rut ? customer.cus_rut : 'No tiene',
-                base_datos: customer.cus_db ? customer.cus_db : 'No tiene',
-                fecha_creacion: customer.cus_created_at ? customer.cus_created_at : 'No tiene',
-                cliente_activo: customer.cus_active ? 'Activo' : 'Inactivo',
+                rut: customer.cus_identifier ? customer.cus_identifier : 'No tiene',
+                base_datos: customer.cus_name_bd ? customer.cus_name_bd : 'No tiene',
+                fecha_creacion: customer.cus_date_in ? customer.cus_date_in : 'No tiene',
+                cliente_activo: 'Activo',
                 acciones: <SmallButtons key={index + 1} config_buttons={[
                     {
                         "class": "btn btn-info",
