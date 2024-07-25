@@ -3,6 +3,7 @@ import Select from 'react-select';
 import './style_inputs.css';
 
 export const InputText = ({ config_input }) => {
+
     const { position_form, number_row } = config_input;
 
     const renderInput = (key) => {
@@ -55,34 +56,19 @@ export const InputText = ({ config_input }) => {
                     }
                 };
 
-                if(key.value){
-                    return (
-                        <Select
-                            id={key.id}
-                            name={name_input}
-                            options={key.options}
-                            placeholder={key.text_default}
-                            required={!!key.required}
-                            value={key.options.find(option => option.value === key.value) || ''}
-                            onChange={handleChange}
-                            getOptionLabel={(option) => option.label}
-                            getOptionValue={(option) => option.value}
-                        />
-                    );
-                }else{
-                    return (
-                        <Select
-                            id={key.id}
-                            name={name_input}
-                            options={key.options}
-                            placeholder={key.text_default}
-                            required={!!key.required}
-                            onChange={handleChange}
-                            getOptionLabel={(option) => option.label}
-                            getOptionValue={(option) => option.value}
-                        />
-                    );
-                }
+                return (
+                    <Select
+                        id={key.id}
+                        name={name_input}
+                        options={key.options}
+                        placeholder={key.text_default}
+                        required={!!key.required}
+                        value={key.options.find(option => option.value === key.value)}
+                        onChange={handleChange}
+                        getOptionLabel={(option) => option.label}
+                        getOptionValue={(option) => option.value}
+                    />
+                );
                 
             case "checkbox":
                 return (
@@ -93,7 +79,7 @@ export const InputText = ({ config_input }) => {
                         name={name_input}
                         required={!!key.required}
                         value={key.value}
-                        checked={key.value || false}
+                        checked={key.value}
                         onChange={event => key.setValue(event.target.value)}
                         {...eventProps}
                     />
@@ -107,14 +93,14 @@ export const InputText = ({ config_input }) => {
                         className="form-control"
                         name={name_input}
                         required={!!key.required}
-                        value={key.value || ''}
+                        value={key.value}
                         onChange={event => key.setValue(event.target.value)}
                         {...eventProps}
                     />
                 );
-                
             case "text":
             default:
+
                 return (
                     <input
                         type="text"
@@ -122,7 +108,7 @@ export const InputText = ({ config_input }) => {
                         className="form-control"
                         name={name_input}
                         required={!!key.required}
-                        value={key.value || ''}
+                        value={key.value}
                         onChange={event => key.setValue(event.target.value)}
                         {...eventProps}
                     />

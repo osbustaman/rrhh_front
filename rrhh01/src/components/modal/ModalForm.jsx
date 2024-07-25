@@ -1,4 +1,8 @@
 export const ModalForm = ({ config_modal }) => {
+    const { id_form, def, clean_form } = config_modal;
+
+    console.log(config_modal);
+
     return (
         <>
             <div className="modal fade bs-example-modal-lg" tabIndex="-1" role="dialog" aria-hidden="true" style={{display: 'none'}}>
@@ -13,8 +17,8 @@ export const ModalForm = ({ config_modal }) => {
                             { config_modal.body }
                         </div>
                         <div className="modal-footer">
-                            <button type="button" id="modal_p_..asd__1" className="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            <button type="button" id="modal_p_..asd__2" className="btn btn-primary">Guardar</button>
+                            <button type="button" id="modal_p_..asd__1" className="btn btn-secondary" onClick={clean_form} data-dismiss="modal">Cerrar</button>
+                            <button type="button" id="modal_p_..asd__2" className="btn btn-primary" onClick={def}>Guardar</button>
                         </div>
                     </div>
                 </div>

@@ -16,9 +16,15 @@ export const EditCustomer = () => {
 
     const { getDataApi } = useFechApi();
     const { validateForm, validateUpdateForm } = useValidateForm();
+
+    // Estados para el formulario de cliente
+
+
     const [countries, setCountries] = useState([]);
     const [regions, setRegions] = useState([]);
     const [communes, setCommunes] = useState([]);
+
+
 
     const { updateBreadcrumbs, updateTitulo, updateButtons } = useContext(AppContext);
     
@@ -48,6 +54,79 @@ export const EditCustomer = () => {
 
     };
 
+    const send_form_user = async (form, url) => {
+        console.log('form', form);
+        console.log('url', url);
+
+        const { error, status } = await validateForm(form, url);
+
+        console.log('error', error);
+        console.log('status', status);
+        if (error) {
+            $.alert({
+                title: 'Error al guardar el cliente',
+                content: status,    
+            });
+            return false;
+        }else{
+            $.alert({
+                title: 'Datos actualizados exitosamente!',
+                content: 'Para continuar, haga clic en el botón ok.',
+            });
+            return false;
+        }
+    };
+
+    const clean_form_user = (id_form) => {
+        //const inputs = document.getElementById(id_form).querySelectorAll('input');
+        console.log("id_form", id_form);
+    };
+
+    const config_form_modal = {
+        number_row: 4,
+        id_form: 'form_user',
+        position_form: 'vertical', // vertical or horizontal
+        def: (event) => { send_form_user('form_user', `update-data-customer/${id}/`); },
+        clean_form: (event) => { clean_form_user('form_user'); },
+        inputs: [
+            {
+                label: 'Usuario',
+                required: true,
+                name: 'username',
+                type: 'text'
+            },{
+                label: 'Email',
+                required: true,
+                name: 'email',
+                type: 'text',
+                evento: {
+                    name: 'onBlur',
+                    action: 'validateEmail',
+                    params: 'email',
+                    message: {
+                        error: 'El email del administrador ingresado no es válido',
+                        success: 'El email del administrador ingresado es válido'
+                    }
+                }
+            },{
+                label: 'Contraseña',
+                required: true,
+                name: 'password',
+                type: 'text'
+            },{
+                label: 'Nombre',
+                required: true,
+                name: 'first_name',
+                type: 'text'
+            },{
+                label: 'Apellido',
+                required: true,
+                name: 'last_name',
+                type: 'text'
+            },
+        ]
+    };
+
     const list_buttons = [
         {
             "icon": "fa fa-edit",
@@ -65,47 +144,9 @@ export const EditCustomer = () => {
             "extra": <ModalForm 
                         config_modal={{
                             title: 'Agregar Usuario Administrativo',
-                            body: <Forms config_form={{
-                                number_row: 4,
-                                position_form: 'vertical', // vertical or horizontal
-                                inputs: [
-                                    {
-                                        label: 'Usuario',
-                                        required: true,
-                                        name: 'cus_name',
-                                        type: 'text',
-                                    },{
-                                        label: 'Email',
-                                        required: true,
-                                        name: 'cus_name',
-                                        type: 'text',
-                                        evento: {
-                                            name: 'onBlur',
-                                            action: 'validateEmail',
-                                            params: 'email',
-                                            message: {
-                                                error: 'El email del administrador ingresado no es válido',
-                                                success: 'El email del administrador ingresado es válido'
-                                            }
-                                        }
-                                    },{
-                                        label: 'Contraseña',
-                                        required: true,
-                                        name: 'cus_name',
-                                        type: 'text',
-                                    },{
-                                        label: 'Nombre',
-                                        required: true,
-                                        name: 'cus_name',
-                                        type: 'text',
-                                    },{
-                                        label: 'Apellido',
-                                        required: true,
-                                        name: 'cus_name',
-                                        type: 'text',
-                                    },
-                                ]
-                            }}  />
+                            url: `/create-user/${id}/`,
+                            def: (event) => { send_form_user('form_user', `update-data-customer/${id}/`); },
+                            body: <Forms config_form={config_form_modal} />
                         }}
                         />
         },{
@@ -118,20 +159,6 @@ export const EditCustomer = () => {
             "extra": ""
         }
     ];
-
-    const [cusName, setCusName] = useState("");
-    const [cusIdentifier, setCusIdentifier] = useState("");
-    const [cusEmail, setCusEmail] = useState("");
-    const [cusRepresentativeName, setCusRepresentativeName] = useState("");
-    const [cusRepresentativeRut, setCusRepresentativeRut] = useState("");
-    const [cusRepresentativeMail, setCusRepresentativeMail] = useState("");
-    const [cusNameBd, setCusNameBd] = useState("");
-    const [cusDateIn, setCusDateIn] = useState("");
-    const [cusDateOut, setCusDateOut] = useState("");
-    const [cusNumberUsers, setCusNumberUsers] = useState("");
-    const [cusCountry, setCusCountry] = useState("");
-    const [cusRegion, setCusRegion] = useState("");
-    const [cusCommune, setCusCommune] = useState("");
 
     const getDataCustomers = async (id_customer) => {
         
@@ -218,6 +245,20 @@ export const EditCustomer = () => {
         loading: true,
         search_input: true,
     };
+
+    const [cusName, setCusName] = useState("");
+    const [cusIdentifier, setCusIdentifier] = useState("");
+    const [cusEmail, setCusEmail] = useState("");
+    const [cusRepresentativeName, setCusRepresentativeName] = useState("");
+    const [cusRepresentativeRut, setCusRepresentativeRut] = useState("");
+    const [cusRepresentativeMail, setCusRepresentativeMail] = useState("");
+    const [cusNameBd, setCusNameBd] = useState("");
+    const [cusDateIn, setCusDateIn] = useState("");
+    const [cusDateOut, setCusDateOut] = useState("");
+    const [cusNumberUsers, setCusNumberUsers] = useState("");
+    const [cusCountry, setCusCountry] = useState("");
+    const [cusRegion, setCusRegion] = useState("");
+    const [cusCommune, setCusCommune] = useState("");
 
     const config_form = {
         number_row: 3,
