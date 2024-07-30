@@ -8,6 +8,7 @@ import { ModalForm } from '../../components/modal/ModalForm';
 import { AppContext } from '../../providers/AppProvider';
 import { useFechApi } from '../../hooks/useFechApi';
 import { useValidateForm } from '../../hooks/useValidateForm';
+import { useFormValidate } from '../../hooks/useFormValidate';
 
 
 export const EditCustomer = () => {
@@ -16,6 +17,8 @@ export const EditCustomer = () => {
 
     const { getDataApi } = useFechApi();
     const { validateForm, validateUpdateForm } = useValidateForm();
+
+    const { validate } = useFormValidate();
 
     // Estados para el formulario de cliente
 
@@ -37,7 +40,7 @@ export const EditCustomer = () => {
 
     const send_form = async (form, url) => {
         const { error, status } = await validateUpdateForm(form, url);
-
+        
         if (error) {
             $.alert({
                 title: 'Error al guardar el cliente',
@@ -58,7 +61,7 @@ export const EditCustomer = () => {
         console.log('form', form);
         console.log('url', url);
 
-        const { error, status } = await validateForm(form, url);
+        const { error, status } = await validate(form, url);
 
         console.log('error', error);
         console.log('status', status);
@@ -99,15 +102,6 @@ export const EditCustomer = () => {
                 required: true,
                 name: 'email',
                 type: 'text',
-                evento: {
-                    name: 'onBlur',
-                    action: 'validateEmail',
-                    params: 'email',
-                    message: {
-                        error: 'El email del administrador ingresado no es válido',
-                        success: 'El email del administrador ingresado es válido'
-                    }
-                }
             },{
                 label: 'Contraseña',
                 required: true,

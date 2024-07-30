@@ -80,7 +80,7 @@ export const InputText = ({ config_input }) => {
                         required={!!key.required}
                         value={key.value}
                         checked={key.value}
-                        onChange={event => key.setValue(event.target.value)}
+                        onChange={event => key.setValue && key.setValue(event.target.value)}
                         {...eventProps}
                     />
                 );
@@ -94,7 +94,7 @@ export const InputText = ({ config_input }) => {
                         name={name_input}
                         required={!!key.required}
                         value={key.value}
-                        onChange={event => key.setValue(event.target.value)}
+                        onChange={event => key.setValue && key.setValue(event.target.value)}
                         {...eventProps}
                     />
                 );
@@ -109,7 +109,7 @@ export const InputText = ({ config_input }) => {
                         name={name_input}
                         required={!!key.required}
                         value={key.value}
-                        onChange={event => key.setValue(event.target.value)}
+                        onChange={event => key.setValue && key.setValue(event.target.value)}
                         {...eventProps}
                     />
                 );
