@@ -14,12 +14,11 @@ import './style.css';
  * @returns {JSX.Element} The rendered table component.
  */
 export const TableDinamyc = ({ data_in_table, config_table }) => {
-
     const [search, setSearch] = useState('');
     const [filteredData, setFilteredData] = useState([]);
-
     const { loading, search_input } = config_table;
     const [pending, setPending] = useState(loading);
+
     useEffect(() => {
 
         const filtered = data_in_table.filter(item => {
@@ -32,66 +31,72 @@ export const TableDinamyc = ({ data_in_table, config_table }) => {
         const timeout = setTimeout(() => {
             setPending(false);
         }, 2000);
-        //return () => clearTimeout(timeout);
-    }, []);
-
+    }, [search, data_in_table]);
+    
     if(data_in_table.length === 0) {
+
         return (
             <div className="alert alert-info" role="alert">
                 No hay datos
             </div>
         )
-    }
+    }else{
 
-    let columns = [];
-    let headers_list = Object.keys(data_in_table[0]);
-    headers_list.map((key, value) => {
-        const transformString = (str) => {
-            return str
-                .split('_')
-                .map(palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1))
-                .join(' ');
-        }
+        let columns = [];
+        let headers_list = Object.keys(data_in_table[0]);
+        headers_list.map((key, value) => {
+            const transformString = (str) => {
+                return str
+                    .split('_')
+                    .map(palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1))
+                    .join(' ');
+            }
 
-        columns.push({
-            name: transformString(key),
-            selector: row => row[key],
-            sortable: true
+            columns.push({
+                name: transformString(key),
+                selector: row => row[key],
+                sortable: true
+            });
         });
-    });
 
-    const paginationComponentOptions = {
-        rowsPerPageText: 'Filas por página',
-        rangeSeparatorText: 'de',
-        selectAllRowsItem: true,
-        selectAllRowsItemText: 'Todos',
-    };
+        console.log("columns: ", columns);
+        console.log("filteredData: ", filteredData);
+
+        const paginationComponentOptions = {
+            rowsPerPageText: 'Filas por página',
+            rangeSeparatorText: 'de',
+            selectAllRowsItem: true,
+            selectAllRowsItemText: 'Todos',
+        };
 
 
-    return (
-        <>
 
-            <div className="col-md-3 col-sm-3 form-group has-feedback text-left align-self-end"> {/* Add 'text-right' class */}
-                <input 
-                    type="text" 
-                    className="form-control has-feedback-left" 
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    placeholder="buscar..." />
-                <span className="fa fa-search form-control-feedback left" aria-hidden="true"></span>
-            </div>
-            
-            <DataTable
-                columns={columns}
-                data={filteredData.map(item => ({ ...item, key: item.id }))}
-                progressPending={pending}
-                pagination
-                fixedHeader
-                fixedHeaderScrollHeight="600px"
-                noHeader
-                noDataComponent="No hay datos"
-                paginationComponentOptions={paginationComponentOptions}
-            />
-        </>
-    )
+        return (
+            <>
+    
+                <div className="col-md-3 col-sm-3 form-group has-feedback text-left align-self-end"> {/* Add 'text-right' class */}
+                    <input 
+                        type="text" 
+                        className="form-control has-feedback-left" 
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        placeholder="buscar..." />
+                    <span className="fa fa-search form-control-feedback left" aria-hidden="true"></span>
+                </div>
+                
+                <DataTable
+                    columns={columns}
+                    data={filteredData.map(item => ({ ...item, key: item.id }))}
+                    progressPending={pending}
+                    pagination
+                    fixedHeader
+                    fixedHeaderScrollHeight="600px"
+                    noHeader
+                    noDataComponent="No hay datos"
+                    paginationComponentOptions={paginationComponentOptions}
+                />
+            </>
+        )
+    }
+    
 }

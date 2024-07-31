@@ -10,27 +10,17 @@ import { useFechApi } from '../../hooks/useFechApi';
 import { useValidateForm } from '../../hooks/useValidateForm';
 import { useFormValidate } from '../../hooks/useFormValidate';
 
-
-import { method_post } from '../../js/request_fech';
-
-
 export const EditCustomer = () => {
 
     const { id } = useParams();
 
-    const { getDataApi } = useFechApi();
+    const { getDataApi, postDataApi } = useFechApi();
     const { validateForm, validateUpdateForm } = useValidateForm();
-
     const { validate } = useFormValidate();
-
-    // Estados para el formulario de cliente
-
-
     const [countries, setCountries] = useState([]);
     const [regions, setRegions] = useState([]);
     const [communes, setCommunes] = useState([]);
-
-
+    const [configTable, setConfigTable] = useState([]);
 
     const { updateBreadcrumbs, updateTitulo, updateButtons } = useContext(AppContext);
     
@@ -65,28 +55,53 @@ export const EditCustomer = () => {
         const { error, status } = await validate(form);
 
         if (error) {
+            clean_form_user(form);
             $.alert({
                 title: 'Error al guardar el cliente',
                 content: status,    
             });
+
             return false;
         }else{
 
+            await postDataApi(`create-user/${id}/`, status);
 
-            console.log("ID", id);
-            console.log("form", form);
+            $.confirm({
+                title: 'Usuario creado exitósamente!',
+                content: 'Para continuar, haga clic en el botón aceptar.',
+                backgroundDismiss: function(){
+                    return false; // modal wont close.
+                },
+                buttons: {
+                    aceptar: function () {
+                        const form_data = document.getElementById(form);
+                        const formData = new FormData(form_data);
 
-            $.alert({
-                title: 'Datos actualizados exitosamente!',
-                content: 'Para continuar, haga clic en el botón ok.',
+                        formData.forEach((value, key) => {
+                            const input = document.getElementsByName(key);
+                            input[0].value = '';
+                            input[0].classList.remove('is-invalid');
+                            
+                        });
+                    }
+                }
             });
+
             return false;
         }
     };
 
     const clean_form_user = (id_form) => {
-        //const inputs = document.getElementById(id_form).querySelectorAll('input');
-        console.log("id_form", id_form);
+        setTimeout(() => {
+            const form = document.getElementById(id_form);
+            const formData = new FormData(form);
+
+            formData.forEach((value, key) => {
+                const input = document.getElementsByName(key);
+                //input[0].value = '';
+                input[0].classList.remove('is-invalid');
+            });
+        }, 3000);
     };
 
     const config_form_modal = {
@@ -159,6 +174,11 @@ export const EditCustomer = () => {
     ];
 
     const getDataCustomers = async (id_customer) => {
+
+
+        const data_users = await getDataApi(`list-admin-users/${id_customer}`);
+
+        console.log(data_users.users);
         
         const data = await getDataApi(`get-data-customer/${id_customer}`);
 
@@ -190,6 +210,7 @@ export const EditCustomer = () => {
         setCusCountry(country_id);
         setCusRegion(region_id);
         setCusCommune(commune_id);
+        setConfigTable(data_users.users);
     }
 
     const data_country = async () => {
@@ -238,7 +259,7 @@ export const EditCustomer = () => {
         getDataCustomers(id);
     }, []);
 
-    const data_table = [];
+    const data_table = configTable;
     const config_table = {
         loading: true,
         search_input: true,

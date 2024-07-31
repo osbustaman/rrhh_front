@@ -1,4 +1,3 @@
-import { method_post, method_update } from '../js/request_fech'
 import { validateRut } from '../js/validations'
 
 /**
@@ -43,7 +42,7 @@ export const useFormValidate = () => {
                         } else {
                             input[0].classList.remove('is-invalid');
                         }
-                    } 
+                    }
                     // Validación de RUT
                     else if (input[0].classList.contains('rut')) {
 
@@ -76,7 +75,7 @@ export const useFormValidate = () => {
 
             return {
                 error: false,
-                status: 'ok'
+                status: formObject
             }
             
             

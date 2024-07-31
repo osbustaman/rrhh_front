@@ -1,8 +1,14 @@
-import { listCustomers } from '../js/listCustomers';
+import { method_post } from '../js/request_fech';
 
 export const useFechApi = () => {
     
     const host_url = import.meta.env.VITE_API_URL;
+
+    const postDataApi = async (url, data) => {
+        const response = await method_post(url, data);
+        return response;
+    };
+
 
     const getDataApi = async (url) => {
 
@@ -37,6 +43,7 @@ export const useFechApi = () => {
     }
 
     return {
-        getDataApi
+        getDataApi,
+        postDataApi
     }
 }
