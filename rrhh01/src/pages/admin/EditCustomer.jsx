@@ -11,6 +11,9 @@ import { useValidateForm } from '../../hooks/useValidateForm';
 import { useFormValidate } from '../../hooks/useFormValidate';
 
 
+import { method_post } from '../../js/request_fech';
+
+
 export const EditCustomer = () => {
 
     const { id } = useParams();
@@ -57,14 +60,10 @@ export const EditCustomer = () => {
 
     };
 
-    const send_form_user = async (form, url) => {
-        console.log('form', form);
-        console.log('url', url);
+    const send_form_user = async (form) => {
 
-        const { error, status } = await validate(form, url);
+        const { error, status } = await validate(form);
 
-        console.log('error', error);
-        console.log('status', status);
         if (error) {
             $.alert({
                 title: 'Error al guardar el cliente',
@@ -72,6 +71,11 @@ export const EditCustomer = () => {
             });
             return false;
         }else{
+
+
+            console.log("ID", id);
+            console.log("form", form);
+
             $.alert({
                 title: 'Datos actualizados exitosamente!',
                 content: 'Para continuar, haga clic en el botón ok.',
@@ -101,7 +105,7 @@ export const EditCustomer = () => {
                 label: 'Email',
                 required: true,
                 name: 'email',
-                type: 'text',
+                type: 'email',
             },{
                 label: 'Contraseña',
                 required: true,

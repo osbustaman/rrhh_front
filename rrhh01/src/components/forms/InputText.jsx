@@ -1,4 +1,4 @@
-import { actionMap } from '../../js/ validations';
+import { actionMap } from '../../js/validations';
 import Select from 'react-select';
 import './style_inputs.css';
 
@@ -98,9 +98,36 @@ export const InputText = ({ config_input }) => {
                         {...eventProps}
                     />
                 );
+                case "email":
+                    return (
+                        <input
+                            type="email"
+                            id={key.id}
+                            className="form-control"
+                            name={name_input}
+                            required={!!key.required}
+                            value={key.value}
+                            onChange={event => key.setValue && key.setValue(event.target.value)}
+                            {...eventProps}
+                        />
+                    );
+
+                    case "rut":
+                        return (
+                            <input
+                                type="text"
+                                tag-rut="true"
+                                id={key.id}
+                                className={`form-control ${key.type}`}
+                                name={name_input}
+                                required={!!key.required}
+                                value={key.value}
+                                onChange={event => key.setValue && key.setValue(event.target.value)}
+                                {...eventProps}
+                            />
+                        );
             case "text":
             default:
-
                 return (
                     <input
                         type="text"

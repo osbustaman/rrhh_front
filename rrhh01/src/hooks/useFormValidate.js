@@ -1,4 +1,5 @@
 import { method_post, method_update } from '../js/request_fech'
+import { validateRut } from '../js/validations'
 
 /**
  * Custom hook for form validation.
@@ -7,7 +8,7 @@ import { method_post, method_update } from '../js/request_fech'
  */
 export const useFormValidate = () => {
 
-    const validate = async (id_form, url) => {
+    const validate = async (id_form) => {
         const form = document.getElementById(id_form);
         if (form) {
             const formData = new FormData(form);
@@ -28,6 +29,37 @@ export const useFormValidate = () => {
                     list_message_error.push({
                         message: `El campo ${label_input.innerHTML.replace(/ :/g, "")} es obligatorio.`
                     });
+                } else {
+                    // Validación de correo electrónico
+                    if (input[0].type === 'email') {
+                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailRegex.test(value)) {
+                            input[0].classList.add('is-invalid');
+                            const label_input = document.getElementById(`label_${key}`);
+
+                            list_message_error.push({
+                                message: `El campo ${label_input.innerHTML.replace(/ :/g, "")} debe ser un correo electrónico válido.`
+                            });
+                        } else {
+                            input[0].classList.remove('is-invalid');
+                        }
+                    } 
+                    // Validación de RUT
+                    else if (input[0].classList.contains('rut')) {
+
+                        if (!validateRut(value)) {
+                            input[0].classList.add('is-invalid');
+                            const label_input = document.getElementById(`label_${key}`);
+
+                            list_message_error.push({
+                                message: `El campo ${label_input.innerHTML.replace(/ :/g, "")} debe ser un RUT válido.`
+                            });
+                        } else {
+                            input[0].classList.remove('is-invalid');
+                        }
+                    } else {
+                        input[0].classList.remove('is-invalid');
+                    }
                 }
             });
 
