@@ -7,8 +7,8 @@ export const MenuAdmin = () => {
 
     const list_menu = () => {
         const type_client = 'admin';
-        const user_id = 1;
-        const getGetMenu = useGetMenu({ type_client, user_id });
+        const profile_user = '[1,2]';
+        const getGetMenu = useGetMenu({ type_client, profile_user });
         return getGetMenu
     }
 
