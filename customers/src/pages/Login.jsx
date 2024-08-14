@@ -22,6 +22,7 @@ export const Login = () => {
             });
             return;
         }else{
+            window.location.href = '/home';
         }
     }
     
