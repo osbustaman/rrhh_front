@@ -12,7 +12,7 @@ export const MenuAdmin = () => {
             <a aria-controls="collapseDashboards" aria-expanded="false" className="nav-link collapsed"
                 data-bs-target="#collapseDashboards" data-bs-toggle="collapse" href="#">
                 <div className="nav-link-icon">
-                    <i class="fa-solid fa-industry"></i>
+                    <i className="fa-solid fa-industry"></i>
                 </div>
                 Empresa
                 <div className="sidenav-collapse-arrow">
@@ -24,10 +24,8 @@ export const MenuAdmin = () => {
                 <nav className="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
 
                     <Link className='nav-link' to='lista-empresas'> Ver Empresas</Link>
+                    <Link className='nav-link' to='agregar-empresa'> Crear Empresa</Link>
     
-                    <a className="nav-link" href="#">
-                        Crear Empresa
-                    </a>
                     <a className="nav-link" href="#">
                         Áreas
                     </a>

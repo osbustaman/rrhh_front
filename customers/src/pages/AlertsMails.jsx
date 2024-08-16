@@ -4,12 +4,12 @@ export const AlertsMails = () => {
             <li className="nav-item dropdown no-caret d-none d-sm-block me-3 dropdown-notifications">
                 <a aria-expanded="false" aria-haspopup="true" className="btn btn-icon btn-transparent-dark dropdown-toggle"
                     data-bs-toggle="dropdown" href="#" id="navbarDropdownMessages" role="button">
-                    <i class="fa-solid fa-envelope"></i>
+                    <i className="fa-solid fa-envelope"></i>
                 </a>
                 <div aria-labelledby="navbarDropdownMessages"
                     className="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up">
                     <h6 className="dropdown-header dropdown-notifications-header">
-                        <i class="fa-solid fa-envelope"></i>
+                        <i className="fa-solid fa-envelope"></i>
                         Message Center
                     </h6>
 

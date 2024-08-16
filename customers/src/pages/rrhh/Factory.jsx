@@ -31,14 +31,14 @@ export const Factory = () => {
                     "class": "btn btn-green btn-icon",
                     "icon": "fa fa-pencil",
                     "label": "Editar",
-                    "url": `#`,
+                    "url": `/home/editar-empresa/1`,
                     "id": ``
                 },
                 {
                     "class": "btn btn-red btn-icon",
                     "icon": "fa fa-trash",
                     "label": "Eliminar",
-                    "url": `#`,
+                    "url": '#',
                     "id": ``
                 }
             ]} />
@@ -53,7 +53,7 @@ export const Factory = () => {
                     "class": "btn btn-green btn-icon",
                     "icon": "fa fa-pencil",
                     "label": "Editar",
-                    "url": `#`,
+                    "url": '/home/editar-empresa/2',
                     "id": ``
                 },
                 {

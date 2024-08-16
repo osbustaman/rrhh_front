@@ -13,6 +13,8 @@ import { AppProvider, AppContext } from '../providers/AppProvider';
 
 import '../static/style_override.css';
 import { Factory } from './rrhh/Factory';
+import { AddFactory } from './rrhh/AddFactory';
+import { EditFactory } from './rrhh/EditFactory';
 
 export const App = () => {
 
@@ -125,6 +127,8 @@ export const App = () => {
                                 <Routes>
                                     <Route path="profile" element={<Profile />} />
                                     <Route path="lista-empresas" element={<Factory />} />
+                                    <Route path="agregar-empresa" element={<AddFactory />} />
+                                    <Route path="editar-empresa/*" element={<EditFactory />} />
                                     <Route path="*" element={<NotFound />} />
                                 </Routes>
                             </div>
