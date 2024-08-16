@@ -5,7 +5,6 @@ export const AppContext = createContext();
 export const AppProvider = ({ children }) => {
     const [breadcrumbs, setBreadcrumbs] = useState([]);
     const [titulo, setTitulo] = useState('');
-    const [buttons, setButtons] = useState([]);
 
     const updateBreadcrumbs = (newBreadcrumbs) => {
         setBreadcrumbs(newBreadcrumbs);
@@ -15,12 +14,8 @@ export const AppProvider = ({ children }) => {
         setTitulo(newTitulo);
     };
 
-    const updateButtons = (newButtons) => {
-        setButtons(newButtons);
-    };
-
     return (
-        <AppContext.Provider value={{ breadcrumbs, updateBreadcrumbs, titulo, updateTitulo, buttons, updateButtons }}>
+        <AppContext.Provider value={{ breadcrumbs, updateBreadcrumbs, titulo, updateTitulo }}>
             {children}
         </AppContext.Provider>
     );

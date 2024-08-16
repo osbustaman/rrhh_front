@@ -42,3 +42,26 @@ html, body {
     max-height: 100%; /* Asegura que no exceda la altura disponible */
     padding: 20px; /* Espaciado interno opcional */
 }
+
+.page-header.page-header-dark .breadcrumb {
+    background-color: transparent !important;
+    box-shadow: transparent !important;
+}
+
+.mt-n10 {
+    margin-top: -8rem !important;
+}
+
+.page-header.page-header-dark .breadcrumb .breadcrumb-item{
+    color:#d8d4d4 !important;
+    font-size: 14px;;
+}
+
+.page-header .page-header-content .page-header-title .page-header-icon {
+    margin-right: 0rem;
+    display: inline-flex;
+}
+
+.color-text {
+    color: #d8d4d4 !important;
+}

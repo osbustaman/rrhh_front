@@ -1,20 +1,20 @@
 import React from 'react'
+import { Link } from "react-router-dom"
 
 export const MenuAdmin = () => {
     return (
         <>
         
             <div className="sidenav-menu-heading">
-                Core
+                Configuración
             </div>
 
             <a aria-controls="collapseDashboards" aria-expanded="false" className="nav-link collapsed"
                 data-bs-target="#collapseDashboards" data-bs-toggle="collapse" href="#">
                 <div className="nav-link-icon">
-                    <i data-feather="activity">
-                    </i>
+                    <i class="fa-solid fa-industry"></i>
                 </div>
-                Dashboards
+                Empresa
                 <div className="sidenav-collapse-arrow">
                     <i className="fas fa-angle-down">
                     </i>
@@ -22,17 +22,23 @@ export const MenuAdmin = () => {
             </a>
             <div className="collapse" data-bs-parent="#accordionSidenav" id="collapseDashboards">
                 <nav className="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                    <a className="nav-link" href="dashboard-1.html">
-                        Default
-                        <span className="badge bg-primary-soft text-primary ms-auto">
-                            Updated
-                        </span>
+
+                    <Link className='nav-link' to='lista-empresas'> Ver Empresas</Link>
+    
+                    <a className="nav-link" href="#">
+                        Crear Empresa
                     </a>
-                    <a className="nav-link" href="dashboard-2.html">
-                        Multipurpose
+                    <a className="nav-link" href="#">
+                        Áreas
                     </a>
-                    <a className="nav-link" href="dashboard-3.html">
-                        Affiliate
+                    <a className="nav-link" href="#">
+                        Puestos
+                    </a>
+                    <a className="nav-link" href="#">
+                        Centros de Costos
+                    </a>
+                    <a className="nav-link" href="#">
+                        Carga Masiva
                     </a>
                 </nav>
             </div>

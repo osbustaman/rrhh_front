@@ -1,4 +1,21 @@
+import React, { useEffect, useState, useContext } from 'react';
+import { AppContext } from '../../providers/AppProvider';
+
+
 export const Profile = () => {
+
+    const { updateBreadcrumbs, updateTitulo } = useContext(AppContext);
+
+    const dict_bread_crumb = [
+        { "bread": "[Nombre Colaborador]" }
+    ];
+
+    const dict_title = { "tittle": "Agregar nuevo cliente" };
+
+    useEffect(() => {
+        updateBreadcrumbs(dict_bread_crumb);
+        updateTitulo(dict_title.tittle);
+    }, []);
     return (
 
         <>
@@ -15,10 +32,9 @@ export const Profile = () => {
                             </div>
                             <div class="wizard-step-text">
                                 <div class="wizard-step-text-name">
-                                    Account Setup
+                                    Datos Personales
                                 </div>
                                 <div class="wizard-step-text-details">
-                                    Basic details and information
                                 </div>
                             </div>
                         </a>
@@ -29,10 +45,9 @@ export const Profile = () => {
                             </div>
                             <div class="wizard-step-text">
                                 <div class="wizard-step-text-name">
-                                    Billing Details
+                                    Previsión
                                 </div>
                                 <div class="wizard-step-text-details">
-                                    Credit card information
                                 </div>
                             </div>
                         </a>
@@ -43,10 +58,9 @@ export const Profile = () => {
                             </div>
                             <div class="wizard-step-text">
                                 <div class="wizard-step-text-name">
-                                    Preferences
+                                    Datos para remuneración
                                 </div>
                                 <div class="wizard-step-text-details">
-                                    Notification and account options
                                 </div>
                             </div>
                         </a>
@@ -57,10 +71,9 @@ export const Profile = () => {
                             </div>
                             <div class="wizard-step-text">
                                 <div class="wizard-step-text-name">
-                                    Review &amp; Submit
+                                    Grupo Familiar
                                 </div>
                                 <div class="wizard-step-text-details">
-                                    Review and submit changes
                                 </div>
                             </div>
                         </a>
