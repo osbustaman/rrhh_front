@@ -3,7 +3,10 @@ import { AppContext } from '../../providers/AppProvider';
 
 
 import { Tabs } from '../../components/tabs/Tabs';
-import { FormFactory } from './FormFactory';
+import { EditFormFactory } from './EditFormFactory';
+import { ListBranchOffice } from './ListBranchOffice';
+import { ListCenterCost } from './ListCenterCost';
+import { ListAssociatedEntities } from './ListAssociatedEntities';
 
 export const EditFactory = () => {
     const { updateBreadcrumbs, updateTitulo } = useContext(AppContext);
@@ -21,11 +24,10 @@ export const EditFactory = () => {
     }, []);
 
     const tabData = [
-        { id: 'empresa', label: 'Empresa', content: <FormFactory /> },
-        { id: 'sucursales', label: 'Sucursales', content: 'Contenido de Sucursales' },
-        { id: 'cargos', label: 'Cargos', content: 'Contenido de Cargos' },
-        { id: 'centros_costos', label: 'Centros de costos', content: 'Contenido de Centros de Costos' },
-        { id: 'entidades_asociadas', label: 'Entidades Asociadas', content: 'Contenido de Entidades Asociadas' },
+        { id: 'empresa', label: 'Empresa', content: <EditFormFactory /> },
+        { id: 'sucursales', label: 'Sucursales', content: <ListBranchOffice /> },
+        { id: 'centros_costos', label: 'Centros de costos', content: <ListCenterCost /> },
+        { id: 'entidades_asociadas', label: 'Entidades Asociadas', content: <ListAssociatedEntities /> },
     ];
 
     return (

@@ -44,9 +44,9 @@ export const InputText = ({ config_input }) => {
                         value={key.value}
                         onChange={(e) => handleEvent(key, e)}
                     >
-                        <option>{key.text_default}</option>
+                        {key.text_default && <option>{key.text_default}</option>}
                         {key.options.map((option) => (
-                            <option key={option.key} value={option.default ? option.key: ''}>
+                            <option key={option.key} value={option.key} selected={option.default && 'selected'}>
                                 {option.value}
                             </option>
                         ))}

@@ -29,9 +29,7 @@ export const MenuAdmin = () => {
                     <a className="nav-link" href="#">
                         Áreas
                     </a>
-                    <a className="nav-link" href="#">
-                        Puestos
-                    </a>
+                    
                     <a className="nav-link" href="#">
                         Centros de Costos
                     </a>

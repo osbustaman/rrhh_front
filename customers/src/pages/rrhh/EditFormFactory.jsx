@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Forms } from "../../components/forms/Forms"
 import { useFormValidate } from '../../hooks/useFormValidate';
 
-export const FormFactory = () => {
+export const EditFormFactory = () => {
 
     const { validate } = useFormValidate();
 
@@ -88,7 +88,7 @@ export const FormFactory = () => {
 
             formData.forEach((value, key) => {
                 const input = document.getElementsByName(key);
-                //input[0].value = '';
+                input[0].value = '';
                 input[0].classList.remove('is-invalid');
             });
         }, 3000);

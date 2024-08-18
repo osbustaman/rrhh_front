@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import DataTable from 'react-data-table-component';
 
 import './style.css';
+import { ListSmallButtons } from "../buttons/ListSmallButtons";
 
 /**
  * A dynamic table component.
@@ -73,7 +74,10 @@ export const TableDinamyc = ({ data_in_table, config_table, title }) => {
             <>
                 <div class="card mb-4">
                     <div class="card-header">
-                        {title}
+                        <div className="row">
+                            {title}
+                            <ListSmallButtons />
+                        </div>
                     </div>
                     <div class="card-body">
                         <div className="col-md-3 col-sm-3 form-group has-feedback text-left align-self-end mb-3"> {/* Add 'text-right' class */}
