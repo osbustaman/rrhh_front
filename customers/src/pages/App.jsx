@@ -15,6 +15,7 @@ import '../static/style_override.css';
 import { Factory } from './rrhh/Factory';
 import { AddFactory } from './rrhh/AddFactory';
 import { EditFactory } from './rrhh/EditFactory';
+import { ListSmallButtons } from '../components/buttons/ListSmallButtons';
 
 export const App = () => {
 
@@ -97,14 +98,14 @@ export const App = () => {
                                 <div className="container-xl px-4">
                                     <div className="page-header-content pt-4">
                                         <div className="row align-items-center justify-content-between">
-                                            <div className="col-auto mt-4">
+                                            <div className="col mt-4">
                                                 <h1 className="page-header-title">
                                                     <div className="page-header-icon">
                                                         <i data-feather="layout">
                                                         </i>
                                                     </div>
                                                     <AppContext.Consumer>
-                                                        {({ breadcrumbs,titulo }) => (
+                                                        {({ titulo }) => (
                                                             <>
                                                                 <Title title={titulo} />
                                                             </>
@@ -113,9 +114,18 @@ export const App = () => {
                                                     
                                                 </h1>
                                                 <div className="page-header-subtitle">
-                                                    <AppContext.Consumer>
-                                                        {({ breadcrumbs }) => <BreadCrumbs breadcrumbs={breadcrumbs} />}
-                                                    </AppContext.Consumer>
+                                                    <div className="row">
+                                                        <div className='col-md-9'>
+                                                            <AppContext.Consumer>
+                                                                {({ breadcrumbs }) => <BreadCrumbs breadcrumbs={breadcrumbs} />}
+                                                            </AppContext.Consumer>
+                                                        </div>
+                                                        <div className='col-md-3 d-flex align-items-center justify-content-end'>
+                                                            <div className="d-none d-sm-block">
+                                                                <ListSmallButtons />
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

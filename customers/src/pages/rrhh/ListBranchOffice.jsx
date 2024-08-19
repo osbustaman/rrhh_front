@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState, useContext } from 'react';
 import { TableDinamyc } from '../../components/datatable/TableDinamyc';
 import { SmallButtons } from "../../components/buttons/SmallButtons";
+
+import { AppContext } from '../../providers/AppProvider';
 
 export const ListBranchOffice = () => {
 
@@ -15,7 +17,6 @@ export const ListBranchOffice = () => {
         country
         sub_matrixhouse (es casa matris?)
      */
-
 
     const data = [
         {
@@ -56,18 +57,19 @@ export const ListBranchOffice = () => {
                     "icon": "fa fa-pencil",
                     "label": "Editar",
                     "url": `#`,
-                    "id": ``
+                    "id": 1
                 },
                 {
                     "class": "btn btn-red btn-icon",
                     "icon": "fa fa-trash",
                     "label": "Eliminar",
                     "url": '#',
-                    "id": ``
+                    "id": 2
                 }
             ]} />
         }
     ];
+
 
     if(data.length > 0){
         const data_table = data;
@@ -78,7 +80,7 @@ export const ListBranchOffice = () => {
         const title_table = 'Listado de Sucursales';
         return (
             <>
-                <TableDinamyc data_in_table={data_table} config_table={config_table} title={title_table}/>
+                <TableDinamyc data_in_table={data_table} config_table={config_table} title={title_table} />
             </>
         )
     }else{

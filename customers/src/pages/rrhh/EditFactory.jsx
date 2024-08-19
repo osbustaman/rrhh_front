@@ -9,7 +9,7 @@ import { ListCenterCost } from './ListCenterCost';
 import { ListAssociatedEntities } from './ListAssociatedEntities';
 
 export const EditFactory = () => {
-    const { updateBreadcrumbs, updateTitulo } = useContext(AppContext);
+    const { updateBreadcrumbs, updateTitulo, updateButtons } = useContext(AppContext);
 
     const dict_bread_crumb = [
         { "bread": "empresa" },
@@ -18,9 +18,26 @@ export const EditFactory = () => {
 
     const dict_title = { "tittle": "[Nombre empresa]" };
 
+    const buttons_menu = [
+        { 
+            "icon" : "fa fa-plus",
+            "list_items": [
+                {
+                    "label": "Agregar",
+                    "url": `#`,
+                }
+            ]
+        },{
+            "icon" : "fa-solid fa-arrow-right-from-bracket",
+            "url": `#`,
+            "label": "Descargar"
+        }
+    ];
+
     useEffect(() => {
         updateBreadcrumbs(dict_bread_crumb);
         updateTitulo(dict_title.tittle);
+        updateButtons(buttons_menu);
     }, []);
 
     const tabData = [
@@ -32,7 +49,7 @@ export const EditFactory = () => {
 
     return (
         <>
-            <Tabs tabs={tabData} />
+            <Tabs tabs={tabData}/>
         </>
     );
 };

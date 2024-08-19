@@ -76,7 +76,6 @@ export const TableDinamyc = ({ data_in_table, config_table, title }) => {
                     <div class="card-header">
                         <div className="row">
                             {title}
-                            <ListSmallButtons />
                         </div>
                     </div>
                     <div class="card-body">
