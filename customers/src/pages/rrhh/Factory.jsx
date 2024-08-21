@@ -5,7 +5,7 @@ import { SmallButtons } from "../../components/buttons/SmallButtons";
 
 export const Factory = () => {
 
-    const { updateBreadcrumbs, updateTitulo } = useContext(AppContext);
+    const { updateBreadcrumbs, updateTitulo, updateButtons } = useContext(AppContext);
 
     const dict_bread_crumb = [
         { "bread": "empresa" },
@@ -14,9 +14,12 @@ export const Factory = () => {
 
     const dict_title = { "tittle": "Empresa: [Nombre Empresa]" };
 
+    const buttons_menu = [];
+
     useEffect(() => {
         updateBreadcrumbs(dict_bread_crumb);
         updateTitulo(dict_title.tittle);
+        updateButtons(buttons_menu);
     }, []);
 
     const data = [

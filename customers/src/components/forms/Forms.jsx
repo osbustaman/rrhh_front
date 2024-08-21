@@ -4,8 +4,6 @@ export const Forms = ({ config_form }) => {
 
     const { id_form, number_row, name_button, def } = config_form;
 
-    console.log('Forms', config_form);
-
     return (
         <>
             <form id={`${id_form}`}>

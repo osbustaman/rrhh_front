@@ -28,6 +28,29 @@ export const useFormValidate = () => {
                     list_message_error.push({
                         message: `El campo ${label_input.innerHTML.replace(/ :/g, "")} es obligatorio.`
                     });
+                } else if (input[0].type === 'file' && value === '') {
+                    input[0].classList.add('is-invalid');
+                    const label_input = document.getElementById(`label_${key}`);
+
+                    list_message_error.push({
+                        message: `El campo ${label_input.innerHTML.replace(/ :/g, "")} es obligatorio.`
+                    });
+
+                } else if (input[0].type === 'text' && value === '') {
+                    input[0].classList.add('is-invalid');
+                    const label_input = document.getElementById(`label_${key}`);
+
+                    list_message_error.push({
+                        message: `El campo ${label_input.innerHTML.replace(/ :/g, "")} es obligatorio.`
+                    });
+                    
+                } else if (input[0].type === 'select-one' && value !== '') {
+                    input[0].classList.add('is-invalid');
+                    const label_input = document.getElementById(`label_${key}`);
+
+                    list_message_error.push({
+                        message: `El campo ${label_input.innerHTML.replace(/ :/g, "")} es obligatorio.`
+                    });
                 } else {
                     // Validación de correo electrónico
                     if (input[0].type === 'email') {

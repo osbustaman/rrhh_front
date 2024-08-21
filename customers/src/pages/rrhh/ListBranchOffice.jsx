@@ -2,21 +2,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import { TableDinamyc } from '../../components/datatable/TableDinamyc';
 import { SmallButtons } from "../../components/buttons/SmallButtons";
 
-import { AppContext } from '../../providers/AppProvider';
 
 export const ListBranchOffice = () => {
-
-    //Subsidiary
-
-    /*  
-        sub_id
-        sub_name
-        sub_address
-        commune
-        region
-        country
-        sub_matrixhouse (es casa matris?)
-     */
 
     const data = [
         {
@@ -32,15 +19,15 @@ export const ListBranchOffice = () => {
                     "class": "btn btn-green btn-icon",
                     "icon": "fa fa-pencil",
                     "label": "Editar",
-                    "url": `#`,
-                    "id": ``
+                    "url": `/home/editar-sucursal/1/1`,
+                    "id": `1`
                 },
                 {
                     "class": "btn btn-red btn-icon",
                     "icon": "fa fa-trash",
                     "label": "Eliminar",
                     "url": '#',
-                    "id": ``
+                    "id": `2`
                 }
             ]} />
         },{
@@ -56,7 +43,7 @@ export const ListBranchOffice = () => {
                     "class": "btn btn-green btn-icon",
                     "icon": "fa fa-pencil",
                     "label": "Editar",
-                    "url": `#`,
+                    "url": `/home/editar-sucursal/1/2`,
                     "id": 1
                 },
                 {

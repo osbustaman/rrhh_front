@@ -16,8 +16,6 @@ import { ListSmallButtons } from "../buttons/ListSmallButtons";
  */
 export const TableDinamyc = ({ data_in_table, config_table, title }) => {
 
-    console.log(title);
-
     const [search, setSearch] = useState('');
     const [filteredData, setFilteredData] = useState([]);
     const { loading, search_input } = config_table;

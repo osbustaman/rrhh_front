@@ -6,7 +6,7 @@ import { FormFactory } from './FormFactory';
 
 export const AddFactory = () => {
 
-    const { updateBreadcrumbs, updateTitulo } = useContext(AppContext);
+    const { updateBreadcrumbs, updateTitulo, updateButtons } = useContext(AppContext);
 
     const dict_bread_crumb = [
         { "bread": "empresa" },
@@ -15,9 +15,12 @@ export const AddFactory = () => {
 
     const dict_title = { "tittle": "Creación de una nueva empresa" };
 
+    const buttons_menu = [];
+
     useEffect(() => {
         updateBreadcrumbs(dict_bread_crumb);
         updateTitulo(dict_title.tittle);
+        updateButtons(buttons_menu);
     }, []);
 
 

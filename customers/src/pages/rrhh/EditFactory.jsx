@@ -20,17 +20,24 @@ export const EditFactory = () => {
 
     const buttons_menu = [
         { 
+            "label" : "Acciones",
             "icon" : "fa fa-plus",
             "list_items": [
                 {
-                    "label": "Agregar",
+                    "label": "Agregar Sucirsal",
+                    "url": `/home/agregar-sucursal/1`,
+                },{
+                    "label": "Agregar Centro de Costos",
+                    "url": `#`,
+                },{
+                    "label": "Agregar Entidad Asociada",
                     "url": `#`,
                 }
             ]
         },{
             "icon" : "fa-solid fa-arrow-right-from-bracket",
-            "url": `#`,
-            "label": "Descargar"
+            "url": `lista-empresas`,
+            "label": "Volver"
         }
     ];
 

@@ -16,8 +16,13 @@ import { Factory } from './rrhh/Factory';
 import { AddFactory } from './rrhh/AddFactory';
 import { EditFactory } from './rrhh/EditFactory';
 import { ListSmallButtons } from '../components/buttons/ListSmallButtons';
+import useMenuMiddleware from '../hooks/useMenuMiddleware';
+import { AddBranchOffice } from './rrhh/BranchOffice/AddBranchOffice';
+import { EditarBranchOffice } from './rrhh/BranchOffice/EditarBranchOffice';
 
 export const App = () => {
+
+    useMenuMiddleware();
 
     const [currentYear, setCurrentYear] = useState('');
     const [isSidebarVisible, setSidebarVisible] = useState(true);
@@ -122,7 +127,9 @@ export const App = () => {
                                                         </div>
                                                         <div className='col-md-3 d-flex align-items-center justify-content-end'>
                                                             <div className="d-none d-sm-block">
-                                                                <ListSmallButtons />
+                                                                <AppContext.Consumer>
+                                                                    {({ buttons }) => <ListSmallButtons buttons={buttons} />}
+                                                                </AppContext.Consumer>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -139,6 +146,8 @@ export const App = () => {
                                     <Route path="lista-empresas" element={<Factory />} />
                                     <Route path="agregar-empresa" element={<AddFactory />} />
                                     <Route path="editar-empresa/*" element={<EditFactory />} />
+                                    <Route path="agregar-sucursal/*" element={<AddBranchOffice />} />
+                                    <Route path="editar-sucursal/:id_customer/:id_branch" element={<EditarBranchOffice />} />
                                     <Route path="*" element={<NotFound />} />
                                 </Routes>
                             </div>

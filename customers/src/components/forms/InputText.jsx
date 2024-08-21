@@ -30,6 +30,15 @@ export const InputText = ({ config_input }) => {
         const eventProps = key.evento ? { [key.evento.name]: (e) => handleEvent(key, e) } : {};
         const name_input = key.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g, "_")
 
+        const customStyles = (isInvalid) => ({
+            control: (provided) => ({
+                ...provided,
+                borderColor: isInvalid ? 'red' : '#c5ccd6',
+                height: '48px',
+                minHeight: '48px',
+            }),
+        });
+
         switch (key.type) {
             case "select":
 
@@ -41,6 +50,7 @@ export const InputText = ({ config_input }) => {
                         required={!!key.required}
                         value={key.value}
                         onChange={(e) => handleEvent(key, e)}
+                        style={{ height: '48px' }}
                     >
                         {key.text_default && <option value="">{key.text_default}</option>}
                         {key.options.map((option) => (
@@ -57,6 +67,8 @@ export const InputText = ({ config_input }) => {
                     }
                 };
 
+                console.log('isInvalid', key.isInvalid);
+
                 return (
                     <Select
                         id={key.id}
@@ -68,6 +80,7 @@ export const InputText = ({ config_input }) => {
                         onChange={handleChange}
                         getOptionLabel={(option) => option.label}
                         getOptionValue={(option) => option.value}
+                        styles={customStyles(key.isInvalid)}
                     />
                 );
                 
