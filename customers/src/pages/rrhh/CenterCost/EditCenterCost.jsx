@@ -1,13 +1,15 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AppContext } from '../../../providers/AppProvider';
-import { useFormValidate } from '../../../hooks/useFormValidate';
-import { Forms } from "../../../components/forms/Forms"
 import { useParams } from 'react-router-dom';
 
+import { useFormValidate } from '../../../hooks/useFormValidate';
+import { Forms } from "../../../components/forms/Forms"
 
-export const AddBranchOffice = () => {
+export const EditCenterCost = () => {
 
-    const { id_customer } = useParams();
+    const [cencostName, setCencostName] = useState("");
+
+    const { id_customer, cencost_id } = useParams();
 
     const { validate } = useFormValidate();
 
@@ -16,10 +18,10 @@ export const AddBranchOffice = () => {
     const dict_bread_crumb = [
         { "bread": "empresa" },
         { "bread": "editar empresa" },
-        { "bread": "agregar sucursal" }
+        { "bread": "agregar centro de costo" }
     ];
 
-    const dict_title = { "tittle": "[Nombre empresa]" };
+    const dict_title = { "tittle": "[Nombre empresa]:[Nombre Centro de Costo]" };
 
     const buttons_menu = [
         { 
@@ -32,36 +34,13 @@ export const AddBranchOffice = () => {
         }
     ];
 
-    const [countries, setcountries] = useState([]);
-    const [regions, setRegions] = useState([]);
-    const [communes, setCommunes] = useState([]);
-
-    const [subName, setSubName] = useState("");
-    const [subAddress, setSubAddress] = useState("");
-    const [country, setCountry] = useState("");
-    const [region, setRegion] = useState("");
-    const [commune, setCommune] = useState("");
-    const [subMatrixhouse, setSubMatrixhouse] = useState("");
-
-    const data_country = async () => {
-        setcountries([]);   
-    }
-
-    const data_region = async () => {
-        setRegions([]);   
-    }
-
-    const data_communes = async () => {
-        setCommunes([]);   
-    }
-
     const send_form = (form) => {
 
         const { error, status } = validate(form);
 
         if (!error) {
             $.confirm({
-                title: 'Sucursal creada exitósamente!',
+                title: 'Centro de costo creado exitósamente!',
                 content: 'Para continuar, haga clic en el botón aceptar.',
                 buttons: {
                     aceptar: function () {
@@ -106,73 +85,26 @@ export const AddBranchOffice = () => {
     };
 
     useEffect(() => {
-        data_country();
-        data_region();
-        data_communes();
         updateBreadcrumbs(dict_bread_crumb);
         updateTitulo(dict_title.tittle);
         updateButtons(buttons_menu);
     }, []);
 
     const config_form = {
-        number_row: 2,
-        id_form: 'form_branch_office',
+        number_row: 6,
+        id_form: 'form_center_cost',
         position_form: 'vertical',
-        def: (event) => { send_form('form_branch_office'); },
+        def: (event) => { send_form('form_center_cost'); },
         name_button: 'Guardar',
         inputs: [
             {
-                label: 'Descripción de la unidad',
+                label: 'Nombre del centro de costo',
                 placeholder: '',
                 required: true,
                 name: 'sub_name',
                 type: 'text',
-                value: subName,
-                setValue: setSubName
-            },{
-                label: 'Direccion de la unidad',
-                placeholder: '',
-                required: true,
-                name: 'sub_address',
-                type: 'text',
-                value: subAddress,
-                setValue: setSubAddress
-            },{
-                label: 'Comunas',
-                required: true,
-                name: 'commune',
-                type: 'select_autocomplete',
-                options: communes,
-                text_default: '-- Seleccione --',
-                value: commune,
-                setValue: setCommune
-            },{
-                label: 'Regiones',
-                required: true,
-                name: 'regions',
-                type: 'select_autocomplete',
-                options: regions,
-                text_default: '-- Seleccione --',
-                value: region,
-                setValue: setRegion
-            },{
-                label: 'País',
-                required: true,
-                name: 'countries',
-                type: 'select_autocomplete',
-                options: countries,
-                text_default: '-- Seleccione --',
-                value: country,
-                setValue: setCountry
-            },{
-                label: 'Es casa matriz?',
-                required: true,
-                name: 'sub_matrixhouse',
-                type: 'select',
-                text_default: '',
-                options: [{key: 'Y', value: 'Si'}, {key: 'N', value: 'No', default: true}],
-                value: subMatrixhouse,
-                setValue: setSubMatrixhouse
+                value: cencostName,
+                setValue: setCencostName
             }
         ],
     }
@@ -182,6 +114,7 @@ export const AddBranchOffice = () => {
             <div className="card mb-4">
                 <div className="card-header">
                     <nav className="nav nav-borders">
+                        
                     </nav>
                 </div>
                 <div className="card-body">

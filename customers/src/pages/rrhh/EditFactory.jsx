@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AppContext } from '../../providers/AppProvider';
-
+import { useParams } from 'react-router-dom';
 
 import { Tabs } from '../../components/tabs/Tabs';
 import { EditFormFactory } from './EditFormFactory';
@@ -9,6 +9,9 @@ import { ListCenterCost } from './ListCenterCost';
 import { ListAssociatedEntities } from './ListAssociatedEntities';
 
 export const EditFactory = () => {
+
+    const { id_customer } = useParams();
+
     const { updateBreadcrumbs, updateTitulo, updateButtons } = useContext(AppContext);
 
     const dict_bread_crumb = [
@@ -25,13 +28,13 @@ export const EditFactory = () => {
             "list_items": [
                 {
                     "label": "Agregar Sucirsal",
-                    "url": `/home/agregar-sucursal/1`,
+                    "url": `/home/agregar-sucursal/${id_customer}`,
                 },{
                     "label": "Agregar Centro de Costos",
-                    "url": `#`,
+                    "url": `/home/agregar-centro-costo/${id_customer}`,
                 },{
                     "label": "Agregar Entidad Asociada",
-                    "url": `#`,
+                    "url": `/home/agregar-entidades-asociadas/${id_customer}`,
                 }
             ]
         },{

@@ -5,7 +5,7 @@ import { Forms } from "../../../components/forms/Forms"
 import { useParams } from 'react-router-dom';
 
 
-export const AddBranchOffice = () => {
+export const AddAssociatedEntities = () => {
 
     const { id_customer } = useParams();
 
@@ -16,7 +16,7 @@ export const AddBranchOffice = () => {
     const dict_bread_crumb = [
         { "bread": "empresa" },
         { "bread": "editar empresa" },
-        { "bread": "agregar sucursal" }
+        { "bread": "agregar entidades asociadas" }
     ];
 
     const dict_title = { "tittle": "[Nombre empresa]" };
@@ -32,27 +32,19 @@ export const AddBranchOffice = () => {
         }
     ];
 
-    const [countries, setcountries] = useState([]);
-    const [regions, setRegions] = useState([]);
-    const [communes, setCommunes] = useState([]);
+    const [mutualSecurities, setMutualSecurities] = useState([]);
+    const [boxesCompensation, setBoxesCompensation] = useState([]);
 
-    const [subName, setSubName] = useState("");
-    const [subAddress, setSubAddress] = useState("");
-    const [country, setCountry] = useState("");
-    const [region, setRegion] = useState("");
-    const [commune, setCommune] = useState("");
-    const [subMatrixhouse, setSubMatrixhouse] = useState("");
+    const [mutualSecurity, setMutualSecurity] = useState("");
+    const [boxCompensation, setBoxCompensation] = useState("");
 
-    const data_country = async () => {
-        setcountries([]);   
+
+    const data_mutualSecurities = async () => {
+        setMutualSecurities([]);   
     }
 
-    const data_region = async () => {
-        setRegions([]);   
-    }
-
-    const data_communes = async () => {
-        setCommunes([]);   
+    const data_boxesCompensation = async () => {
+        setBoxesCompensation([]);   
     }
 
     const send_form = (form) => {
@@ -61,7 +53,7 @@ export const AddBranchOffice = () => {
 
         if (!error) {
             $.confirm({
-                title: 'Sucursal creada exitósamente!',
+                title: 'Entidades guardadas exitósamente!',
                 content: 'Para continuar, haga clic en el botón aceptar.',
                 buttons: {
                     aceptar: function () {
@@ -106,73 +98,39 @@ export const AddBranchOffice = () => {
     };
 
     useEffect(() => {
-        data_country();
-        data_region();
-        data_communes();
+        data_mutualSecurities();
+        data_boxesCompensation();
+
         updateBreadcrumbs(dict_bread_crumb);
         updateTitulo(dict_title.tittle);
         updateButtons(buttons_menu);
     }, []);
 
     const config_form = {
-        number_row: 2,
-        id_form: 'form_branch_office',
+        number_row: 4,
+        id_form: 'form_entities',
         position_form: 'vertical',
-        def: (event) => { send_form('form_branch_office'); },
+        def: (event) => { send_form('form_entities'); },
         name_button: 'Guardar',
         inputs: [
             {
-                label: 'Descripción de la unidad',
-                placeholder: '',
+                label: 'Mutual de seguridad',
                 required: true,
-                name: 'sub_name',
-                type: 'text',
-                value: subName,
-                setValue: setSubName
-            },{
-                label: 'Direccion de la unidad',
-                placeholder: '',
-                required: true,
-                name: 'sub_address',
-                type: 'text',
-                value: subAddress,
-                setValue: setSubAddress
-            },{
-                label: 'Comunas',
-                required: true,
-                name: 'commune',
+                name: 'mutual_security',
                 type: 'select_autocomplete',
-                options: communes,
+                options: mutualSecurities,
                 text_default: '-- Seleccione --',
-                value: commune,
-                setValue: setCommune
+                value: mutualSecurity,
+                setValue: setMutualSecurity
             },{
-                label: 'Regiones',
+                label: 'Cajas de compensación',
                 required: true,
-                name: 'regions',
+                name: 'boxes_compensation',
                 type: 'select_autocomplete',
-                options: regions,
+                options: boxesCompensation,
                 text_default: '-- Seleccione --',
-                value: region,
-                setValue: setRegion
-            },{
-                label: 'País',
-                required: true,
-                name: 'countries',
-                type: 'select_autocomplete',
-                options: countries,
-                text_default: '-- Seleccione --',
-                value: country,
-                setValue: setCountry
-            },{
-                label: 'Es casa matriz?',
-                required: true,
-                name: 'sub_matrixhouse',
-                type: 'select',
-                text_default: '',
-                options: [{key: 'Y', value: 'Si'}, {key: 'N', value: 'No', default: true}],
-                value: subMatrixhouse,
-                setValue: setSubMatrixhouse
+                value: boxCompensation,
+                setValue: setBoxCompensation
             }
         ],
     }

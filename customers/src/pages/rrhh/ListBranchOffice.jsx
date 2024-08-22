@@ -1,9 +1,12 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { TableDinamyc } from '../../components/datatable/TableDinamyc';
 import { SmallButtons } from "../../components/buttons/SmallButtons";
+import { useParams } from 'react-router-dom';
 
 
 export const ListBranchOffice = () => {
+
+    const { id_customer } = useParams();
 
     const data = [
         {
@@ -19,7 +22,7 @@ export const ListBranchOffice = () => {
                     "class": "btn btn-green btn-icon",
                     "icon": "fa fa-pencil",
                     "label": "Editar",
-                    "url": `/home/editar-sucursal/1/1`,
+                    "url": `/home/editar-sucursal/${id_customer}/1`,
                     "id": `1`
                 },
                 {
@@ -43,7 +46,7 @@ export const ListBranchOffice = () => {
                     "class": "btn btn-green btn-icon",
                     "icon": "fa fa-pencil",
                     "label": "Editar",
-                    "url": `/home/editar-sucursal/1/2`,
+                    "url": `/home/editar-sucursal/${id_customer}/2`,
                     "id": 1
                 },
                 {

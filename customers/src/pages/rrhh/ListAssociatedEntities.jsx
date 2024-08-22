@@ -1,29 +1,17 @@
 import React from 'react'
 import { TableDinamyc } from '../../components/datatable/TableDinamyc';
 import { SmallButtons } from "../../components/buttons/SmallButtons";
+import { useParams } from 'react-router-dom';
 
 export const ListAssociatedEntities = () => {
 
-    //CenterCost
-
-    /*  
-        cencost_id
-        cencost_name
-     */
-
+    const { id_customer } = useParams();
 
     const data = [
         {
-            cencost_id: 1,
-            cencost_name: 'Desarrollo',
+            id: 1,
+            nombre_entidad: 'ACHS',
             acciones: <SmallButtons key={1} config_buttons={[
-                {
-                    "class": "btn btn-green btn-icon",
-                    "icon": "fa fa-pencil",
-                    "label": "Editar",
-                    "url": `#`,
-                    "id": ``
-                },
                 {
                     "class": "btn btn-red btn-icon",
                     "icon": "fa fa-trash",
@@ -33,16 +21,9 @@ export const ListAssociatedEntities = () => {
                 }
             ]} />
         },{
-            cencost_id: 2,
-            cencost_name: 'ventas',
+            id: 2,
+            nombre_entidad: 'Caja los Andes',
             acciones: <SmallButtons key={2} config_buttons={[
-                {
-                    "class": "btn btn-green btn-icon",
-                    "icon": "fa fa-pencil",
-                    "label": "Editar",
-                    "url": `#`,
-                    "id": ``
-                },
                 {
                     "class": "btn btn-red btn-icon",
                     "icon": "fa fa-trash",

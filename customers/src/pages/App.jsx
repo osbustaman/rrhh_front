@@ -19,6 +19,9 @@ import { ListSmallButtons } from '../components/buttons/ListSmallButtons';
 import useMenuMiddleware from '../hooks/useMenuMiddleware';
 import { AddBranchOffice } from './rrhh/BranchOffice/AddBranchOffice';
 import { EditarBranchOffice } from './rrhh/BranchOffice/EditarBranchOffice';
+import { AddCenterCost } from './rrhh/CenterCost/AddCenterCost';
+import { EditCenterCost } from './rrhh/CenterCost/EditCenterCost';
+import { AddAssociatedEntities } from './rrhh/AssociatedEntities/AddAssociatedEntities';
 
 export const App = () => {
 
@@ -145,9 +148,12 @@ export const App = () => {
                                     <Route path="profile" element={<Profile />} />
                                     <Route path="lista-empresas" element={<Factory />} />
                                     <Route path="agregar-empresa" element={<AddFactory />} />
-                                    <Route path="editar-empresa/*" element={<EditFactory />} />
-                                    <Route path="agregar-sucursal/*" element={<AddBranchOffice />} />
+                                    <Route path="editar-empresa/:id_customer" element={<EditFactory />} />
+                                    <Route path="agregar-sucursal/:id_customer" element={<AddBranchOffice />} />
                                     <Route path="editar-sucursal/:id_customer/:id_branch" element={<EditarBranchOffice />} />
+                                    <Route path="agregar-centro-costo/:id_customer" element={<AddCenterCost />} />
+                                    <Route path="editar-centro-costo/:id_customer/:cencost_id" element={<EditCenterCost />} />
+                                    <Route path="agregar-entidades-asociadas/:id_customer" element={<AddAssociatedEntities />} />
                                     <Route path="*" element={<NotFound />} />
                                 </Routes>
                             </div>

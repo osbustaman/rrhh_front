@@ -177,7 +177,6 @@ export const EditarBranchOffice = () => {
             <div className="card mb-4">
                 <div className="card-header">
                     <nav className="nav nav-borders">
-                        Nueva sucursal
                     </nav>
                 </div>
                 <div className="card-body">

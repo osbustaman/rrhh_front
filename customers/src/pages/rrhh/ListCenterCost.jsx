@@ -1,16 +1,11 @@
 import React from 'react'
 import { TableDinamyc } from '../../components/datatable/TableDinamyc';
 import { SmallButtons } from "../../components/buttons/SmallButtons";
+import { useParams } from 'react-router-dom';
 
 export const ListCenterCost = () => {
 
-    //CenterCost
-
-    /*  
-        cencost_id
-        cencost_name
-     */
-
+    const { id_customer } = useParams();
 
     const data = [
         {
@@ -21,7 +16,7 @@ export const ListCenterCost = () => {
                     "class": "btn btn-green btn-icon",
                     "icon": "fa fa-pencil",
                     "label": "Editar",
-                    "url": `#`,
+                    "url": `/home/editar-centro-costo/${id_customer}/1`,
                     "id": ``
                 },
                 {
@@ -40,7 +35,7 @@ export const ListCenterCost = () => {
                     "class": "btn btn-green btn-icon",
                     "icon": "fa fa-pencil",
                     "label": "Editar",
-                    "url": `#`,
+                    "url": `/home/editar-centro-costo/${id_customer}/2`,
                     "id": ``
                 },
                 {

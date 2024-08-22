@@ -2,32 +2,26 @@ import { useLocation } from 'react-router-dom';
 
 const useMenuMiddleware = () => {
     const location = useLocation();
-
     const path = location.pathname;
-    let item = '';
-    let subItem = '';
 
-    if (path.includes('/home/lista-empresas')) {
-        item = 'ver_empresas';
-        subItem = 'lista_empresas';
+    const pathMappings = {
+        '/home/lista-empresas': { item: 'ver_empresas', subItem: 'lista_empresas' },
+        '/home/editar-empresa': { item: 'ver_empresas', subItem: 'lista_empresas' },
+        '/home/agregar-sucursal': { item: 'ver_empresas', subItem: 'lista_empresas' },
+        '/home/editar-sucursal': { item: 'ver_empresas', subItem: 'lista_empresas' },
+        '/home/agregar-centro-costo': { item: 'ver_empresas', subItem: 'lista_empresas' },
+        '/home/editar-centro-costo': { item: 'ver_empresas', subItem: 'lista_empresas' },
+        '/home/agregar-entidades-asociadas': { item: 'ver_empresas', subItem: 'lista_empresas' },
 
-    } else if (path.includes('/home/editar-empresa')) {
-        item = 'ver_empresas';
-        subItem = 'lista_empresas';
-    
-    } else if (path.includes('/home/agregar-sucursal')) {
-        item = 'ver_empresas';
-        subItem = 'lista_empresas';
 
-    } else if (path.includes('/home/editar-sucursal')) {
-        item = 'ver_empresas';
-        subItem = 'lista_empresas';
 
-    } else if (path.includes('/home/agregar-empresa')) {
-        item = 'ver_empresas';
-        subItem = 'agregar_empresa';
-    }
-    // Agrega el resto de las condiciones aquí...
+        '/home/agregar-empresa': { item: 'ver_empresas', subItem: 'agregar_empresa' },
+        // Agrega el resto de las condiciones aquí...
+    };
+
+    const { item = '', subItem = '' } = Object.keys(pathMappings).find(key => path.includes(key)) 
+        ? pathMappings[Object.keys(pathMappings).find(key => path.includes(key))] 
+        : {};
 
     localStorage.setItem('item', item);
     localStorage.setItem('sub-item', subItem);
