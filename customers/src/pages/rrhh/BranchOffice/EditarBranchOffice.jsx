@@ -122,16 +122,14 @@ export const EditarBranchOffice = () => {
                 required: true,
                 name: 'sub_name',
                 type: 'text',
-                value: subName,
-                setValue: setSubName
+                value: ''
             },{
                 label: 'Direccion de la unidad',
                 placeholder: '',
                 required: true,
                 name: 'sub_address',
                 type: 'text',
-                value: subAddress,
-                setValue: setSubAddress
+                value: ''
             },{
                 label: 'Comunas',
                 required: true,
@@ -139,8 +137,7 @@ export const EditarBranchOffice = () => {
                 type: 'select_autocomplete',
                 options: communes,
                 text_default: '-- Seleccione --',
-                value: commune,
-                setValue: setCommune
+                value: ''
             },{
                 label: 'Regiones',
                 required: true,
@@ -148,8 +145,7 @@ export const EditarBranchOffice = () => {
                 type: 'select_autocomplete',
                 options: regions,
                 text_default: '-- Seleccione --',
-                value: region,
-                setValue: setRegion
+                value: ''
             },{
                 label: 'País',
                 required: true,
@@ -157,8 +153,7 @@ export const EditarBranchOffice = () => {
                 type: 'select_autocomplete',
                 options: countries,
                 text_default: '-- Seleccione --',
-                value: country,
-                setValue: setCountry
+                value: ''
             },{
                 label: 'Es casa matriz?',
                 required: true,
@@ -166,8 +161,7 @@ export const EditarBranchOffice = () => {
                 type: 'select',
                 text_default: '',
                 options: [{key: 'Y', value: 'Si'}, {key: 'N', value: 'No', default: true}],
-                value: subMatrixhouse,
-                setValue: setSubMatrixhouse
+                value: ''
             }
         ],
     }

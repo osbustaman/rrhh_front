@@ -1,10 +1,30 @@
+import { useState, useEffect } from 'react';
 import { actionMap } from '../../js/validations';
 import Select from 'react-select';
 import './style_inputs.css';
 
 export const InputText = ({ config_input }) => {
 
-    const { position_form, number_row } = config_input;
+    const { position_form, number_row, inputs } = config_input;
+
+    // Inicializa el estado del formulario con los valores iniciales de inputs
+    const initial_form = {};
+    inputs.forEach((input) => {
+        initial_form[input.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g, "_")] = input.value;
+    });
+
+    const [formState, setFormState] = useState(initial_form);
+
+    // Función para manejar los cambios en los campos de entrada
+    const onInputChange = ({ target }) => {
+        const { name, value } = target;
+        setFormState({ ...formState, [name]: value });
+    };
+
+    // Función para manejar los cambios en los campos de tipo select_autocomplete
+    const onSelectChange = (name, selectedOption) => {
+        setFormState({ ...formState, [name]: selectedOption ? selectedOption.value : '' });
+    };
 
     const renderInput = (key) => {
 
@@ -48,26 +68,25 @@ export const InputText = ({ config_input }) => {
                         className="form-control"
                         name={name_input}
                         required={!!key.required}
-                        value={key.value}
-                        onChange={(e) => handleEvent(key, e)}
+                        value={formState[name_input]} // Usa formState para el valor
+                        onChange={onInputChange}
                         style={{ height: '48px' }}
                     >
                         {key.text_default && <option value="">{key.text_default}</option>}
                         {key.options.map((option) => (
-                            <option key={option.key} value={option.key}>
+                            <option key={option.key} value={option.key} >
                                 {option.value}
                             </option>
                         ))}
                     </select>
                 );
+
             case "select_autocomplete":
                 const handleChange = (selectedOption) => {
                     if(key.value){
                         key.setValue(selectedOption ? selectedOption.value : '');
                     }
                 };
-
-                console.log('isInvalid', key.isInvalid);
 
                 return (
                     <Select
@@ -76,8 +95,8 @@ export const InputText = ({ config_input }) => {
                         options={key.options}
                         placeholder={key.text_default}
                         required={!!key.required}
-                        value={key.options.find(option => option.value === key.value)}
-                        onChange={handleChange}
+                        value={key.options.find(option => option.value === formState[name_input])} // Usa formState para el valor
+                        onChange={(selectedOption) => onSelectChange(name_input, selectedOption)}
                         getOptionLabel={(option) => option.label}
                         getOptionValue={(option) => option.value}
                         styles={customStyles(key.isInvalid)}
@@ -92,9 +111,8 @@ export const InputText = ({ config_input }) => {
                         className="form-check-input"
                         name={name_input}
                         required={!!key.required}
-                        value={key.value}
-                        checked={key.value}
-                        onChange={event => key.setValue && key.setValue(event.target.value)}
+                        checked={formState[name_input]}
+                        onChange={onInputChange}
                         {...eventProps}
                     />
                 );
@@ -107,8 +125,8 @@ export const InputText = ({ config_input }) => {
                         className="form-control"
                         name={name_input}
                         required={!!key.required}
-                        value={key.value}
-                        onChange={event => key.setValue && key.setValue(event.target.value)}
+                        value={formState[name_input]}
+                        onChange={onInputChange}
                         {...eventProps}
                     />
                 );
@@ -120,8 +138,8 @@ export const InputText = ({ config_input }) => {
                             className="form-control"
                             name={name_input}
                             required={!!key.required}
-                            value={key.value}
-                            onChange={event => key.setValue && key.setValue(event.target.value)}
+                            value={formState[name_input]}
+                            onChange={onInputChange}
                             {...eventProps}
                         />
                     );
@@ -135,8 +153,8 @@ export const InputText = ({ config_input }) => {
                                 className={`form-control ${key.type}`}
                                 name={name_input}
                                 required={!!key.required}
-                                value={key.value}
-                                onChange={event => key.setValue && key.setValue(event.target.value)}
+                                value={formState[name_input]}
+                                onChange={onInputChange}
                                 {...eventProps}
                             />
                         );
@@ -149,8 +167,8 @@ export const InputText = ({ config_input }) => {
                         className="form-control"
                         name={name_input}
                         required={!!key.required}
-                        value={key.value}
-                        onChange={event => key.setValue && key.setValue(event.target.value)}
+                        value={formState[name_input]}
+                        onChange={onInputChange}
                         {...eventProps}
                     />
                 );

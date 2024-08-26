@@ -1,6 +1,9 @@
 import React from 'react'
 import { useState, useEffect } from "react";
 
+import { useLogin } from '../hooks/useLogin';
+
+
 export const Login = () => {
 
     const [username, setUsername] = useState('');
@@ -14,7 +17,7 @@ export const Login = () => {
         setPassword(event.target.value);
     }
     
-    const login_user = () => {
+    const send_login = async () => {
         if (!username || !password) {
             $.alert({
                 title: 'Alerta!',
@@ -22,10 +25,22 @@ export const Login = () => {
             });
             return;
         }else{
-            window.location.href = '/home/profile';
+
+            const { getFechLogin } = useLogin({ username, password });
+            const response = await getFechLogin();
+            const { error, status } = response;
+
+            if (status) {
+                window.location.href = '/home/profile';
+            }else{
+                $.alert({
+                    title: 'Error!',
+                    content: error,
+                });
+            }
+
         }
     }
-    
 
     return (
         <>
@@ -53,6 +68,7 @@ export const Login = () => {
                                                     <input 
                                                         className="form-control" 
                                                         id="username"
+                                                        name='username'
                                                         placeholder="12345678-9" 
                                                         type="text"
                                                         onChange={handleUserChange}
@@ -66,6 +82,7 @@ export const Login = () => {
                                                     <input 
                                                         className="form-control" 
                                                         id="inputPassword" 
+                                                        name='password'
                                                         placeholder="contraseña"
                                                         type="password"
                                                         onChange={handlePasswordChange}
@@ -86,7 +103,7 @@ export const Login = () => {
                                                     <a className="small" href="auth-password-basic.html">
                                                         Forgot Password?
                                                     </a>
-                                                    <a className="btn btn-primary" onClick={login_user}>
+                                                    <a className="btn btn-primary" onClick={send_login}>
                                                         Ingresar
                                                     </a>
                                                 </div>

@@ -12,23 +12,6 @@ export const EditFormFactory = () => {
     const [communes, setCommunes] = useState([]);
     const [comSocialReason, setComSocialReason] = useState([]);
 
-    const [rut, setRut] = useState("");
-    const [nameCompany, setNameCompany] = useState("");
-    const [nameCounter, setNameCounter] = useState("");
-    const [representativeName, setRepresentativeName] = useState("");
-    const [rutRepresentative, setRutRepresentative] = useState("");
-    const [socialReason, setSocialReason] = useState("");
-    const [twistCompany, setTwistCompany] = useState("");
-    const [address, setAddress] = useState("");
-    const [cusCountry, setCusCountry] = useState("");
-    const [cusRegion, setCusRegion] = useState("");
-    const [cusCommune, setCusCommune] = useState("");
-
-    const [phoneOne, setPhoneOne] = useState("");
-    const [phoneTwo, setPhoneTwo] = useState("");
-    const [mailOne, setMailOne] = useState("");
-    const [mailTwo, setMailTwo] = useState("");
-
     const data_country = async () => {
         setCountries([]);   
     }
@@ -115,54 +98,49 @@ export const EditFormFactory = () => {
                 required: true,
                 name: 'com_rut',
                 type: 'rut',
-                value: rut,
-                setValue: setRut
+                value: ''
             },{
                 label: 'Nombre de la compañia',
                 placeholder: '',
                 required: true,
                 name: 'com_name_company',
                 type: 'text',
-                value: nameCompany,
-                setValue: setNameCompany
+                value: ''
             },{
                 label: 'Razón social',
                 placeholder: '',
                 required: true,
                 name: 'com_name_counter',
                 type: 'text',
-                value: nameCounter,
-                setValue: setNameCounter
+                value: ''
             },{
                 label: 'Es Holding',
                 required: true,
                 name: 'com_is_holding',
                 type: 'select',
                 text_default: '',
-                options: [{key: 'Y', value: 'Si', default: true}, {key: 'N', value: 'No'}]
+                options: [{key: 'Y', value: 'Si'}, {key: 'N', value: 'No', default: true}]
             },{
                 label: 'Compañia principal?',
                 required: true,
                 name: 'com_id_parent_company',
                 type: 'select',
                 text_default: '',
-                options: [{key: 'Y', value: 'Si', default: true}, {key: 'N', value: 'No'}]
+                options: [{key: 'Y', value: 'Si'}, {key: 'N', value: 'No', default: true}]
             },{
                 label: 'Nombre del representante',
                 placeholder: '',
                 required: true,
                 name: 'com_representative_name',
                 type: 'text',
-                value: representativeName,
-                setValue: setRepresentativeName
+                value: ''
             },{
                 label: 'Rut del representante',
                 placeholder: '',
                 required: true,
                 name: 'com_rut_representative',
                 type: 'rut',
-                value: rutRepresentative,
-                setValue: setRutRepresentative
+                value: ''
             },{
                 label: 'Es estatal?',
                 required: true,
@@ -177,24 +155,21 @@ export const EditFormFactory = () => {
                 type: 'select_autocomplete',
                 options: comSocialReason,
                 text_default: '-- Seleccione --',
-                value: socialReason,
-                setValue: setSocialReason
+                value: ''
             },{
                 label: 'Giro de la compañia',
                 placeholder: '',
                 required: true,
                 name: 'com_twist_company',
                 type: 'text',
-                value: twistCompany,
-                setValue: setTwistCompany
+                value: ''
             },{
                 label: 'Dirección',
                 placeholder: '',
                 required: true,
                 name: 'com_address',
                 type: 'text',
-                value: address,
-                setValue: setAddress
+                value: ''
             },{
                 label: 'Comunas',
                 required: true,
@@ -202,8 +177,7 @@ export const EditFormFactory = () => {
                 type: 'select_autocomplete',
                 options: communes,
                 text_default: '-- Seleccione --',
-                value: cusCommune,
-                setValue: setCusCommune
+                value: ''
             },{
                 label: 'Regiones',
                 required: true,
@@ -211,8 +185,7 @@ export const EditFormFactory = () => {
                 type: 'select_autocomplete',
                 options: regions,
                 text_default: '-- Seleccione --',
-                value: cusRegion,
-                setValue: setCusRegion
+                value: ''
             },{
                 label: 'País',
                 required: true,
@@ -220,40 +193,35 @@ export const EditFormFactory = () => {
                 type: 'select_autocomplete',
                 options: countries,
                 text_default: '-- Seleccione --',
-                value: cusCountry,
-                setValue: setCusCountry
+                value: ''
             },{
                 label: 'Teléfono 1',
                 placeholder: '',
                 required: true,
                 name: 'com_phone_one',
                 type: 'text',
-                value: phoneOne,
-                setValue: setPhoneOne
+                value: ''
             },{
                 label: 'Teléfono 2',
                 placeholder: '',
                 required: true,
                 name: 'com_phone_two',
                 type: 'text',
-                value: phoneTwo,
-                setValue: setPhoneTwo
+                value: ''
             },{
                 label: 'Correo 1',
                 placeholder: '',
                 required: true,
                 name: 'com_mail_one',
                 type: 'mail',
-                value: mailOne,
-                setValue: setMailOne
+                value: ''
             },{
                 label: 'Correo 2',
                 placeholder: '',
                 required: true,
                 name: 'com_mail_two',
                 type: 'mail',
-                value: mailTwo,
-                setValue: setMailTwo
+                value: ''
             }
         ],
     }

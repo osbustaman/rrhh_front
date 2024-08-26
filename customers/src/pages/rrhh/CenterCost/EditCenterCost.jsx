@@ -7,8 +7,6 @@ import { Forms } from "../../../components/forms/Forms"
 
 export const EditCenterCost = () => {
 
-    const [cencostName, setCencostName] = useState("");
-
     const { id_customer, cencost_id } = useParams();
 
     const { validate } = useFormValidate();
@@ -103,8 +101,7 @@ export const EditCenterCost = () => {
                 required: true,
                 name: 'sub_name',
                 type: 'text',
-                value: cencostName,
-                setValue: setCencostName
+                value: ''
             }
         ],
     }

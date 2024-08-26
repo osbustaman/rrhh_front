@@ -1,4 +1,6 @@
 export const validateRut = (rut) => {
+
+    console.log('rut ---->', rut);
     /**
      * Validates if a Chilean RUT is valid.
      * 

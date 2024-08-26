@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { AppContext } from '../../providers/AppProvider';
 import { TableDinamyc } from '../../components/datatable/TableDinamyc';
 import { SmallButtons } from "../../components/buttons/SmallButtons";
+import { useFech } from '../../hooks/useFech';
 
 export const Factory = () => {
 
@@ -16,10 +17,20 @@ export const Factory = () => {
 
     const buttons_menu = [];
 
+    let data_table = [];
+
+    const get_data_table = async () => {
+        const { getDataTable } = useFech({ url: 'list-companies' });
+        const response = await getDataTable();
+
+        console.log(response);
+    }
+
     useEffect(() => {
         updateBreadcrumbs(dict_bread_crumb);
         updateTitulo(dict_title.tittle);
         updateButtons(buttons_menu);
+        get_data_table();
     }, []);
 
     const data = [

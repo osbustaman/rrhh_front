@@ -120,8 +120,7 @@ export const AddAssociatedEntities = () => {
                 type: 'select_autocomplete',
                 options: mutualSecurities,
                 text_default: '-- Seleccione --',
-                value: mutualSecurity,
-                setValue: setMutualSecurity
+                value: ''
             },{
                 label: 'Cajas de compensación',
                 required: true,
@@ -129,8 +128,7 @@ export const AddAssociatedEntities = () => {
                 type: 'select_autocomplete',
                 options: boxesCompensation,
                 text_default: '-- Seleccione --',
-                value: boxCompensation,
-                setValue: setBoxCompensation
+                value: ''
             }
         ],
     }

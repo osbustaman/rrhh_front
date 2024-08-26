@@ -22,10 +22,18 @@ import { EditarBranchOffice } from './rrhh/BranchOffice/EditarBranchOffice';
 import { AddCenterCost } from './rrhh/CenterCost/AddCenterCost';
 import { EditCenterCost } from './rrhh/CenterCost/EditCenterCost';
 import { AddAssociatedEntities } from './rrhh/AssociatedEntities/AddAssociatedEntities';
+import { useDataUser } from '../hooks/useDataUser';
 
 export const App = () => {
 
     useMenuMiddleware();
+
+    const get_data_user = async () => {
+        const { getDataUser } = useDataUser(localStorage.getItem('user'));
+        const response = await getDataUser();
+    }
+
+    get_data_user();
 
     const [currentYear, setCurrentYear] = useState('');
     const [isSidebarVisible, setSidebarVisible] = useState(true);
@@ -38,6 +46,7 @@ export const App = () => {
 
         // Llamada inicial para obtener el año actual al montar el componente
         getYear();
+        
     }, []);
 
     const toggleSidebar = () => {
