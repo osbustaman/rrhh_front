@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Forms } from "../../components/forms/Forms"
 import { useFormValidate } from '../../hooks/useFormValidate';
 import { useFech } from '../../hooks/useFech';
+import { Link } from 'react-router-dom';
 
 export const FormFactory = () => {
 
@@ -93,12 +94,12 @@ export const FormFactory = () => {
 
     const send_form_user = async (form) => {
 
-        const { error, status } = validate(form);
+        const { error, form_data } = validate(form);
 
         if (error) {
             $.confirm({
                 title: 'Tienes errores en los siguientes campos!',
-                content: status,
+                content: form_data,
                 buttons: {
                     aceptar: function () {
                         const form_data = document.getElementById(form);
@@ -112,12 +113,25 @@ export const FormFactory = () => {
             });
             return false;
         }else{
-            console.log('enviar');
-            console.log(status);
 
             const { postDataApi } = useFech({ url: 'create-company' });
-            const response = await postDataApi(status);
+            const { error, status } = await postDataApi(form_data);
 
+            if (error) {
+                $.alert('Error al crear la compañia');
+            }else{
+                const { com_id, message } = status;
+                $.confirm({
+                    title: message,
+                    content: form_data,
+                    buttons: {
+                        continuar: function () {
+                            window.location.href = `/home/editar-empresa/${com_id}`;
+                        }
+                    }
+                });
+                return false;
+            }
         }
         
 
@@ -243,7 +257,7 @@ export const FormFactory = () => {
             },{
                 label: 'Regiones',
                 required: true,
-                name: 'regions',
+                name: 'region',
                 type: 'select_autocomplete',
                 options: regions,
                 text_default: '-- Seleccione --',
@@ -251,7 +265,7 @@ export const FormFactory = () => {
             },{
                 label: 'País',
                 required: true,
-                name: 'countries',
+                name: 'country',
                 type: 'select_autocomplete',
                 options: countries,
                 text_default: '-- Seleccione --',

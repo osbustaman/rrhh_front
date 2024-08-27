@@ -95,7 +95,7 @@ export const InputText = ({ config_input }) => {
                         options={key.options}
                         placeholder={key.text_default}
                         required={!!key.required}
-                        value={key.options.find(option => option.value === formState[name_input])} // Usa formState para el valor
+                        value={key.options.find(option => option.value === (formState[name_input] ?? key.value))} // Usa formState para el valor
                         onChange={(selectedOption) => onSelectChange(name_input, selectedOption)}
                         getOptionLabel={(option) => option.label}
                         getOptionValue={(option) => option.value}
@@ -111,7 +111,7 @@ export const InputText = ({ config_input }) => {
                         className="form-check-input"
                         name={name_input}
                         required={!!key.required}
-                        checked={formState[name_input]}
+                        checked={formState[name_input] ?? key.value}
                         onChange={onInputChange}
                         {...eventProps}
                     />
@@ -125,7 +125,7 @@ export const InputText = ({ config_input }) => {
                         className="form-control"
                         name={name_input}
                         required={!!key.required}
-                        value={formState[name_input]}
+                        value={formState[name_input] ?? key.value}
                         onChange={onInputChange}
                         {...eventProps}
                     />
@@ -138,7 +138,7 @@ export const InputText = ({ config_input }) => {
                             className="form-control"
                             name={name_input}
                             required={!!key.required}
-                            value={formState[name_input]}
+                            value={formState[name_input] ?? key.value}
                             onChange={onInputChange}
                             {...eventProps}
                         />
@@ -153,7 +153,7 @@ export const InputText = ({ config_input }) => {
                                 className={`form-control ${key.type}`}
                                 name={name_input}
                                 required={!!key.required}
-                                value={formState[name_input]}
+                                value={formState[name_input] ?? key.value}
                                 onChange={onInputChange}
                                 {...eventProps}
                             />
@@ -167,7 +167,7 @@ export const InputText = ({ config_input }) => {
                         className="form-control"
                         name={name_input}
                         required={!!key.required}
-                        value={formState[name_input]}
+                        value={formState[name_input] ?? key.value}
                         onChange={onInputChange}
                         {...eventProps}
                     />

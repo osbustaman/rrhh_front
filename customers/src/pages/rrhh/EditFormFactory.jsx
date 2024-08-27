@@ -1,16 +1,200 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Forms } from "../../components/forms/Forms"
 import { useFormValidate } from '../../hooks/useFormValidate';
+import { useFech } from '../../hooks/useFech';
+import { useParams } from 'react-router-dom';
 
 
 export const EditFormFactory = () => {
 
+    const { id_customer } = useParams();
     const { validate } = useFormValidate();
+    const { getDataTable } = useFech({ url: `view-company/${id_customer}/` });
 
     const [countries, setCountries] = useState([]);
     const [regions, setRegions] = useState([]);
     const [communes, setCommunes] = useState([]);
     const [comSocialReason, setComSocialReason] = useState([]);
+    const [dataCompany, setDataCompany] = useState([]);
+    const [dataLoaded, setDataLoaded] = useState(false);
+
+    const get_data_company = async () => {
+        if (!dataLoaded) {
+            const { error, status } = await getDataTable();
+
+            const {
+                com_id
+                , com_rut
+                , com_name_company
+                , com_name_counter
+                , com_is_holding
+                , com_id_parent_company
+                , com_representative_name
+                , com_rut_representative
+                , com_is_state
+                , com_social_reason
+                , com_twist_company
+                , com_address
+                , commune
+                , region
+                , country
+                , com_phone_one
+                , com_phone_two
+                , com_mail_one
+                , com_mail_two
+        
+        
+            } = status;
+
+            setDataCompany([
+                {
+                    label: 'Rut de la compañia',
+                    placeholder: '',
+                    required: true,
+                    name: 'com_rut',
+                    type: 'rut',
+                    value: com_rut
+                },{
+                    label: 'Nombre de la compañia',
+                    placeholder: '',
+                    required: true,
+                    name: 'com_name_company',
+                    type: 'text',
+                    value: com_name_company
+                },{
+                    label: 'Razón social',
+                    placeholder: '',
+                    required: true,
+                    name: 'com_name_counter',
+                    type: 'text',
+                    value: ''
+                },{
+                    label: 'Es Holding',
+                    required: true,
+                    name: 'com_is_holding',
+                    type: 'select',
+                    text_default: '',
+                    options: [{key: 'Y', value: 'Si'}, {key: 'N', value: 'No', default: true}]
+                },{
+                    label: 'Compañia principal?',
+                    required: true,
+                    name: 'com_id_parent_company',
+                    type: 'select',
+                    text_default: '',
+                    options: [{key: 'Y', value: 'Si'}, {key: 'N', value: 'No', default: true}]
+                },{
+                    label: 'Nombre del representante',
+                    placeholder: '',
+                    required: true,
+                    name: 'com_representative_name',
+                    type: 'text',
+                    value: ''
+                },{
+                    label: 'Rut del representante',
+                    placeholder: '',
+                    required: true,
+                    name: 'com_rut_representative',
+                    type: 'rut',
+                    value: ''
+                },{
+                    label: 'Es estatal?',
+                    required: true,
+                    name: 'com_is_state',
+                    type: 'select',
+                    text_default: '',
+                    options: [{key: 'Y', value: 'Si'}, {key: 'N', value: 'No', default: true}]
+                },{
+                    label: 'Razón social',
+                    required: true,
+                    name: 'com_social_reason',
+                    type: 'select_autocomplete',
+                    options: comSocialReason,
+                    text_default: '-- Seleccione --',
+                    value: ''
+                },{
+                    label: 'Giro de la compañia',
+                    placeholder: '',
+                    required: true,
+                    name: 'com_twist_company',
+                    type: 'text',
+                    value: ''
+                },{
+                    label: 'Dirección',
+                    placeholder: '',
+                    required: true,
+                    name: 'com_address',
+                    type: 'text',
+                    value: ''
+                },{
+                    label: 'Comunas',
+                    required: true,
+                    name: 'commune',
+                    type: 'select_autocomplete',
+                    options: communes,
+                    text_default: '-- Seleccione --',
+                    value: ''
+                },{
+                    label: 'Regiones',
+                    required: true,
+                    name: 'region',
+                    type: 'select_autocomplete',
+                    options: regions,
+                    text_default: '-- Seleccione --',
+                    value: ''
+                },{
+                    label: 'País',
+                    required: true,
+                    name: 'country',
+                    type: 'select_autocomplete',
+                    options: countries,
+                    text_default: '-- Seleccione --',
+                    value: ''
+                },{
+                    label: 'Teléfono 1',
+                    placeholder: '',
+                    required: true,
+                    name: 'com_phone_one',
+                    type: 'text',
+                    value: ''
+                },{
+                    label: 'Teléfono 2',
+                    placeholder: '',
+                    required: true,
+                    name: 'com_phone_two',
+                    type: 'text',
+                    value: ''
+                },{
+                    label: 'Correo 1',
+                    placeholder: '',
+                    required: true,
+                    name: 'com_mail_one',
+                    type: 'mail',
+                    value: ''
+                },{
+                    label: 'Correo 2',
+                    placeholder: '',
+                    required: true,
+                    name: 'com_mail_two',
+                    type: 'mail',
+                    value: ''
+                }
+            ]);
+            setDataLoaded(true);
+        }
+    };
+
+    // Este useEffect se asegura de que get_data_company solo se ejecute una vez.
+    useEffect(() => {
+        console.log("Ejecución de get_data_company");
+        get_data_company();
+    }, [id_customer]); // Mantén id_customer como dependencia
+
+    useEffect(() => {
+        data_country();
+        data_region();
+        data_communes();
+        data_social_reason();
+    }, []);
 
     const data_country = async () => {
         setCountries([]);   
@@ -29,40 +213,7 @@ export const EditFormFactory = () => {
     }
 
     const send_form_user = (form) => {
-
         const { error, status } = validate(form);
-
-        if (!error) {
-            $.confirm({
-                title: 'Usuario creado exitósamente!',
-                content: 'Para continuar, haga clic en el botón aceptar.',
-                buttons: {
-                    aceptar: function () {
-                        alert('se debe hacer código para redireccionar al editar')
-                    }
-                }
-            });
-            return false;
-        }else{
-
-            $.confirm({
-                title: 'Tienes errores en los siguientes campos!',
-                content: status,
-                buttons: {
-                    aceptar: function () {
-                        const form_data = document.getElementById(form);
-                        const formData = new FormData(form_data);
-
-                        formData.forEach((value, key) => {
-                            const input = document.getElementsByName(key);
-                            input[0].classList.remove('is-invalid');
-                        });
-                    }
-                }
-            });
-
-            return false;
-        }
     };
 
     const clean_form_user = (id_form) => {
@@ -85,145 +236,14 @@ export const EditFormFactory = () => {
         data_social_reason();
     }, []);
 
+
     const config_form = {
         number_row: 6,
         id_form: 'form_company',
         position_form: 'vertical',
         def: (event) => { send_form_user('form_company'); },
         name_button: 'Guardar',
-        inputs: [
-            {
-                label: 'Rut de la compañia',
-                placeholder: '',
-                required: true,
-                name: 'com_rut',
-                type: 'rut',
-                value: ''
-            },{
-                label: 'Nombre de la compañia',
-                placeholder: '',
-                required: true,
-                name: 'com_name_company',
-                type: 'text',
-                value: ''
-            },{
-                label: 'Razón social',
-                placeholder: '',
-                required: true,
-                name: 'com_name_counter',
-                type: 'text',
-                value: ''
-            },{
-                label: 'Es Holding',
-                required: true,
-                name: 'com_is_holding',
-                type: 'select',
-                text_default: '',
-                options: [{key: 'Y', value: 'Si'}, {key: 'N', value: 'No', default: true}]
-            },{
-                label: 'Compañia principal?',
-                required: true,
-                name: 'com_id_parent_company',
-                type: 'select',
-                text_default: '',
-                options: [{key: 'Y', value: 'Si'}, {key: 'N', value: 'No', default: true}]
-            },{
-                label: 'Nombre del representante',
-                placeholder: '',
-                required: true,
-                name: 'com_representative_name',
-                type: 'text',
-                value: ''
-            },{
-                label: 'Rut del representante',
-                placeholder: '',
-                required: true,
-                name: 'com_rut_representative',
-                type: 'rut',
-                value: ''
-            },{
-                label: 'Es estatal?',
-                required: true,
-                name: 'com_is_state',
-                type: 'select',
-                text_default: '',
-                options: [{key: 'Y', value: 'Si'}, {key: 'N', value: 'No', default: true}]
-            },{
-                label: 'Razón social',
-                required: true,
-                name: 'com_social_reason',
-                type: 'select_autocomplete',
-                options: comSocialReason,
-                text_default: '-- Seleccione --',
-                value: ''
-            },{
-                label: 'Giro de la compañia',
-                placeholder: '',
-                required: true,
-                name: 'com_twist_company',
-                type: 'text',
-                value: ''
-            },{
-                label: 'Dirección',
-                placeholder: '',
-                required: true,
-                name: 'com_address',
-                type: 'text',
-                value: ''
-            },{
-                label: 'Comunas',
-                required: true,
-                name: 'commune',
-                type: 'select_autocomplete',
-                options: communes,
-                text_default: '-- Seleccione --',
-                value: ''
-            },{
-                label: 'Regiones',
-                required: true,
-                name: 'regions',
-                type: 'select_autocomplete',
-                options: regions,
-                text_default: '-- Seleccione --',
-                value: ''
-            },{
-                label: 'País',
-                required: true,
-                name: 'countries',
-                type: 'select_autocomplete',
-                options: countries,
-                text_default: '-- Seleccione --',
-                value: ''
-            },{
-                label: 'Teléfono 1',
-                placeholder: '',
-                required: true,
-                name: 'com_phone_one',
-                type: 'text',
-                value: ''
-            },{
-                label: 'Teléfono 2',
-                placeholder: '',
-                required: true,
-                name: 'com_phone_two',
-                type: 'text',
-                value: ''
-            },{
-                label: 'Correo 1',
-                placeholder: '',
-                required: true,
-                name: 'com_mail_one',
-                type: 'mail',
-                value: ''
-            },{
-                label: 'Correo 2',
-                placeholder: '',
-                required: true,
-                name: 'com_mail_two',
-                type: 'mail',
-                value: ''
-            }
-        ],
+        inputs: dataCompany
     }
 
     return (
