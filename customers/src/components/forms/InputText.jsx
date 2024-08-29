@@ -61,6 +61,7 @@ export const InputText = ({ config_input }) => {
 
         switch (key.type) {
             case "select":
+                console.log('---> ', key.text_selected);
 
                 return (
                     <select
@@ -72,9 +73,9 @@ export const InputText = ({ config_input }) => {
                         onChange={onInputChange}
                         style={{ height: '48px' }}
                     >
-                        {key.text_default && <option value="">{key.value}</option>}
+                        {key.text_default && <option>{key.value}</option>}
                         {key.options.map((option) => (
-                            <option key={option.key} value={option.key} >
+                            <option key={option.key} selected={option.default ? option.key : ''}>
                                 {option.value}
                             </option>
                         ))}

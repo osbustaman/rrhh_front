@@ -46,6 +46,10 @@ export const EditFormFactory = () => {
         
             } = status;
 
+            const text_data_selected = com_id_parent_company ? 'Y' : 'N';
+
+            console.log('text_data_selected', text_data_selected);
+
             setDataCompany([
                 {
                     label: 'Rut de la compañia',
@@ -74,14 +78,17 @@ export const EditFormFactory = () => {
                     name: 'com_is_holding',
                     type: 'select',
                     text_default: '',
-                    options: [{key: 'Y', value: 'Si', default: com_is_holding === 'Y' ? true : ''}, {key: 'N', value: 'No', default: com_is_holding === 'N' ? true : ''}]
+                    options: [{key: 'Y', value: 'Si'}, {key: 'N', value: 'No'}],
+                    text_selected: com_is_holding
                 },{
                     label: 'Compañia principal?',
                     required: true,
                     name: 'com_id_parent_company',
                     type: 'select',
-                    text_default: '',
-                    options: [{key: 'Y', value: 'Si', default: com_id_parent_company === 'Y' ? true : ''}, {key: 'N', value: 'No', default: com_id_parent_company === 'N' ? true : ''}]
+                    text_default:'',
+                    options: [{key: 'Y', value: 'Si'}, {key: 'N', value: 'No'}],
+                    text_selected: text_data_selected
+
                 },{
                     label: 'Nombre del representante',
                     placeholder: '',
@@ -102,7 +109,8 @@ export const EditFormFactory = () => {
                     name: 'com_is_state',
                     type: 'select',
                     text_default: '',
-                    options: [{key: 'Y', value: 'Si', default: com_is_state === 'Y' ? true : ''}, {key: 'N', value: 'No', default: com_is_state === 'N' ? true : ''}]
+                    options: [{key: 'Y', value: 'Si'}, {key: 'N', value: 'No'}],
+                    text_selected: com_is_state
                 },{
                     label: 'Razón social',
                     required: true,
@@ -185,7 +193,6 @@ export const EditFormFactory = () => {
 
     // Este useEffect se asegura de que get_data_company solo se ejecute una vez.
     useEffect(() => {
-        console.log("Ejecución de get_data_company");
         get_data_company();
     }, [id_customer]); // Mantén id_customer como dependencia
 
@@ -236,6 +243,7 @@ export const EditFormFactory = () => {
         data_social_reason();
     }, []);
 
+    //console.log(dataCompany);
 
     const config_form = {
         number_row: 6,
