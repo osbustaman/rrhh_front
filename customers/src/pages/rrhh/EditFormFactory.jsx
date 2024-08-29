@@ -67,42 +67,42 @@ export const EditFormFactory = () => {
                     required: true,
                     name: 'com_name_counter',
                     type: 'text',
-                    value: ''
+                    value: com_name_counter
                 },{
                     label: 'Es Holding',
                     required: true,
                     name: 'com_is_holding',
                     type: 'select',
                     text_default: '',
-                    options: [{key: 'Y', value: 'Si'}, {key: 'N', value: 'No', default: true}]
+                    options: [{key: 'Y', value: 'Si', default: com_is_holding === 'Y' ? true : ''}, {key: 'N', value: 'No', default: com_is_holding === 'N' ? true : ''}]
                 },{
                     label: 'Compañia principal?',
                     required: true,
                     name: 'com_id_parent_company',
                     type: 'select',
                     text_default: '',
-                    options: [{key: 'Y', value: 'Si'}, {key: 'N', value: 'No', default: true}]
+                    options: [{key: 'Y', value: 'Si', default: com_id_parent_company === 'Y' ? true : ''}, {key: 'N', value: 'No', default: com_id_parent_company === 'N' ? true : ''}]
                 },{
                     label: 'Nombre del representante',
                     placeholder: '',
                     required: true,
                     name: 'com_representative_name',
                     type: 'text',
-                    value: ''
+                    value: com_representative_name
                 },{
                     label: 'Rut del representante',
                     placeholder: '',
                     required: true,
                     name: 'com_rut_representative',
                     type: 'rut',
-                    value: ''
+                    value: com_rut_representative
                 },{
                     label: 'Es estatal?',
                     required: true,
                     name: 'com_is_state',
                     type: 'select',
                     text_default: '',
-                    options: [{key: 'Y', value: 'Si'}, {key: 'N', value: 'No', default: true}]
+                    options: [{key: 'Y', value: 'Si', default: com_is_state === 'Y' ? true : ''}, {key: 'N', value: 'No', default: com_is_state === 'N' ? true : ''}]
                 },{
                     label: 'Razón social',
                     required: true,
@@ -110,21 +110,21 @@ export const EditFormFactory = () => {
                     type: 'select_autocomplete',
                     options: comSocialReason,
                     text_default: '-- Seleccione --',
-                    value: ''
+                    value: com_social_reason
                 },{
                     label: 'Giro de la compañia',
                     placeholder: '',
                     required: true,
                     name: 'com_twist_company',
                     type: 'text',
-                    value: ''
+                    value: com_twist_company
                 },{
                     label: 'Dirección',
                     placeholder: '',
                     required: true,
                     name: 'com_address',
                     type: 'text',
-                    value: ''
+                    value: com_address
                 },{
                     label: 'Comunas',
                     required: true,
@@ -132,7 +132,7 @@ export const EditFormFactory = () => {
                     type: 'select_autocomplete',
                     options: communes,
                     text_default: '-- Seleccione --',
-                    value: ''
+                    value: commune
                 },{
                     label: 'Regiones',
                     required: true,
@@ -140,7 +140,7 @@ export const EditFormFactory = () => {
                     type: 'select_autocomplete',
                     options: regions,
                     text_default: '-- Seleccione --',
-                    value: ''
+                    value: region
                 },{
                     label: 'País',
                     required: true,
@@ -148,35 +148,35 @@ export const EditFormFactory = () => {
                     type: 'select_autocomplete',
                     options: countries,
                     text_default: '-- Seleccione --',
-                    value: ''
+                    value: country
                 },{
                     label: 'Teléfono 1',
                     placeholder: '',
                     required: true,
                     name: 'com_phone_one',
                     type: 'text',
-                    value: ''
+                    value: com_phone_one
                 },{
                     label: 'Teléfono 2',
                     placeholder: '',
                     required: true,
                     name: 'com_phone_two',
                     type: 'text',
-                    value: ''
+                    value: com_phone_two
                 },{
                     label: 'Correo 1',
                     placeholder: '',
                     required: true,
                     name: 'com_mail_one',
                     type: 'mail',
-                    value: ''
+                    value: com_mail_one
                 },{
                     label: 'Correo 2',
                     placeholder: '',
                     required: true,
                     name: 'com_mail_two',
                     type: 'mail',
-                    value: ''
+                    value: com_mail_two
                 }
             ]);
             setDataLoaded(true);

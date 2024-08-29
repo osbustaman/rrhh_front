@@ -72,7 +72,7 @@ export const InputText = ({ config_input }) => {
                         onChange={onInputChange}
                         style={{ height: '48px' }}
                     >
-                        {key.text_default && <option value="">{key.text_default}</option>}
+                        {key.text_default && <option value="">{key.value}</option>}
                         {key.options.map((option) => (
                             <option key={option.key} value={option.key} >
                                 {option.value}
