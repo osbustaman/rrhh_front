@@ -7,6 +7,7 @@ import { useFech } from '../../hooks/useFech';
 export const Factory = () => {
 
     const { updateBreadcrumbs, updateTitulo, updateButtons } = useContext(AppContext);
+    const [dataTable, setDataTable] = useState(false);
 
     const dict_bread_crumb = [
         { "bread": "empresa" },
@@ -21,9 +22,11 @@ export const Factory = () => {
 
     const get_data_table = async () => {
         const { getDataTable } = useFech({ url: 'list-companies' });
-        const response = await getDataTable();
+        const { error, status } = await getDataTable();
 
-        console.log(response);
+        console.log(status);
+
+        //setDataTable(response);
     }
 
     useEffect(() => {
@@ -37,6 +40,7 @@ export const Factory = () => {
         {
             id: 1,
             name: 'Jhon',
+            name_header: 'Nombre',
             last_name: 'Doe',
             age: 25,
             email: 'mail@mail.cl',
