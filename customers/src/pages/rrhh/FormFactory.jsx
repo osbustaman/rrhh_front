@@ -86,7 +86,7 @@ export const FormFactory = () => {
             const { error, status } = await postDataApi(form_data);
 
             if (error) {
-                $.alert('Error al crear la compañia');
+                $.alert(status.message);
             }else{
                 const { com_id, message } = status;
                 $.confirm({
@@ -155,7 +155,7 @@ export const FormFactory = () => {
             },{
                 label: 'Compañia principal?',
                 required: true,
-                name: 'id_parent_company',
+                name: 'com_id_parent_company',
                 type: 'select_autocomplete',
                 options: [{value: 'Y', label: 'Si'}, {value: 'N', label: 'No'}],
                 text_default: '-- Seleccione --',
