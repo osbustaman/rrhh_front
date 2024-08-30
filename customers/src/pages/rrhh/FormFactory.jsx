@@ -8,88 +8,56 @@ export const FormFactory = () => {
 
     const { validate } = useFormValidate();
 
+    const { getDataTable: list_countries } = useFech({ url: 'list-countries' });
+    const { getDataTable: list_regions } = useFech({ url: 'list-region' });
+    const { getDataTable: list_communes } = useFech({ url: 'list-commune' });
+    const { getDataTable: list_reason_social } = useFech({ url: 'list-reason-social' });
+
     const [countries, setCountries] = useState([]);
     const [regions, setRegions] = useState([]);
     const [communes, setCommunes] = useState([]);
     const [comSocialReason, setComSocialReason] = useState([]);
     
-    const data_country = async () => {
-
-        const { getDataTable } = useFech({ url: 'list-countries' });
-        const { error, status } = await getDataTable();
+    const getDataFech = async (get_data_table, set_state, error_message, type_data_response) => {
+        
+        const { error, status } = await get_data_table();
 
         if (error) {
-            $.alert('Error al cargar los datos de los paises');
+            $.alert(error_message);
         }
 
         let list_data = [];
-        status.map((value) => {
-            list_data.push({
-                value: value.cou_id,
-                label: value.cou_name
+
+        if (type_data_response === 'countries') {
+            status.map((value) => {
+                list_data.push({
+                    value: value.cou_id,
+                    label: value.cou_name
+                });
             });
-        });
-        setCountries(list_data);    
-    }
-
-    const data_region = async () => {
-
-        const { getDataTable } = useFech({ url: 'list-region' });
-        const { error, status } = await getDataTable();
-
-        if (error) {
-            $.alert('Error al cargar los datos de las regiones');
+        }else if (type_data_response === 'regions') {
+            status.map((value) => {
+                list_data.push({
+                    value: value.re_id,
+                    label: value.re_name
+                });
+            });
+        }else if (type_data_response === 'communes') {
+            status.map((value) => {
+                list_data.push({
+                    value: value.com_id,
+                    label: value.com_name
+                });
+            });
+        }else if (type_data_response === 'social_reason') {
+            status.map((value) => {
+                list_data.push({
+                    value: value.id,
+                    label: value.name
+                });
+            });
         }
-
-        let list_data = [];
-        status.map((value) => {
-            list_data.push({
-                value: value.re_id,
-                label: value.re_name
-            });
-        });
-
-        setRegions(list_data);   
-    }
-
-    const data_communes = async () => {
-
-        const { getDataTable } = useFech({ url: 'list-commune' });
-        const { error, status } = await getDataTable();
-
-        if (error) {
-            $.alert('Error al cargar los datos de las comunas');
-        }
-
-        let list_data = [];
-        status.map((value) => {
-            list_data.push({
-                value: value.com_id,
-                label: value.com_name
-            });
-        });
-
-        setCommunes(list_data);   
-    }
-
-    const data_social_reason = async () => {
-
-        const { getDataTable } = useFech({ url: 'list-reason-social' });
-        const { error, status } = await getDataTable();
-
-        if (error) {
-            $.alert('Error al cargar los datos de la razón social');
-        }
-
-        let list_reason_social = [];
-        status.map((reason_social) => {
-            list_reason_social.push({
-                value: reason_social.id,
-                label: reason_social.name
-            });
-        });
-
-        setComSocialReason(list_reason_social);   
+        set_state(list_data);    
     }
 
     const send_form_user = async (form) => {
@@ -133,11 +101,6 @@ export const FormFactory = () => {
                 return false;
             }
         }
-        
-
-    
-
-
     };
 
     const clean_form_user = (id_form) => {
@@ -154,11 +117,10 @@ export const FormFactory = () => {
     };
 
     useEffect(() => {
-        data_country();
-        data_region();
-        data_communes();
-        data_social_reason();
-        
+        getDataFech(list_countries, setCountries, 'Error al cargar los datos de los paises', 'countries');
+        getDataFech(list_regions, setRegions, 'Error al cargar los datos de las regiones', 'regions');
+        getDataFech(list_communes, setCommunes, 'Error al cargar los datos de las comunas', 'communes');
+        getDataFech(list_reason_social, setComSocialReason, 'Error al cargar los datos de las razones sociales', 'social_reason');
     }, []);
 
     const config_form = {
@@ -183,26 +145,21 @@ export const FormFactory = () => {
                 type: 'text',
                 value: ''
             },{
-                label: 'Razón social',
-                placeholder: '',
-                required: true,
-                name: 'com_name_counter',
-                type: 'text',
-                value: ''
-            },{
                 label: 'Es Holding',
                 required: true,
                 name: 'com_is_holding',
-                type: 'select',
-                text_default: '',
-                options: [{key: 'Y', value: 'Si'}, {key: 'N', value: 'No', default: true}]
+                type: 'select_autocomplete',
+                options: [{value: 'Y', label: 'Si'}, {value: 'N', label: 'No'}],
+                text_default: '-- Seleccione --',
+                value: ''
             },{
                 label: 'Compañia principal?',
                 required: true,
-                name: 'com_id_parent_company',
-                type: 'select',
-                text_default: '',
-                options: [{key: 'Y', value: 'Si', default: true}, {key: 'N', value: 'No'}]
+                name: 'id_parent_company',
+                type: 'select_autocomplete',
+                options: [{value: 'Y', label: 'Si'}, {value: 'N', label: 'No'}],
+                text_default: '-- Seleccione --',
+                value: ''
             },{
                 label: 'Nombre del representante',
                 placeholder: '',
@@ -221,9 +178,10 @@ export const FormFactory = () => {
                 label: 'Es estatal?',
                 required: true,
                 name: 'com_is_state',
-                type: 'select',
-                text_default: '',
-                options: [{key: 'Y', value: 'Si'}, {key: 'N', value: 'No', default: true}]
+                type: 'select_autocomplete',
+                options: [{value: 'Y', label: 'Si'}, {value: 'N', label: 'No'}],
+                text_default: '-- Seleccione --',
+                value: ''
             },{
                 label: 'Razón social',
                 required: true,

@@ -18,6 +18,8 @@ export const method_update = async (url, data_form) => {
         redirect: 'follow'
     };
 
+    console.log(requestOptions);
+
     try {
         const response = await fetch(route_url, requestOptions);
         const { status, ok } = response;

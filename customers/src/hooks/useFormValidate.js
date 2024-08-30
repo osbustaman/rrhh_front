@@ -70,8 +70,6 @@ export const useFormValidate = () => {
                     // Validación de RUT
                     else if (input[0].classList.contains('rut')) {
 
-                        console.log('rut', value);
-
                         if (!validateRut(value)) {
                             input[0].classList.add('is-invalid');
                             const label_input = document.getElementById(`label_${key}`);
@@ -95,7 +93,7 @@ export const useFormValidate = () => {
 
                 return {
                     error: true,
-                    status: `<ul>${message_error}</ul>`
+                    form_data: `<ul>${message_error}</ul>`
                 }
             }
 

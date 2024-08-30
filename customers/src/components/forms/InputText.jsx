@@ -60,8 +60,19 @@ export const InputText = ({ config_input }) => {
         });
 
         switch (key.type) {
+            case "hidden":
+                return (
+                    <input
+                        type="hidden"
+                        id={key.id}
+                        key={key.name.toLowerCase().replace(/ /g, "_")+key.id}
+                        name={name_input}
+                        value={formState[name_input] ?? key.value}
+                        {...eventProps}
+                    />  
+                );
+
             case "select":
-                console.log('---> ', key.text_selected);
 
                 return (
                     <select
@@ -179,14 +190,19 @@ export const InputText = ({ config_input }) => {
     return (
         <>
             {config_input.inputs.map((key, index) => (
-                <div
-                    key={key.name.toLowerCase().replace(/ /g, "_") + index}
-                    className={`${position_form === 'vertical' ? '' : 'item form-group mb-2'} mb-2 col-md-${number_row}`}
-                >
-                    <label className='small mb-1' htmlFor={key.name.toLowerCase().replace(/ /g, "_")} id={`label_${key.name.toLowerCase().replace(/ /g, "_")}`}>{`${key.label}`} :</label>
-                    {renderInput(key)}
-                </div>
+                key.type === 'hidden' ? (
+                    renderInput(key)
+                ) : (
+                    <div
+                        key={key.name.toLowerCase().replace(/ /g, "_") + index}
+                        className={`${position_form === 'vertical' ? '' : 'item form-group mb-2'} mb-2 col-md-${number_row}`}
+                    >
+                        <label className='small mb-1' htmlFor={key.name.toLowerCase().replace(/ /g, "_")} id={`label_${key.name.toLowerCase().replace(/ /g, "_")}`}>{`${key.label}`} :</label>
+                        {renderInput(key)}
+                    </div>
+                )
             ))}
+
         </>
     );
 };

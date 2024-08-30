@@ -1,4 +1,4 @@
-import { method_get, method_post } from "../js/fech";
+import { method_get, method_post, method_update } from "../js/fech";
 
 
 export const useFech = ({ url }) => {
@@ -13,9 +13,15 @@ export const useFech = ({ url }) => {
         return response;
     };
 
+    const updateDataApi = async (data) => {
+        const response = await method_update(url, data);
+        return response;
+    };
+
     return {
         getDataTable,
-        postDataApi
+        postDataApi,
+        updateDataApi
     }
     
 }
