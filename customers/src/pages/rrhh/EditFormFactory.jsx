@@ -64,11 +64,7 @@ export const EditFormFactory = () => {
     }
 
     const get_data_company = async () => {
-
         const { error, status } = await getDataTable();
-
-        console.log('status', status);
-
         setDataCompany(status);
     };
 
@@ -119,7 +115,6 @@ export const EditFormFactory = () => {
             });
         }, 3000);
     };
-
 
     const {
         com_id
@@ -180,7 +175,7 @@ export const EditFormFactory = () => {
                 options: [{value: 'Y', label: 'Si'}, {value: 'N', label: 'No'}],
                 text_default: '-- Seleccione --',
                 value: com_id_parent_company ? 'Y' : 'N'
-            },,{
+            },{
                 label: '',
                 required: true,
                 name: 'com_id_parent_company',

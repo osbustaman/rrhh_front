@@ -2,7 +2,9 @@ import React, { useEffect, useState, useContext } from 'react';
 import { AppContext } from '../../../providers/AppProvider';
 import { useFormValidate } from '../../../hooks/useFormValidate';
 import { Forms } from "../../../components/forms/Forms"
+import { useFech } from '../../../hooks/useFech';
 import { useParams } from 'react-router-dom';
+
 
 
 export const AddBranchOffice = () => {
@@ -32,47 +34,61 @@ export const AddBranchOffice = () => {
         }
     ];
 
-    const [countries, setcountries] = useState([]);
+    const { getDataTable: list_countries } = useFech({ url: 'list-countries' });
+    const { getDataTable: list_regions } = useFech({ url: 'list-region' });
+    const { getDataTable: list_communes } = useFech({ url: 'list-commune' });
+
+    const [countries, setCountries] = useState([]);
     const [regions, setRegions] = useState([]);
     const [communes, setCommunes] = useState([]);
 
-    const data_country = async () => {
-        setcountries([]);   
-    }
+    const getDataFech = async (get_data_table, set_state, error_message, type_data_response) => {
+        
+        const { error, status } = await get_data_table();
 
-    const data_region = async () => {
-        setRegions([]);   
-    }
+        if (error) {
+            $.alert(error_message);
+        }
 
-    const data_communes = async () => {
-        setCommunes([]);   
-    }
+        let list_data = [];
 
-    const send_form = (form) => {
-
-        const { error, status } = validate(form);
-
-        if (!error) {
-            $.confirm({
-                title: 'Sucursal creada exitósamente!',
-                content: 'Para continuar, haga clic en el botón aceptar.',
-                buttons: {
-                    aceptar: function () {
-                        alert('se debe hacer código para redireccionar al editar')
-                    }
-                }
+        if (type_data_response === 'countries') {
+            status.map((value) => {
+                list_data.push({
+                    value: value.cou_id,
+                    label: value.cou_name
+                });
             });
-            return false;
-        }else{
+        }else if (type_data_response === 'regions') {
+            status.map((value) => {
+                list_data.push({
+                    value: value.re_id,
+                    label: value.re_name
+                });
+            });
+        }else if (type_data_response === 'communes') {
+            status.map((value) => {
+                list_data.push({
+                    value: value.com_id,
+                    label: value.com_name
+                });
+            });
+        }
+        set_state(list_data);    
+    }
 
+    const send_form = async (form) => {
+
+        const { error, form_data } = validate(form);
+
+        if (error) {
             $.confirm({
                 title: 'Tienes errores en los siguientes campos!',
-                content: status,
+                content: form_data,
                 buttons: {
                     aceptar: function () {
                         const form_data = document.getElementById(form);
                         const formData = new FormData(form_data);
-
                         formData.forEach((value, key) => {
                             const input = document.getElementsByName(key);
                             input[0].classList.remove('is-invalid');
@@ -80,9 +96,34 @@ export const AddBranchOffice = () => {
                     }
                 }
             });
-
             return false;
+        }else{
+
+            console.log(form_data);
+
+            const { postDataApi } = useFech({ url: `create-branch-office/${id_customer}/` });
+            const { error, status } = await postDataApi(form_data);
+
+            console.log(error);
+            console.log(status);
+
+            // if (error) {
+            //     $.alert(status.message);
+            // }else{
+            //     const { com_id, message } = status;
+            //     $.confirm({
+            //         title: message,
+            //         content: form_data,
+            //         buttons: {
+            //             continuar: function () {
+            //                 window.location.href = `/home/editar-sucursal/${id_customer}/${com_id}`;
+            //             }
+            //         }
+            //     });
+            //     return false;
+            // }
         }
+
     };
 
     const clean_form = (id_form) => {
@@ -98,17 +139,19 @@ export const AddBranchOffice = () => {
         }, 3000);
     };
 
+
     useEffect(() => {
-        data_country();
-        data_region();
-        data_communes();
+        getDataFech(list_countries, setCountries, 'Error al cargar los datos de los paises', 'countries');
+        getDataFech(list_regions, setRegions, 'Error al cargar los datos de las regiones', 'regions');
+        getDataFech(list_communes, setCommunes, 'Error al cargar los datos de las comunas', 'communes');
         updateBreadcrumbs(dict_bread_crumb);
         updateTitulo(dict_title.tittle);
         updateButtons(buttons_menu);
     }, []);
 
+
     const config_form = {
-        number_row: 2,
+        number_row: 3,
         id_form: 'form_branch_office',
         position_form: 'vertical',
         def: (event) => { send_form('form_branch_office'); },
@@ -122,7 +165,21 @@ export const AddBranchOffice = () => {
                 type: 'text',
                 value: ''
             },{
-                label: 'Direccion de la unidad',
+                label: 'Correo',
+                placeholder: '',
+                required: true,
+                name: 'sub_mail',
+                type: 'email',
+                value: ''
+            },{
+                label: 'Teléfono',
+                placeholder: '',
+                required: true,
+                name: 'sub_phone',
+                type: 'text',
+                value: ''
+            },{
+                label: 'Dirección',
                 placeholder: '',
                 required: true,
                 name: 'sub_address',
@@ -139,7 +196,7 @@ export const AddBranchOffice = () => {
             },{
                 label: 'Regiones',
                 required: true,
-                name: 'regions',
+                name: 'region',
                 type: 'select_autocomplete',
                 options: regions,
                 text_default: '-- Seleccione --',
@@ -147,18 +204,19 @@ export const AddBranchOffice = () => {
             },{
                 label: 'País',
                 required: true,
-                name: 'countries',
+                name: 'country',
                 type: 'select_autocomplete',
                 options: countries,
                 text_default: '-- Seleccione --',
                 value: ''
             },{
+
                 label: 'Es casa matriz?',
                 required: true,
                 name: 'sub_matrixhouse',
-                type: 'select',
-                text_default: '',
-                options: [{key: 'Y', value: 'Si'}, {key: 'N', value: 'No', default: true}],
+                type: 'select_autocomplete',
+                options: [{value: 'Y', label: 'Si'}, {value: 'N', label: 'No'}],
+                text_default: '-- Seleccione --',
                 value: ''
             }
         ],
