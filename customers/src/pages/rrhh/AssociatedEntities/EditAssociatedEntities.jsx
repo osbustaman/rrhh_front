@@ -36,8 +36,12 @@ export const AddAssociatedEntities = () => {
     const [mutualSecurities, setMutualSecurities] = useState([]);
     const [boxesCompensation, setBoxesCompensation] = useState([]);
 
+    const [mutualSecurity, setMutualSecurity] = useState("");
+    const [boxCompensation, setBoxCompensation] = useState("");
+
     const { getDataTable: list_mutualSecurities } = useFech({ url: 'mutual-security' });
     const { getDataTable: list_boxesCompensation } = useFech({ url: 'boxes-compensation' });
+
 
     const getDataFech = async (get_data_table, set_state, error_message, type_data_response) => {
         
@@ -67,18 +71,31 @@ export const AddAssociatedEntities = () => {
         set_state(list_data);    
     }
 
-    const send_form = async (form) => {
+    const send_form = (form) => {
 
-        const { error, form_data } = validate(form);
+        const { error, status } = validate(form);
 
-        if (error) {
+        if (!error) {
+            $.confirm({
+                title: 'Entidades guardadas exitósamente!',
+                content: 'Para continuar, haga clic en el botón aceptar.',
+                buttons: {
+                    aceptar: function () {
+                        alert('se debe hacer código para redireccionar al editar')
+                    }
+                }
+            });
+            return false;
+        }else{
+
             $.confirm({
                 title: 'Tienes errores en los siguientes campos!',
-                content: form_data,
+                content: status,
                 buttons: {
                     aceptar: function () {
                         const form_data = document.getElementById(form);
                         const formData = new FormData(form_data);
+
                         formData.forEach((value, key) => {
                             const input = document.getElementsByName(key);
                             input[0].classList.remove('is-invalid');
@@ -86,27 +103,8 @@ export const AddAssociatedEntities = () => {
                     }
                 }
             });
+
             return false;
-        }else{
-
-            const { updateDataApi } = useFech({ url: `create-associated-entities/${id_customer}/` });
-            const { error, status } = await updateDataApi(form_data);
-
-            if (error) {
-                $.alert(status.message);
-            }else{
-                const { com_id, message } = status;
-                $.confirm({
-                    title: message,
-                    content: form_data,
-                    buttons: {
-                        continuar: function () {
-                            window.location.href = `/home/editar-empresa/${id_customer}`;
-                        }
-                    }
-                });
-                return false;
-            }
         }
     };
 
@@ -117,6 +115,7 @@ export const AddAssociatedEntities = () => {
 
             formData.forEach((value, key) => {
                 const input = document.getElementsByName(key);
+                //input[0].value = '';
                 input[0].classList.remove('is-invalid');
             });
         }, 3000);
@@ -125,6 +124,7 @@ export const AddAssociatedEntities = () => {
     useEffect(() => {
         getDataFech(list_mutualSecurities, setMutualSecurities, 'Error al cargar los datos de las mutuales', 'mutual_security');
         getDataFech(list_boxesCompensation, setBoxesCompensation, 'Error al cargar los datos de las cajas de compensación', 'boxes_compensation');
+
         updateBreadcrumbs(dict_bread_crumb);
         updateTitulo(dict_title.tittle);
         updateButtons(buttons_menu);

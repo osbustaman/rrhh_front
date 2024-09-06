@@ -10,8 +10,6 @@ export const EditarBranchOffice = () => {
 
     const { id_customer, id_branch } = useParams();
 
-    // view-branch-office/<int:sucursal>/<int:barn_office>/
-
     const { validate } = useFormValidate();
     const { getDataTable } = useFech({ url: `view-branch-office/${id_branch}/` });
 

@@ -8,6 +8,11 @@ export const useFech = ({ url }) => {
         return response
     }
 
+    const getDataList = async () => {
+        const response = await method_get(url);
+        return response
+    }
+
     const postDataApi = async (data) => {
         const response = await method_post(url, data);
         return response;
@@ -21,7 +26,8 @@ export const useFech = ({ url }) => {
     return {
         getDataTable,
         postDataApi,
-        updateDataApi
+        updateDataApi,
+        getDataList
     }
     
 }

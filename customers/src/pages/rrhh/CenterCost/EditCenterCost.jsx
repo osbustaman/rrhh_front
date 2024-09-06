@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AppContext } from '../../../providers/AppProvider';
 import { useParams } from 'react-router-dom';
-
+import { useFech } from '../../../hooks/useFech';
 import { useFormValidate } from '../../../hooks/useFormValidate';
 import { Forms } from "../../../components/forms/Forms"
 
@@ -10,6 +10,7 @@ export const EditCenterCost = () => {
     const { id_customer, cencost_id } = useParams();
 
     const { validate } = useFormValidate();
+    const { getDataTable } = useFech({ url: `view-center-cost/${cencost_id}/` });
 
     const { updateBreadcrumbs, updateTitulo, updateButtons } = useContext(AppContext);
 
@@ -32,31 +33,25 @@ export const EditCenterCost = () => {
         }
     ];
 
-    const send_form = (form) => {
+    const [dataCenterCost, setDataCenterCost] = useState([]);
 
-        const { error, status } = validate(form);
+    const get_center_cost = async () => {
+        const { error, status } = await getDataTable();
+        setDataCenterCost(status);
+    };
 
-        if (!error) {
-            $.confirm({
-                title: 'Centro de costo creado exitósamente!',
-                content: 'Para continuar, haga clic en el botón aceptar.',
-                buttons: {
-                    aceptar: function () {
-                        alert('se debe hacer código para redireccionar al editar')
-                    }
-                }
-            });
-            return false;
-        }else{
+    const send_form = async (form) => {
 
+        const { error, form_data } = validate(form);
+
+        if (error) {
             $.confirm({
                 title: 'Tienes errores en los siguientes campos!',
-                content: status,
+                content: form_data,
                 buttons: {
                     aceptar: function () {
                         const form_data = document.getElementById(form);
                         const formData = new FormData(form_data);
-
                         formData.forEach((value, key) => {
                             const input = document.getElementsByName(key);
                             input[0].classList.remove('is-invalid');
@@ -64,8 +59,19 @@ export const EditCenterCost = () => {
                     }
                 }
             });
-
             return false;
+        }else{
+
+            const { updateDataApi } = useFech({ url: `edit-center-cost/${cencost_id}/` });
+            const { error, status } = await updateDataApi(form_data);
+
+            if (error) {
+                $.alert(status.message);
+            }else{
+                const { cencost_id, message } = status;
+                $.alert(message);
+                return false;
+            }
         }
     };
 
@@ -88,6 +94,16 @@ export const EditCenterCost = () => {
         updateButtons(buttons_menu);
     }, []);
 
+    useEffect(() => {
+        get_center_cost();
+    }, [id_customer]); // Mantén id_customer como dependencia
+
+
+    const {
+        cencost_name,
+        company
+    } = dataCenterCost;   
+
     const config_form = {
         number_row: 6,
         id_form: 'form_center_cost',
@@ -99,9 +115,15 @@ export const EditCenterCost = () => {
                 label: 'Nombre del centro de costo',
                 placeholder: '',
                 required: true,
-                name: 'sub_name',
+                name: 'cencost_name',
                 type: 'text',
-                value: ''
+                value: cencost_name
+            },{
+                label: '',
+                required: true,
+                name: 'company',
+                type: 'hidden',
+                value: company
             }
         ],
     }

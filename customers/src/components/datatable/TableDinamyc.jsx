@@ -68,6 +68,12 @@ export const TableDinamyc = ({ data_in_table, config_table, title }) => {
             selectAllRowsItemText: 'Todos',
         };
 
+        const customProgressComponent = (
+            <div className="custom-progress">
+                Cargando...
+            </div>
+        );
+
         return (
             <>
                 <div class="card mb-4">
@@ -91,6 +97,7 @@ export const TableDinamyc = ({ data_in_table, config_table, title }) => {
                             columns={columns}
                             data={filteredData.map(item => ({ ...item, key: item.id }))}
                             progressPending={pending}
+                            progressComponent={customProgressComponent}
                             pagination
                             fixedHeader
                             fixedHeaderScrollHeight="600px"

@@ -1,56 +1,52 @@
-import React from 'react'
+import React, { useEffect, useState, useContext } from 'react';
 import { TableDinamyc } from '../../components/datatable/TableDinamyc';
 import { SmallButtons } from "../../components/buttons/SmallButtons";
+import { useFech } from '../../hooks/useFech';
 import { useParams } from 'react-router-dom';
 
 export const ListCenterCost = () => {
 
     const { id_customer } = useParams();
 
-    const data = [
-        {
-            cencost_id: 1,
-            cencost_name: 'Desarrollo',
-            acciones: <SmallButtons key={1} config_buttons={[
-                {
-                    "class": "btn btn-green btn-icon",
-                    "icon": "fa fa-pencil",
-                    "label": "Editar",
-                    "url": `/home/editar-centro-costo/${id_customer}/1`,
-                    "id": ``
-                },
-                {
-                    "class": "btn btn-red btn-icon",
-                    "icon": "fa fa-trash",
-                    "label": "Eliminar",
-                    "url": '#',
-                    "id": ``
-                }
-            ]} />
-        },{
-            cencost_id: 2,
-            cencost_name: 'ventas',
-            acciones: <SmallButtons key={2} config_buttons={[
-                {
-                    "class": "btn btn-green btn-icon",
-                    "icon": "fa fa-pencil",
-                    "label": "Editar",
-                    "url": `/home/editar-centro-costo/${id_customer}/2`,
-                    "id": ``
-                },
-                {
-                    "class": "btn btn-red btn-icon",
-                    "icon": "fa fa-trash",
-                    "label": "Eliminar",
-                    "url": '#',
-                    "id": ``
-                }
-            ]} />
-        }
-    ];
+    const [dataTable, setDataTable] = useState([]);
 
-    if(data.length > 0){
-        const data_table = data;
+    const get_data_table = async () => {
+        const { getDataTable } = useFech({ url: `list-center-cost/${id_customer}/` });
+        const { error, status } = await getDataTable();
+
+        const data_response = []
+
+        status.map((item, index) => {
+            data_response.push({
+                id: item.cencost_id,
+                nombre_centro_costo: item.cencost_name,
+                acciones: <SmallButtons key={index} config_buttons={[
+                    {
+                        "class": "btn btn-green btn-icon",
+                        "icon": "fa fa-pencil",
+                        "label": "Editar",
+                        "url": `/home/editar-centro-costo/${id_customer}/${item.cencost_id}/`,
+                        "id": ``
+                    },
+                    {
+                        "class": "btn btn-red btn-icon",
+                        "icon": "fa fa-trash",
+                        "label": "Eliminar",
+                        "url": '#',
+                        "id": ``
+                    }
+                ]} />
+            })
+        });
+        setDataTable(data_response);
+    }
+
+    useEffect(() => {
+        get_data_table();
+    }, []);
+
+    if(dataTable.length > 0){
+        const data_table = dataTable;
         const config_table = {
             loading: true,
             search_input: true,

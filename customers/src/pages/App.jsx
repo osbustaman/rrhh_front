@@ -16,13 +16,15 @@ import { Factory } from './rrhh/Factory';
 import { AddFactory } from './rrhh/AddFactory';
 import { EditFactory } from './rrhh/EditFactory';
 import { ListSmallButtons } from '../components/buttons/ListSmallButtons';
-import useMenuMiddleware from '../hooks/useMenuMiddleware';
+
 import { AddBranchOffice } from './rrhh/BranchOffice/AddBranchOffice';
 import { EditarBranchOffice } from './rrhh/BranchOffice/EditarBranchOffice';
 import { AddCenterCost } from './rrhh/CenterCost/AddCenterCost';
 import { EditCenterCost } from './rrhh/CenterCost/EditCenterCost';
 import { AddAssociatedEntities } from './rrhh/AssociatedEntities/AddAssociatedEntities';
 import { useDataUser } from '../hooks/useDataUser';
+
+import useMenuMiddleware from '../hooks/useMenuMiddleware';
 
 export const App = () => {
 

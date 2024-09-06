@@ -15,8 +15,6 @@ export const ListBranchOffice = () => {
         const { getDataTable } = useFech({ url: `list-branch-office/${id_customer}/` });
         const { error, status } = await getDataTable();
 
-        console.log('status', status)
-
         const data_companies = []
 
         status.map((item, index) => {
@@ -45,9 +43,6 @@ export const ListBranchOffice = () => {
                 ]} />
             })
         });
-
-        
-
         setDataTable(data_companies);
     }
 
@@ -56,9 +51,6 @@ export const ListBranchOffice = () => {
     }, []);
 
     if(dataTable.length > 0){
-
-
-
         const data_table = dataTable;
         const config_table = {
             loading: true,

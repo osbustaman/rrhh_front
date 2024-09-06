@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AppContext } from '../../../providers/AppProvider';
 import { useParams } from 'react-router-dom';
-
+import { useFech } from '../../../hooks/useFech';
 import { useFormValidate } from '../../../hooks/useFormValidate';
 import { Forms } from "../../../components/forms/Forms"
 
@@ -32,31 +32,17 @@ export const AddCenterCost = () => {
         }
     ];
 
-    const send_form = (form) => {
+    const send_form = async (form) => {
+        const { error, form_data } = validate(form);
 
-        const { error, status } = validate(form);
-
-        if (!error) {
-            $.confirm({
-                title: 'Centro de costo creado exitósamente!',
-                content: 'Para continuar, haga clic en el botón aceptar.',
-                buttons: {
-                    aceptar: function () {
-                        alert('se debe hacer código para redireccionar al editar')
-                    }
-                }
-            });
-            return false;
-        }else{
-
+        if (error) {
             $.confirm({
                 title: 'Tienes errores en los siguientes campos!',
-                content: status,
+                content: form_data,
                 buttons: {
                     aceptar: function () {
                         const form_data = document.getElementById(form);
                         const formData = new FormData(form_data);
-
                         formData.forEach((value, key) => {
                             const input = document.getElementsByName(key);
                             input[0].classList.remove('is-invalid');
@@ -64,11 +50,30 @@ export const AddCenterCost = () => {
                     }
                 }
             });
-
             return false;
-        }
-    };
+        }else{
 
+            const { postDataApi } = useFech({ url: `create-center-cost/${id_customer}/` });
+            const { error, status } = await postDataApi(form_data);
+
+            if (error) {
+                $.alert(status.message);
+            }else{
+                const { cencost_id, message } = status;
+                $.confirm({
+                    title: message,
+                    content: form_data,
+                    buttons: {
+                        continuar: function () {
+                            window.location.href = `/home/editar-centro-costo/${id_customer}/${cencost_id}`;
+                        }
+                    }
+                });
+                return false;
+            }
+        }
+
+    };
     const clean_form = (id_form) => {
         setTimeout(() => {
             const form = document.getElementById(id_form);
@@ -99,9 +104,15 @@ export const AddCenterCost = () => {
                 label: 'Nombre del centro de costo',
                 placeholder: '',
                 required: true,
-                name: 'sub_name',
+                name: 'cencost_name',
                 type: 'text',
                 value: '',
+            },{
+                label: '',
+                required: true,
+                name: 'company',
+                type: 'hidden',
+                value: id_customer
             }
         ],
     }
