@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { TableDinamyc } from '../../components/datatable/TableDinamyc';
 import { SmallButtons } from "../../components/buttons/SmallButtons";
+import { useFech } from '../../hooks/useFech';
 import { useParams } from 'react-router-dom';
 
 
@@ -8,61 +9,57 @@ export const ListBranchOffice = () => {
 
     const { id_customer } = useParams();
 
-    const data = [
-        {
-            sub_id: 1,
-            sub_name: 'Casa matriz',
-            sub_address: 'Pasaje Coiron 16944',
-            commune: 'Maipú',
-            region: 'Metropolitana',
-            country: 'Chile',
-            sub_matrixhouse: 'Si',
-            acciones: <SmallButtons key={1} config_buttons={[
-                {
-                    "class": "btn btn-green btn-icon",
-                    "icon": "fa fa-pencil",
-                    "label": "Editar",
-                    "url": `/home/editar-sucursal/${id_customer}/1`,
-                    "id": `1`
-                },
-                {
-                    "class": "btn btn-red btn-icon",
-                    "icon": "fa fa-trash",
-                    "label": "Eliminar",
-                    "url": '#',
-                    "id": `2`
-                }
-            ]} />
-        },{
-            sub_id: 2,
-            sub_name: 'Sucursal Quinta Normal',
-            sub_address: 'Lourdes 1012',
-            commune: 'Quinta Normal',
-            region: 'Metropolitana',
-            country: 'Chile',
-            sub_matrixhouse: 'No',
-            acciones: <SmallButtons key={2} config_buttons={[
-                {
-                    "class": "btn btn-green btn-icon",
-                    "icon": "fa fa-pencil",
-                    "label": "Editar",
-                    "url": `/home/editar-sucursal/${id_customer}/2`,
-                    "id": 1
-                },
-                {
-                    "class": "btn btn-red btn-icon",
-                    "icon": "fa fa-trash",
-                    "label": "Eliminar",
-                    "url": '#',
-                    "id": 2
-                }
-            ]} />
-        }
-    ];
+    const [dataTable, setDataTable] = useState([]);
+
+    const get_data_table = async () => {
+        const { getDataTable } = useFech({ url: `list-branch-office/${id_customer}/` });
+        const { error, status } = await getDataTable();
+
+        console.log('status', status)
+
+        const data_companies = []
+
+        status.map((item, index) => {
+            data_companies.push({
+                id: item.sub_id,
+                nombre_sucursal: item.sub_name,
+                direccion: item.sub_address,
+                comuna: item.commune_name,
+                region: item.region_name,
+                casa_matris: item.sub_matrixhouse ? 'Si' : 'No',
+                acciones: <SmallButtons key={index} config_buttons={[
+                    {
+                        "class": "btn btn-green btn-icon",
+                        "icon": "fa fa-pencil",
+                        "label": "Editar",
+                        "url": `/home/editar-sucursal/${id_customer}/${item.sub_id}/`,
+                        "id": ``
+                    },
+                    {
+                        "class": "btn btn-red btn-icon",
+                        "icon": "fa fa-trash",
+                        "label": "Eliminar",
+                        "url": '#',
+                        "id": ``
+                    }
+                ]} />
+            })
+        });
+
+        
+
+        setDataTable(data_companies);
+    }
+
+    useEffect(() => {
+        get_data_table();
+    }, []);
+
+    if(dataTable.length > 0){
 
 
-    if(data.length > 0){
-        const data_table = data;
+
+        const data_table = dataTable;
         const config_table = {
             loading: true,
             search_input: true,

@@ -5,8 +5,6 @@ import { Forms } from "../../../components/forms/Forms"
 import { useFech } from '../../../hooks/useFech';
 import { useParams } from 'react-router-dom';
 
-
-
 export const AddBranchOffice = () => {
 
     const { id_customer } = useParams();
@@ -99,29 +97,26 @@ export const AddBranchOffice = () => {
             return false;
         }else{
 
-            console.log(form_data);
-
             const { postDataApi } = useFech({ url: `create-branch-office/${id_customer}/` });
             const { error, status } = await postDataApi(form_data);
 
-            console.log(error);
-            console.log(status);
+            const { sub_id, message } = status;
 
-            // if (error) {
-            //     $.alert(status.message);
-            // }else{
-            //     const { com_id, message } = status;
-            //     $.confirm({
-            //         title: message,
-            //         content: form_data,
-            //         buttons: {
-            //             continuar: function () {
-            //                 window.location.href = `/home/editar-sucursal/${id_customer}/${com_id}`;
-            //             }
-            //         }
-            //     });
-            //     return false;
-            // }
+            if (error) {
+                $.alert(status.message);
+            }else{
+                const { com_id, message } = status;
+                $.confirm({
+                    title: message,
+                    content: form_data,
+                    buttons: {
+                        continuar: function () {
+                            window.location.href = `/home/editar-sucursal/${id_customer}/${sub_id}`;
+                        }
+                    }
+                });
+                return false;
+            }
         }
 
     };
