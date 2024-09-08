@@ -22,6 +22,7 @@ import { EditarBranchOffice } from './rrhh/BranchOffice/EditarBranchOffice';
 import { AddCenterCost } from './rrhh/CenterCost/AddCenterCost';
 import { EditCenterCost } from './rrhh/CenterCost/EditCenterCost';
 import { AddAssociatedEntities } from './rrhh/AssociatedEntities/AddAssociatedEntities';
+import { EditAssociatedEntities } from './rrhh/AssociatedEntities/EditAssociatedEntities';
 import { useDataUser } from '../hooks/useDataUser';
 
 import useMenuMiddleware from '../hooks/useMenuMiddleware';
@@ -165,6 +166,7 @@ export const App = () => {
                                     <Route path="agregar-centro-costo/:id_customer" element={<AddCenterCost />} />
                                     <Route path="editar-centro-costo/:id_customer/:cencost_id" element={<EditCenterCost />} />
                                     <Route path="agregar-entidades-asociadas/:id_customer" element={<AddAssociatedEntities />} />
+                                    <Route path="editar-entidades-asociadas/:id_customer" element={< EditAssociatedEntities/>} />
                                     <Route path="*" element={<NotFound />} />
                                 </Routes>
                             </div>

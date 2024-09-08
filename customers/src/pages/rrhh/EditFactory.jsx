@@ -27,7 +27,7 @@ export const EditFactory = () => {
             "icon" : "fa fa-plus",
             "list_items": [
                 {
-                    "label": "Agregar Sucirsal",
+                    "label": "Agregar Sucursal",
                     "url": `/home/agregar-sucursal/${id_customer}`,
                 },{
                     "label": "Agregar Centro de Costos",

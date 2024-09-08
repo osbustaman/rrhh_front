@@ -12,6 +12,7 @@ const useMenuMiddleware = () => {
         '/home/agregar-centro-costo': { item: 'ver_empresas', subItem: 'lista_empresas' },
         '/home/editar-centro-costo': { item: 'ver_empresas', subItem: 'lista_empresas' },
         '/home/agregar-entidades-asociadas': { item: 'ver_empresas', subItem: 'lista_empresas' },
+        '/home/editar-entidades-asociadas': { item: 'ver_empresas', subItem: 'lista_empresas' },
 
 
 

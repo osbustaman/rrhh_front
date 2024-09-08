@@ -11,6 +11,36 @@ export const ListBranchOffice = () => {
 
     const [dataTable, setDataTable] = useState([]);
 
+
+    const delete_branch_office = async (id) => {
+
+        // Definir la función asíncrona fuera de la confirmación
+        const confirmDelete = async () => {
+            const { deleteData } = useFech({ url: `delete-branch-office/${id}/` });
+            const { error, status } = await deleteData();
+
+            if (status) {
+                get_data_table(); // Actualizar la tabla después de eliminar
+            } else if (error) {
+                $.alert('Error al eliminar la sucursal');
+            }
+        };
+
+        $.confirm({
+            title: 'Confirmación!',
+            content: 'Esta seguro de eliminar la sucursal?',
+            buttons: {
+                confirmar: function () {
+                    confirmDelete(); // Llamar a la función asíncrona
+                    get_data_table();
+                },
+                cancelar: function () {
+                }
+            }
+        });
+    }
+
+
     const get_data_table = async () => {
         const { getDataTable } = useFech({ url: `list-branch-office/${id_customer}/` });
         const { error, status } = await getDataTable();
@@ -31,14 +61,16 @@ export const ListBranchOffice = () => {
                         "icon": "fa fa-pencil",
                         "label": "Editar",
                         "url": `/home/editar-sucursal/${id_customer}/${item.sub_id}/`,
-                        "id": ``
+                        "id": ``,
+                        "def": ``
                     },
                     {
                         "class": "btn btn-red btn-icon",
                         "icon": "fa fa-trash",
                         "label": "Eliminar",
                         "url": '#',
-                        "id": ``
+                        "id": ``,
+                        "def": () => delete_branch_office(item.sub_id)
                     }
                 ]} />
             })

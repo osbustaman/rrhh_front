@@ -6,11 +6,20 @@ import { useFech } from '../../../hooks/useFech';
 import { useParams } from 'react-router-dom';
 
 
-export const AddAssociatedEntities = () => {
+export const EditAssociatedEntities = () => {
 
     const { id_customer } = useParams();
 
     const { validate } = useFormValidate();
+
+    const [dataCompany, setDataCompany] = useState([]);
+
+    const { getDataList } = useFech({ url: `get-associated-entities/${id_customer}/` });
+
+    const get_data_company = async () => {
+        const { error, status } = await getDataList();
+        setDataCompany(status);
+    };
 
     const { updateBreadcrumbs, updateTitulo, updateButtons } = useContext(AppContext);
 
@@ -71,31 +80,18 @@ export const AddAssociatedEntities = () => {
         set_state(list_data);    
     }
 
-    const send_form = (form) => {
+    const send_form = async (form) => {
 
-        const { error, status } = validate(form);
+        const { error, form_data } = validate(form);
 
-        if (!error) {
-            $.confirm({
-                title: 'Entidades guardadas exitósamente!',
-                content: 'Para continuar, haga clic en el botón aceptar.',
-                buttons: {
-                    aceptar: function () {
-                        alert('se debe hacer código para redireccionar al editar')
-                    }
-                }
-            });
-            return false;
-        }else{
-
+        if (error) {
             $.confirm({
                 title: 'Tienes errores en los siguientes campos!',
-                content: status,
+                content: form_data,
                 buttons: {
                     aceptar: function () {
                         const form_data = document.getElementById(form);
                         const formData = new FormData(form_data);
-
                         formData.forEach((value, key) => {
                             const input = document.getElementsByName(key);
                             input[0].classList.remove('is-invalid');
@@ -103,8 +99,19 @@ export const AddAssociatedEntities = () => {
                     }
                 }
             });
-
             return false;
+        }else{
+
+            const { updateDataApi } = useFech({ url: `create-associated-entities/${id_customer}/` });
+            const { error, status } = await updateDataApi(form_data);
+
+            if (error) {
+                $.alert(status.message);
+            }else{
+                const { com_id, message } = status;
+                $.alert(message);
+                return false;
+            }
         }
     };
 
@@ -130,6 +137,18 @@ export const AddAssociatedEntities = () => {
         updateButtons(buttons_menu);
     }, []);
 
+    const {
+        mutual_security,
+        boxes_compensation,
+        com_id,
+        mutual_security_id,
+        boxes_compensation_id
+    } = dataCompany;
+
+    useEffect(() => {
+        get_data_company();
+    }, [id_customer]); // Mantén id_customer como dependencia
+
     const config_form = {
         number_row: 4,
         id_form: 'form_entities',
@@ -144,7 +163,7 @@ export const AddAssociatedEntities = () => {
                 type: 'select_autocomplete',
                 options: mutualSecurities,
                 text_default: '-- Seleccione --',
-                value: ''
+                value: mutual_security_id
             },{
                 label: 'Cajas de compensación',
                 required: true,
@@ -152,7 +171,7 @@ export const AddAssociatedEntities = () => {
                 type: 'select_autocomplete',
                 options: boxesCompensation,
                 text_default: '-- Seleccione --',
-                value: ''
+                value: boxes_compensation_id
             }
         ],
     }

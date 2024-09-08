@@ -23,11 +23,17 @@ export const useFech = ({ url }) => {
         return response;
     };
 
+    const deleteData = async (data) => {
+        const response = await method_update(url, data);
+        return response;
+    };
+
     return {
         getDataTable,
         postDataApi,
         updateDataApi,
-        getDataList
+        getDataList,
+        deleteData
     }
     
 }

@@ -1,34 +1,44 @@
-import React from 'react'
+import React, { useEffect, useState, useContext } from 'react';
 import { TableDinamyc } from '../../components/datatable/TableDinamyc';
 import { SmallButtons } from "../../components/buttons/SmallButtons";
+import { useFech } from '../../hooks/useFech';
 import { useParams } from 'react-router-dom';
 
 export const ListAssociatedEntities = () => {
 
     const { id_customer } = useParams();
 
+    const [dataCompany, setDataCompany] = useState([]);
+
+    const { getDataList } = useFech({ url: `get-associated-entities/${id_customer}/` });
+
+    const get_data_company = async () => {
+        const { error, status } = await getDataList();
+        setDataCompany(status);
+    };
+
+    const {
+        mutual_security,
+        boxes_compensation,
+        com_id
+    } = dataCompany;
+    
+
+    useEffect(() => {
+        get_data_company();
+    }, [id_customer]); // Mantén id_customer como dependencia
+
     const data = [
         {
             id: 1,
-            nombre_entidad: 'ACHS',
+            mutual: mutual_security || 'No disponible',
+            caja_compensacion: boxes_compensation  || 'No disponible',
             acciones: <SmallButtons key={1} config_buttons={[
                 {
-                    "class": "btn btn-red btn-icon",
-                    "icon": "fa fa-trash",
-                    "label": "Eliminar",
-                    "url": '#',
-                    "id": ``
-                }
-            ]} />
-        },{
-            id: 2,
-            nombre_entidad: 'Caja los Andes',
-            acciones: <SmallButtons key={2} config_buttons={[
-                {
-                    "class": "btn btn-red btn-icon",
-                    "icon": "fa fa-trash",
-                    "label": "Eliminar",
-                    "url": '#',
+                    "class": "btn btn-green btn-icon",
+                    "icon": "fa fa-pencil",
+                    "label": "Editar",
+                    "url": `/home/editar-entidades-asociadas/${id_customer}`,
                     "id": ``
                 }
             ]} />

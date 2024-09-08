@@ -10,6 +10,36 @@ export const ListCenterCost = () => {
 
     const [dataTable, setDataTable] = useState([]);
 
+
+    const delete_center_cost = async (id) => {
+
+        // Definir la función asíncrona fuera de la confirmación
+        const confirmDelete = async () => {
+            const { deleteData } = useFech({ url: `delete-center-cost/${id}/` });
+            const { error, status } = await deleteData();
+
+            if (status) {
+                get_data_table(); // Actualizar la tabla después de eliminar
+            } else if (error) {
+                $.alert('Error al eliminar el centro de costo');
+            }
+        };
+
+        $.confirm({
+            title: 'Confirmación!',
+            content: 'Esta seguro de eliminar el centro de costo?',
+            buttons: {
+                confirmar: function () {
+                    confirmDelete(); // Llamar a la función asíncrona
+                    get_data_table();
+                },
+                cancelar: function () {
+                }
+            }
+        });
+    }
+
+
     const get_data_table = async () => {
         const { getDataTable } = useFech({ url: `list-center-cost/${id_customer}/` });
         const { error, status } = await getDataTable();
@@ -26,14 +56,16 @@ export const ListCenterCost = () => {
                         "icon": "fa fa-pencil",
                         "label": "Editar",
                         "url": `/home/editar-centro-costo/${id_customer}/${item.cencost_id}/`,
-                        "id": ``
+                        "id": ``,
+                        "def": ``
                     },
                     {
                         "class": "btn btn-red btn-icon",
                         "icon": "fa fa-trash",
                         "label": "Eliminar",
                         "url": '#',
-                        "id": ``
+                        "id": ``,
+                        "def": () => delete_center_cost(item.cencost_id)
                     }
                 ]} />
             })
