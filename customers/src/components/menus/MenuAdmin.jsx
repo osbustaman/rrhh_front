@@ -39,7 +39,7 @@ export const MenuAdmin = () => {
 
                     <Link className={localStorage.getItem('sub-item') === 'lista_empresas' ? `active nav-link` : 'nav-link'} to='lista-empresas'> Ver Empresas</Link>
                     <Link className={localStorage.getItem('sub-item') === 'agregar_empresa' ? `active nav-link` : 'nav-link'} to='agregar-empresa'> Crear Empresa</Link>
-                    <Link className='nav-link' to='#'> Áreas</Link>
+                    <Link className={localStorage.getItem('sub-item') === 'areas' ? `active nav-link` : 'nav-link'} to='lista-areas'> Áreas</Link>
                     <Link className='nav-link' to='#'> Carga Masiva</Link>
                     
                 </nav>

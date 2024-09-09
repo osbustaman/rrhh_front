@@ -3,6 +3,7 @@ import { Forms } from "../../components/forms/Forms"
 import { useFormValidate } from '../../hooks/useFormValidate';
 import { useFech } from '../../hooks/useFech';
 import { useParams } from 'react-router-dom';
+import { InputUploadImage } from '../../components/upload/InputUploadImage';
 
 
 export const EditFormFactory = () => {
@@ -295,26 +296,8 @@ export const EditFormFactory = () => {
     return (
         <>
             <div class="row">
-                <div class="col-xl-4">
-                    <div class="card mb-4 mb-xl-0">
-                        <div class="card-header">
-                            Logo empresa
-                        </div>
-                        <div class="card-body text-center">
-
-                            <img alt="" class="img-account-profile rounded-circle mb-2"
-                                src="assets/img/illustrations/profiles/profile-1.png" />
-
-                            <div class="small font-italic text-muted mb-4">
-                                JPG or PNG no larger than 5 MB
-                            </div>
-
-                            <button class="btn btn-primary" type="button">
-                                Upload new image
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                
+                <InputUploadImage />
 
                 <div class="col-xl-8">
                     <div class="card mb-4">

@@ -14,9 +14,11 @@ const useMenuMiddleware = () => {
         '/home/agregar-entidades-asociadas': { item: 'ver_empresas', subItem: 'lista_empresas' },
         '/home/editar-entidades-asociadas': { item: 'ver_empresas', subItem: 'lista_empresas' },
 
-
-
         '/home/agregar-empresa': { item: 'ver_empresas', subItem: 'agregar_empresa' },
+
+        '/home/lista-areas': { item: 'ver_empresas', subItem: 'areas' },
+        '/home/agregar-area': { item: 'ver_empresas', subItem: 'areas' },
+        '/home/editar-area': { item: 'ver_empresas', subItem: 'areas' },
         // Agrega el resto de las condiciones aquí...
     };
 

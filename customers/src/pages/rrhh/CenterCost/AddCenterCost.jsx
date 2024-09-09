@@ -66,7 +66,8 @@ export const AddCenterCost = () => {
                     buttons: {
                         continuar: function () {
                             window.location.href = `/home/editar-centro-costo/${id_customer}/${cencost_id}`;
-                        }, nuevo: function () {
+                        }, 
+                        nuevo: function () {
                             window.location.href = `/home/agregar-centro-costo/${id_customer}`;
                         }
                     }

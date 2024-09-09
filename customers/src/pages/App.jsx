@@ -23,9 +23,15 @@ import { AddCenterCost } from './rrhh/CenterCost/AddCenterCost';
 import { EditCenterCost } from './rrhh/CenterCost/EditCenterCost';
 import { AddAssociatedEntities } from './rrhh/AssociatedEntities/AddAssociatedEntities';
 import { EditAssociatedEntities } from './rrhh/AssociatedEntities/EditAssociatedEntities';
+
+
+
 import { useDataUser } from '../hooks/useDataUser';
 
 import useMenuMiddleware from '../hooks/useMenuMiddleware';
+import { ListAreas } from './rrhh/ListAreas';
+import { AddArea } from './rrhh/Area/AddArea';
+import { EditArea } from './rrhh/Area/EditArea';
 
 export const App = () => {
 
@@ -167,6 +173,11 @@ export const App = () => {
                                     <Route path="editar-centro-costo/:id_customer/:cencost_id" element={<EditCenterCost />} />
                                     <Route path="agregar-entidades-asociadas/:id_customer" element={<AddAssociatedEntities />} />
                                     <Route path="editar-entidades-asociadas/:id_customer" element={< EditAssociatedEntities/>} />
+                                    <Route path="lista-areas" element={< ListAreas/>} />
+                                    <Route path="agregar-area" element={< AddArea/>} />
+                                    <Route path="editar-area/:id_area" element={< EditArea/>} />
+
+
                                     <Route path="*" element={<NotFound />} />
                                 </Routes>
                             </div>
