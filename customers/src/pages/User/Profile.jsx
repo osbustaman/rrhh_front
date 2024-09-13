@@ -123,7 +123,7 @@ export const Profile = () => {
                                                 <label class="small mb-1" for="inputLocation">
                                                     Location
                                                 </label>
-                                                <input class="form-control" id="inputLocation" placeholder="Enter your location" type="text" value="San Francisco, CA" />
+                                                <input class="form-control" id="inputLocation" type="text" value="San Francisco, CA" />
                                             </div>
                                         </div>
                                         <div class="mb-3">
@@ -175,13 +175,13 @@ export const Profile = () => {
                                                 <label class="small mb-1" for="inputBillingName">
                                                     Name on card
                                                 </label>
-                                                <input class="form-control" id="inputBillingName" placeholder="Enter the name as it appears on your card" type="text" value="Valerie Luna" />
+                                                <input class="form-control" id="inputBillingName" type="text" value="Valerie Luna" />
                                             </div>
                                             <div class="mb-3 col-md-6">
                                                 <label class="small mb-1" for="inputBillingCCNumber">
                                                     Card number
                                                 </label>
-                                                <input class="form-control" id="inputBillingCCNumber" placeholder="Enter your credit card number" type="text" value="4444 3333 2222 1111" />
+                                                <input class="form-control" id="inputBillingCCNumber" type="text" value="4444 3333 2222 1111" />
                                             </div>
                                         </div>
                                         <div class="row gx-3">
@@ -189,19 +189,19 @@ export const Profile = () => {
                                                 <label class="small mb-1" for="inputOrgName">
                                                     Card expiry month
                                                 </label>
-                                                <input class="form-control" id="inputOrgName" placeholder="Enter expiry month" type="text" value="06" />
+                                                <input class="form-control" id="inputOrgName" type="text" value="06" />
                                             </div>
                                             <div class="col-md-4 mb-4 mb-md-0">
                                                 <label class="small mb-1" for="inputLocation">
                                                     Card expiry year
                                                 </label>
-                                                <input class="form-control" id="inputLocation" placeholder="Enter expiry year" type="text" value="2024" />
+                                                <input class="form-control" id="inputLocation" type="text" value="2024" />
                                             </div>
                                             <div class="col-md-4 mb-0">
                                                 <label class="small mb-1" for="inputLocation">
                                                     CVV Number
                                                 </label>
-                                                <input class="form-control" id="inputLocation" placeholder="Enter CVV number" type="password" value="111" />
+                                                <input class="form-control" id="inputLocation" type="password" value="111" />
                                             </div>
                                         </div>
                                         <hr class="my-4" />
