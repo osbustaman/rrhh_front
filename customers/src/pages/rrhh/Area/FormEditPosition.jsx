@@ -5,46 +5,22 @@ import { Forms } from "../../../components/forms/Forms"
 import { useFech } from '../../../hooks/useFech';
 import { useParams } from 'react-router-dom';
 
-export const FormEditArea = () => {
+export const FormEditPosition = () => {
 
-    const { id_area } = useParams();
-    const { getDataList } = useFech({ url: `list-companies` });
-    const [dataCompanies, setDataCompanies] = useState([]);
+    const { id_area, id_department, id_position } = useParams();
+    const { getDataList } = useFech({ url: `get-position/${id_position}` });
     const [configForm, setConfigForm] = useState(null);
-    const [dataArea, setDataArea] = useState([]);
+    const [dataResponses, setDataResponses] = useState([]);
     const [companiesLoaded, setCompaniesLoaded] = useState(false);
     const { validate } = useFormValidate();
-    const { getDataList: get_area } = useFech({ url: `get-areas/${id_area}/` });
 
-    const get_data_area = async () => {
-        const { error, status } = await get_area();
-        setDataArea(status);
-    };
-
-    const get_list_companies = async () => {
-        try {
-            const { error, status } = await getDataList();
-            const list_data = [];
-            status.map((value) => {
-                list_data.push({
-                    value: value.com_id,
-                    label: value.com_name_company
-                });
-            });
-            setDataCompanies(list_data);
-            setCompaniesLoaded(true);
-        } catch (error) {
-            $.alert({
-                title: 'Alerta!',
-                content: error,
-            });
-        }
+    const get_data_element = async () => {
+        const { error, status } = await getDataList();
+        setDataResponses(status);
     };
 
     const send_form = async (form) => {
-
         const { error, form_data } = validate(form);
-
         if (error) {
             $.confirm({
                 title: 'Tienes errores en los siguientes campos!',
@@ -62,59 +38,57 @@ export const FormEditArea = () => {
             });
             return false;
         }else{
-
-            const { updateDataApi } = useFech({ url: `update-areas/${id_area}/` });
+            const { updateDataApi } = useFech({ url: `update-position/${id_position}/` });
             const { error, status } = await updateDataApi(form_data);
-
             if (error) {
                 $.alert(status.message);
             }else{
-                $.alert('Área editada correctamente!');
+                $.alert('Cargo editado correctamente!');
                 return false;
             }
         }
     };
 
     useEffect(() => {
-        if (Object.keys(dataArea).length > 0) {
-            const { 
-                ar_name, 
-                company 
-            } = dataArea;
-
+        if (Object.keys(dataResponses).length > 0) {
+            const { pos_name_position, post_description, departament } = dataResponses;
             const config_form = {
-                number_row: 6,
-                id_form: 'form_area',
+                number_row: 12,
+                id_form: 'form_cargo',
                 position_form: 'vertical',
-                def: (event) => { send_form('form_area'); },
+                def: (event) => { send_form('form_cargo'); },
                 name_button: 'Editar',
                 inputs: [
                     {
-                        label: 'Nombre área',
+                        label: 'Nombre  del cargo',
                         placeholder: '',
                         required: true,
-                        name: 'ar_name',
+                        name: 'pos_name_position',
                         type: 'text',
-                        value: ar_name,
+                        value: pos_name_position,
                     },{
-                        label: 'Empresa',
+                        label: 'Descripción del cargo',
+                        placeholder: '',
                         required: true,
-                        name: 'company',
-                        type: 'select_autocomplete',
-                        options: dataCompanies,
-                        text_default: '-- Seleccione una empresa --',
-                        value: company
+                        name: 'post_description',
+                        type: 'textarea',
+                        value: post_description,
+                    },{
+                        label: '',
+                        required: true,
+                        name: 'departament',
+                        type: 'hidden',
+                        value: departament
                     }
-                ],
+                ]
             }
             setConfigForm(config_form);
         }
-    }, [dataArea, companiesLoaded]);
+    }, [dataResponses, companiesLoaded]);
 
     useEffect(() => {
-        get_data_area();
-        get_list_companies();
-    }, [id_area]);
+        get_data_element();
+    }, [id_department, id_position]);
 
     return (
         <>

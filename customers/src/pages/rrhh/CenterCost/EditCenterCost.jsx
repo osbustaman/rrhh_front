@@ -35,6 +35,8 @@ export const EditCenterCost = () => {
 
     const [dataCenterCost, setDataCenterCost] = useState([]);
 
+    const [configForm, setConfigForm] = useState(null);
+
     const get_center_cost = async () => {
         const { error, status } = await getDataTable();
         setDataCenterCost(status);
@@ -82,7 +84,6 @@ export const EditCenterCost = () => {
 
             formData.forEach((value, key) => {
                 const input = document.getElementsByName(key);
-                //input[0].value = '';
                 input[0].classList.remove('is-invalid');
             });
         }, 3000);
@@ -96,37 +97,42 @@ export const EditCenterCost = () => {
 
     useEffect(() => {
         get_center_cost();
-    }, [id_customer]); // Mantén id_customer como dependencia
+    }, [id_customer]);
 
+    useEffect(() => {
+        if (Object.keys(dataCenterCost).length > 0) {
+            const {
+                cencost_name,
+                company
+            } = dataCenterCost;   
 
-    const {
-        cencost_name,
-        company
-    } = dataCenterCost;   
-
-    const config_form = {
-        number_row: 6,
-        id_form: 'form_center_cost',
-        position_form: 'vertical',
-        def: (event) => { send_form('form_center_cost'); },
-        name_button: 'Guardar',
-        inputs: [
-            {
-                label: 'Nombre del centro de costo',
-                placeholder: '',
-                required: true,
-                name: 'cencost_name',
-                type: 'text',
-                value: cencost_name
-            },{
-                label: '',
-                required: true,
-                name: 'company',
-                type: 'hidden',
-                value: company
+            const config_form = {
+                number_row: 6,
+                id_form: 'form_center_cost',
+                position_form: 'vertical',
+                def: (event) => { send_form('form_center_cost'); },
+                name_button: 'Guardar',
+                inputs: [
+                    {
+                        label: 'Nombre del centro de costo',
+                        placeholder: '',
+                        required: true,
+                        name: 'cencost_name',
+                        type: 'text',
+                        value: cencost_name
+                    },{
+                        label: '',
+                        required: true,
+                        name: 'company',
+                        type: 'hidden',
+                        value: company
+                    }
+                ],
             }
-        ],
-    }
+
+            setConfigForm(config_form);
+        }
+    }, [dataCenterCost]);
 
     return (
         <>
@@ -138,7 +144,7 @@ export const EditCenterCost = () => {
                 </div>
                 <div className="card-body">
                     <div className="row">
-                        <Forms config_form={config_form}/>
+                        {configForm && <Forms config_form={configForm} />}
                     </div>
                 </div>
             </div>

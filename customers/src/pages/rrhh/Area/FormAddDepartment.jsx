@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { AppContext } from '../../../providers/AppProvider';
 import { useFormValidate } from '../../../hooks/useFormValidate';
 import { Forms } from "../../../components/forms/Forms"
 import { useFech } from '../../../hooks/useFech';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
-export const FormAddArea = () => {
+export const FormAddDepartment = () => {
 
+    const { id_area } = useParams();
     const { getDataList } = useFech({ url: `list-companies` });
     const [dataCompanies, setDataCompanies] = useState([]);
     const navigate = useNavigate();
@@ -50,18 +52,18 @@ export const FormAddArea = () => {
             });
             return false;
         }else{
-            const { postDataApi } = useFech({ url: `add-areas/create/` });
+            const { postDataApi } = useFech({ url: `add-department/create/` });
             const { error, status } = await postDataApi(form_data);
             if (error) {
                 $.alert(status.message);
             }else{
                 const { message } = status;
                 $.confirm({
-                    title: 'Área creada correctamente!',
-                    content: 'Click en continuar para ver la lista de áreas o en nuevo para agregar una nueva área.',
+                    title: 'Departamento creada correctamente!',
+                    content: 'Click en continuar o en nuevo para agregar otro departamento.',
                     buttons: {
                         continuar: function () {
-                            navigate(`/home/lista-areas`);
+                            navigate(`/home/editar-area/${id_area}/`);
                         }, 
                         nuevo: function () {
                             setFormKey(Date.now());
@@ -71,32 +73,35 @@ export const FormAddArea = () => {
                 return false;
             }
         }
-
     };
 
-
     const config_form = {
-        number_row: 6,
-        id_form: 'form_area',
+        number_row: 12,
+        id_form: 'form_department',
         position_form: 'vertical',
-        def: (event) => { send_form('form_area'); },
+        def: (event) => { send_form('form_department'); },
         name_button: 'Guardar',
         inputs: [
             {
-                label: 'Nombre área',
+                label: 'Nombre departamento',
                 placeholder: '',
                 required: true,
-                name: 'ar_name',
+                name: 'dep_name',
                 type: 'text',
                 value: '',
             },{
-                label: 'Empresa',
+                label: 'Descripción departamento',
+                placeholder: '',
                 required: true,
-                name: 'company',
-                type: 'select_autocomplete',
-                options: dataCompanies,
-                text_default: '-- Seleccione una empresa --',
-                value: ''
+                name: 'dep_description',
+                type: 'textarea',
+                value: '',
+            },{
+                label: '',
+                required: true,
+                name: 'area',
+                type: 'hidden',
+                value: id_area
             }
         ],
     }

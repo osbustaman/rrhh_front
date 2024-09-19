@@ -9,10 +9,9 @@ import { useParams } from 'react-router-dom';
 export const EditAssociatedEntities = () => {
 
     const { id_customer } = useParams();
-
     const { validate } = useFormValidate();
-
     const [dataCompany, setDataCompany] = useState([]);
+    const [configForm, setConfigForm] = useState(null);
 
     const { getDataList } = useFech({ url: `get-associated-entities/${id_customer}/` });
 
@@ -44,9 +43,6 @@ export const EditAssociatedEntities = () => {
 
     const [mutualSecurities, setMutualSecurities] = useState([]);
     const [boxesCompensation, setBoxesCompensation] = useState([]);
-
-    const [mutualSecurity, setMutualSecurity] = useState("");
-    const [boxCompensation, setBoxCompensation] = useState("");
 
     const { getDataTable: list_mutualSecurities } = useFech({ url: 'mutual-security' });
     const { getDataTable: list_boxesCompensation } = useFech({ url: 'boxes-compensation' });
@@ -122,7 +118,6 @@ export const EditAssociatedEntities = () => {
 
             formData.forEach((value, key) => {
                 const input = document.getElementsByName(key);
-                //input[0].value = '';
                 input[0].classList.remove('is-invalid');
             });
         }, 3000);
@@ -137,44 +132,49 @@ export const EditAssociatedEntities = () => {
         updateButtons(buttons_menu);
     }, []);
 
-    const {
-        mutual_security,
-        boxes_compensation,
-        com_id,
-        mutual_security_id,
-        boxes_compensation_id
-    } = dataCompany;
-
     useEffect(() => {
         get_data_company();
     }, [id_customer]); // Mantén id_customer como dependencia
 
-    const config_form = {
-        number_row: 4,
-        id_form: 'form_entities',
-        position_form: 'vertical',
-        def: (event) => { send_form('form_entities'); },
-        name_button: 'Guardar',
-        inputs: [
-            {
-                label: 'Mutual de seguridad',
-                required: true,
-                name: 'mutual_security',
-                type: 'select_autocomplete',
-                options: mutualSecurities,
-                text_default: '-- Seleccione --',
-                value: mutual_security_id
-            },{
-                label: 'Cajas de compensación',
-                required: true,
-                name: 'boxes_compensation',
-                type: 'select_autocomplete',
-                options: boxesCompensation,
-                text_default: '-- Seleccione --',
-                value: boxes_compensation_id
+    useEffect(() => {
+        if (Object.keys(dataCompany).length > 0) {
+            const {
+                mutual_security_id,
+                boxes_compensation_id
+            } = dataCompany;  
+
+            const config_form = {
+                number_row: 4,
+                id_form: 'form_entities',
+                position_form: 'vertical',
+                def: (event) => { send_form('form_entities'); },
+                name_button: 'Guardar',
+                inputs: [
+                    {
+                        label: 'Mutual de seguridad',
+                        required: true,
+                        name: 'mutual_security',
+                        type: 'select_autocomplete',
+                        options: mutualSecurities,
+                        text_default: '-- Seleccione --',
+                        value: mutual_security_id
+                    },{
+                        label: 'Cajas de compensación',
+                        required: true,
+                        name: 'boxes_compensation',
+                        type: 'select_autocomplete',
+                        options: boxesCompensation,
+                        text_default: '-- Seleccione --',
+                        value: boxes_compensation_id
+                    }
+                ],
             }
-        ],
-    }
+
+            setConfigForm(config_form);
+        }
+    }, [dataCompany]);
+
+
 
     return (
         <>
@@ -185,7 +185,7 @@ export const EditAssociatedEntities = () => {
                 </div>
                 <div className="card-body">
                     <div className="row">
-                        <Forms config_form={config_form}/>
+                        {configForm && <Forms config_form={configForm} />}
                     </div>
                 </div>
             </div>

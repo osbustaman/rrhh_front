@@ -44,6 +44,8 @@ export const EditarBranchOffice = () => {
 
     const [dataBranchOffice, setDataBranchOffice] = useState([]);
 
+    const [configForm, setConfigForm] = useState(null);
+
     const getDataFech = async (get_data_table, set_state, error_message, type_data_response) => {
         
         const { error, status } = await get_data_table();
@@ -144,91 +146,97 @@ export const EditarBranchOffice = () => {
 
     useEffect(() => {
         get_data_branch_office();
-    }, [id_customer]); // Mantén id_customer como dependencia
+    }, [id_customer]);
 
+    useEffect(() => {
+        if (Object.keys(dataBranchOffice).length > 0) {
+            const {
+                sub_name,
+                sub_mail,
+                sub_phone,
+                sub_address,
+                commune,
+                region,
+                country,
+                sub_matrixhouse
+            } = dataBranchOffice;  
 
-    const {
-        sub_name,
-        sub_mail,
-        sub_phone,
-        sub_address,
-        commune,
-        region,
-        country,
-        sub_matrixhouse
-    } = dataBranchOffice;   
-
-    const config_form = {
-        number_row: 3,
-        id_form: 'form_branch_office',
-        position_form: 'vertical',
-        def: (event) => { send_form('form_branch_office'); },
-        name_button: 'Editar',
-        inputs: [
-            {
-                label: 'Descripción de la unidad',
-                placeholder: '',
-                required: true,
-                name: 'sub_name',
-                type: 'text',
-                value: sub_name
-            },{
-                label: 'Correo',
-                placeholder: '',
-                required: true,
-                name: 'sub_mail',
-                type: 'email',
-                value: sub_mail
-            },{
-                label: 'Teléfono',
-                placeholder: '',
-                required: true,
-                name: 'sub_phone',
-                type: 'text',
-                value: sub_phone
-            },{
-                label: 'Dirección',
-                placeholder: '',
-                required: true,
-                name: 'sub_address',
-                type: 'text',
-                value: sub_address
-            },{
-                label: 'Comunas',
-                required: true,
-                name: 'commune',
-                type: 'select_autocomplete',
-                options: communes,
-                text_default: '-- Seleccione --',
-                value: commune
-            },{
-                label: 'Regiones',
-                required: true,
-                name: 'region',
-                type: 'select_autocomplete',
-                options: regions,
-                text_default: '-- Seleccione --',
-                value: region
-            },{
-                label: 'País',
-                required: true,
-                name: 'country',
-                type: 'select_autocomplete',
-                options: countries,
-                text_default: '-- Seleccione --',
-                value: country
-            },{
-
-                label: 'Es casa matriz?',
-                required: true,
-                name: 'sub_matrixhouse',
-                type: 'select_autocomplete',
-                options: [{value: 'Y', label: 'Si'}, {value: 'N', label: 'No'}],
-                text_default: '-- Seleccione --',
-                value: sub_matrixhouse
+            const config_form = {
+                number_row: 3,
+                id_form: 'form_branch_office',
+                position_form: 'vertical',
+                def: (event) => { send_form('form_branch_office'); },
+                name_button: 'Editar',
+                inputs: [
+                    {
+                        label: 'Descripción de la unidad',
+                        placeholder: '',
+                        required: true,
+                        name: 'sub_name',
+                        type: 'text',
+                        value: sub_name
+                    },{
+                        label: 'Correo',
+                        placeholder: '',
+                        required: true,
+                        name: 'sub_mail',
+                        type: 'email',
+                        value: sub_mail
+                    },{
+                        label: 'Teléfono',
+                        placeholder: '',
+                        required: true,
+                        name: 'sub_phone',
+                        type: 'text',
+                        value: sub_phone
+                    },{
+                        label: 'Dirección',
+                        placeholder: '',
+                        required: true,
+                        name: 'sub_address',
+                        type: 'text',
+                        value: sub_address
+                    },{
+                        label: 'Comunas',
+                        required: true,
+                        name: 'commune',
+                        type: 'select_autocomplete',
+                        options: communes,
+                        text_default: '-- Seleccione --',
+                        value: commune
+                    },{
+                        label: 'Regiones',
+                        required: true,
+                        name: 'region',
+                        type: 'select_autocomplete',
+                        options: regions,
+                        text_default: '-- Seleccione --',
+                        value: region
+                    },{
+                        label: 'País',
+                        required: true,
+                        name: 'country',
+                        type: 'select_autocomplete',
+                        options: countries,
+                        text_default: '-- Seleccione --',
+                        value: country
+                    },{
+        
+                        label: 'Es casa matriz?',
+                        required: true,
+                        name: 'sub_matrixhouse',
+                        type: 'select_autocomplete',
+                        options: [{value: 'Y', label: 'Si'}, {value: 'N', label: 'No'}],
+                        text_default: '-- Seleccione --',
+                        value: sub_matrixhouse
+                    }
+                ],
             }
-        ],
-    }
+
+            setConfigForm(config_form);
+        }
+    }, [dataBranchOffice, communes, regions, countries]);
+
 
     return (
         <>
@@ -239,7 +247,7 @@ export const EditarBranchOffice = () => {
                 </div>
                 <div className="card-body">
                     <div className="row">
-                        <Forms config_form={config_form}/>
+                        {configForm && <Forms config_form={configForm} />}
                     </div>
                 </div>
             </div>

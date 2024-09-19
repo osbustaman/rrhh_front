@@ -2,7 +2,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Forms } from "../../components/forms/Forms"
 import { useFormValidate } from '../../hooks/useFormValidate';
 import { useFech } from '../../hooks/useFech';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { InputUploadImage } from '../../components/upload/InputUploadImage';
 
 export const FormFactory = () => {
 
@@ -17,11 +18,12 @@ export const FormFactory = () => {
     const [regions, setRegions] = useState([]);
     const [communes, setCommunes] = useState([]);
     const [comSocialReason, setComSocialReason] = useState([]);
+
+    const navigate = useNavigate();
+    const [formKey, setFormKey] = useState(Date.now());
     
     const getDataFech = async (get_data_table, set_state, error_message, type_data_response) => {
-        
         const { error, status } = await get_data_table();
-
         if (error) {
             $.alert(error_message);
         }
@@ -61,9 +63,7 @@ export const FormFactory = () => {
     }
 
     const send_form_user = async (form) => {
-
         const { error, form_data } = validate(form);
-
         if (error) {
             $.confirm({
                 title: 'Tienes errores en los siguientes campos!',
@@ -81,10 +81,8 @@ export const FormFactory = () => {
             });
             return false;
         }else{
-
             const { postDataApi } = useFech({ url: 'create-company' });
             const { error, status } = await postDataApi(form_data);
-
             if (error) {
                 $.alert(status.message);
             }else{
@@ -94,26 +92,13 @@ export const FormFactory = () => {
                     content: form_data,
                     buttons: {
                         continuar: function () {
-                            window.location.href = `/home/editar-empresa/${com_id}`;
+                            navigate(`/home/editar-empresa/${com_id}`);
                         }
                     }
                 });
                 return false;
             }
         }
-    };
-
-    const clean_form_user = (id_form) => {
-        setTimeout(() => {
-            const form = document.getElementById(id_form);
-            const formData = new FormData(form);
-
-            formData.forEach((value, key) => {
-                const input = document.getElementsByName(key);
-                //input[0].value = '';
-                input[0].classList.remove('is-invalid');
-            });
-        }, 3000);
     };
 
     useEffect(() => {
@@ -263,34 +248,14 @@ export const FormFactory = () => {
     return (
         <>
             <div class="row">
-                <div class="col-xl-4">
-                    <div class="card mb-4 mb-xl-0">
-                        <div class="card-header">
-                            Logo empresa
-                        </div>
-                        <div class="card-body text-center">
-
-                            <img alt="" class="img-account-profile rounded-circle mb-2"
-                                src="assets/img/illustrations/profiles/profile-1.png" />
-
-                            <div class="small font-italic text-muted mb-4">
-                                JPG or PNG no larger than 5 MB
-                            </div>
-
-                            <button class="btn btn-primary" type="button">
-                                Upload new image
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
+                <InputUploadImage />
                 <div class="col-xl-8">
                     <div class="card mb-4">
                         <div class="card-header">
                             Datos de la empresa
                         </div>
                         <div class="card-body">
-                            <Forms config_form={config_form}/>
+                            <Forms key={formKey} config_form={config_form} />
                         </div>
                     </div>
                 </div>

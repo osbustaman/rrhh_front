@@ -1,32 +1,32 @@
 import React, { useEffect, useState, useContext, useCallback, useMemo } from 'react';
-import { TableDinamyc } from '../../components/datatable/TableDinamyc';
-import { SmallButtons } from "../../components/buttons/SmallButtons";
-import { useFech } from '../../hooks/useFech';
+import { TableDinamyc } from '../../../components/datatable/TableDinamyc';
+import { SmallButtons } from "../../../components/buttons/SmallButtons";
+import { useFech } from '../../../hooks/useFech';
 import { useParams } from 'react-router-dom';
 
 
-export const ListCenterCost = () => {
-    const title_table = 'Listado de Centros de Costos';
-    const { id_customer } = useParams();
+export const ListPosition = () => {
+    const title_table = 'Listado de cargos';
+    const { id_area, id_department } = useParams();
     const [dataTable, setDataTable] = useState([]);
     const [timeGetData, setTimeGetData] = useState(0);
     const [loading_, setLoading_] = useState(true);
 
     const delete_element = useCallback(async (id) => {
         const confirmDelete = async () => {
-            const { deleteData } = useFech({ url: `delete-center-cost/${id}/` });
+            const { deleteData } = useFech({ url: `delete-position/${id}/` });
             const { error, status } = await deleteData();
 
             if (status) {
                 get_data_table(); // Actualizar la tabla después de eliminar
             } else if (error) {
-                $.alert('Error al eliminar el centro de costo');
+                $.alert('Error al eliminar el cargo');
             }
         };
 
         $.confirm({
             title: 'Confirmación!',
-            content: 'Esta seguro de eliminar el centro de costo?',
+            content: 'Esta seguro de eliminar el cargo?',
             buttons: {
                 confirmar: function () {
                     confirmDelete();
@@ -40,18 +40,18 @@ export const ListCenterCost = () => {
 
     const get_data_table = useCallback(async () => {
         const startTime = performance.now();
-        const { getDataTable } = useFech({ url: `list-center-cost/${id_customer}/` });
+        const { getDataTable } = useFech({ url: `list-position/${id_department}/` });
         const { error, status } = await getDataTable();
 
         const element = status.map((item, index) => ({
-            id: item.cencost_id,
-            nombre_centro_costo: item.cencost_name,
+            id: item.pos_id,
+            cargo: item.pos_name_position,
             acciones: <SmallButtons key={index} config_buttons={[
                 {
                     "class": "btn btn-green btn-icon",
                     "icon": "fa fa-pencil",
                     "label": "Editar",
-                    "url": `/home/editar-centro-costo/${id_customer}/${item.cencost_id}/`,
+                    "url": `/home/editar-cargo/${id_area}/${id_department}/${item.pos_id}/`,
                     "id": ``,
                     "def": ``
                 },
@@ -61,7 +61,7 @@ export const ListCenterCost = () => {
                     "label": "Eliminar",
                     "url": '#',
                     "id": ``,
-                    "def": () => delete_element(item.cencost_id)
+                    "def": () => delete_element(item.pos_id)
                 }
             ]} />
         }));

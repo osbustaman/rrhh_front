@@ -17,9 +17,7 @@ export const method_update = async (url, data_form) => {
         body: raw,
         redirect: 'follow'
     };
-
-    console.log(requestOptions);
-
+    
     try {
         const response = await fetch(route_url, requestOptions);
         const { status, ok } = response;

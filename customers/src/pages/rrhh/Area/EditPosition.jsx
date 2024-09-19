@@ -1,38 +1,31 @@
 import React, { useEffect, useState, useContext } from 'react';
-
-import { useParams } from 'react-router-dom';
-
 import { AppContext } from '../../../providers/AppProvider';
 import { Tabs } from '../../../components/tabs/Tabs';
-import { FormEditArea } from './FormEditArea';
-import { ListDepartament } from './ListDepartament';
+import { useParams } from 'react-router-dom';
+import { FormAddPosition } from './FormAddPosition';
+import { FormEditDepartment } from './FormEditDepartment';
+import { FormEditPosition } from './FormEditPosition';
 
-export const EditArea = () => {
+export const EditPosition = () => {
 
-    const { id_area } = useParams();
+    const { id_area, id_department, id_position } = useParams();
 
     const { updateBreadcrumbs, updateTitulo, updateButtons } = useContext(AppContext);
-    const [dataTable, setDataTable] = useState(false);
 
     const dict_bread_crumb = [
         { "bread": "empresa" },
-        { "bread": "editar área" }
+        { "bread": "cargo" }
     ];
 
-    const dict_title = { "tittle": "Editar Área" };
+    const dict_title = { "tittle": "Editar cargo" };
 
     const buttons_menu = [
         { 
             "label" : "Acciones",
-            "list_items": [
-                {
-                    "label": "Agregar Departamento",
-                    "url": `/home/agregar-departamento/${id_area}/`,
-                }
-            ]
+            "list_items": []
         },{
             "icon" : "fa-solid fa-arrow-right-from-bracket",
-            "url": `lista-areas`,
+            "url": `editar-departamento/${id_area}/${id_department}/`,
             "label": "Volver"
         }
     ];
@@ -45,8 +38,7 @@ export const EditArea = () => {
     }, []);
 
     const tabData = [
-        { id: 'area', label: 'Área', content: <FormEditArea /> },
-        { id: 'dpto', label: 'Departamento', content: <ListDepartament /> },
+        { id: 'position', label: 'Cargo', content: <FormEditPosition /> },
     ];
 
     return (

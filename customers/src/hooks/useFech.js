@@ -1,6 +1,5 @@
 import { method_get, method_post, method_update } from "../js/fech";
 
-
 export const useFech = ({ url }) => {
 
     const getDataTable = async () => {

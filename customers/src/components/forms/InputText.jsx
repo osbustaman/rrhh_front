@@ -10,7 +10,7 @@ export const InputText = ({ config_input }) => {
     // Inicializa el estado del formulario con los valores iniciales de inputs
     const initial_form = {};
     inputs.forEach((input) => {
-        initial_form[input.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g, "_")] = input.value;
+        initial_form[input.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g, "_")] = input.value ?? '';
     });
 
     const [formState, setFormState] = useState(initial_form);
@@ -142,34 +142,48 @@ export const InputText = ({ config_input }) => {
                         {...eventProps}
                     />
                 );
-                case "email":
-                    return (
-                        <input
-                            type="email"
-                            id={key.id}
-                            className="form-control"
-                            name={name_input}
-                            required={!!key.required}
-                            value={formState[name_input] ?? key.value}
-                            onChange={onInputChange}
-                            {...eventProps}
-                        />
-                    );
+            case "email":
+                return (
+                    <input
+                        type="email"
+                        id={key.id}
+                        className="form-control"
+                        name={name_input}
+                        required={!!key.required}
+                        value={formState[name_input] ?? key.value}
+                        onChange={onInputChange}
+                        {...eventProps}
+                    />
+                );
 
-                    case "rut":
-                        return (
-                            <input
-                                type="text"
-                                tag-rut="true"
-                                id={key.id}
-                                className={`form-control ${key.type}`}
-                                name={name_input}
-                                required={!!key.required}
-                                value={formState[name_input] ?? key.value}
-                                onChange={onInputChange}
-                                {...eventProps}
-                            />
-                        );
+            case "rut":
+                return (
+                    <input
+                        type="text"
+                        tag-rut="true"
+                        id={key.id}
+                        className={`form-control ${key.type}`}
+                        name={name_input}
+                        required={!!key.required}
+                        value={formState[name_input] ?? key.value}
+                        onChange={onInputChange}
+                        {...eventProps}
+                    />
+                );
+
+            case "textarea":
+                return (
+                    <textarea
+                        id={key.id}
+                        className="form-control"
+                        name={name_input}
+                        required={!!key.required}
+                        value={formState[name_input] ?? key.value}
+                        onChange={onInputChange}
+                        {...eventProps}
+                    />
+                );
+
             case "text":
             default:
                 return (
@@ -179,7 +193,7 @@ export const InputText = ({ config_input }) => {
                         className="form-control"
                         name={name_input}
                         required={!!key.required}
-                        value={formState[name_input] ?? key.value}
+                        value={(formState[name_input] ?? key.value) ?? ''}
                         onChange={onInputChange}
                         {...eventProps}
                     />

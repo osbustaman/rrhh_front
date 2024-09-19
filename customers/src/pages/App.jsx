@@ -24,14 +24,16 @@ import { EditCenterCost } from './rrhh/CenterCost/EditCenterCost';
 import { AddAssociatedEntities } from './rrhh/AssociatedEntities/AddAssociatedEntities';
 import { EditAssociatedEntities } from './rrhh/AssociatedEntities/EditAssociatedEntities';
 
-
-
 import { useDataUser } from '../hooks/useDataUser';
 
 import useMenuMiddleware from '../hooks/useMenuMiddleware';
 import { ListAreas } from './rrhh/ListAreas';
 import { AddArea } from './rrhh/Area/AddArea';
 import { EditArea } from './rrhh/Area/EditArea';
+import { AddDepartment } from './rrhh/Area/AddDepartment';
+import { EditDepartment } from './rrhh/Area/EditDepartment';
+import { AddPosition } from './rrhh/Area/AddPosition';
+import { EditPosition } from './rrhh/Area/EditPosition';
 
 export const App = () => {
 
@@ -177,6 +179,11 @@ export const App = () => {
                                     <Route path="agregar-area" element={< AddArea/>} />
                                     <Route path="editar-area/:id_area" element={< EditArea/>} />
 
+                                    <Route path="agregar-departamento/:id_area" element={< AddDepartment/>} />
+                                    <Route path="editar-departamento/:id_area/:id_department" element={< EditDepartment/>} />
+                                    
+                                    <Route path="agregar-cargo/:id_area/:id_department" element={<AddPosition />} />
+                                    <Route path="editar-cargo/:id_area/:id_department/:id_position" element={< EditPosition/>} />
 
                                     <Route path="*" element={<NotFound />} />
                                 </Routes>

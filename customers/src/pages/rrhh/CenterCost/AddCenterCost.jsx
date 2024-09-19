@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AppContext } from '../../../providers/AppProvider';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useFech } from '../../../hooks/useFech';
 import { useFormValidate } from '../../../hooks/useFormValidate';
 import { Forms } from "../../../components/forms/Forms"
@@ -8,10 +8,10 @@ import { Forms } from "../../../components/forms/Forms"
 export const AddCenterCost = () => {
 
     const { id_customer } = useParams();
-
     const { validate } = useFormValidate();
-
     const { updateBreadcrumbs, updateTitulo, updateButtons } = useContext(AppContext);
+    const navigate = useNavigate();
+    const [formKey, setFormKey] = useState(Date.now());
 
     const dict_bread_crumb = [
         { "bread": "empresa" },
@@ -34,7 +34,6 @@ export const AddCenterCost = () => {
 
     const send_form = async (form) => {
         const { error, form_data } = validate(form);
-
         if (error) {
             $.confirm({
                 title: 'Tienes errores en los siguientes campos!',
@@ -52,10 +51,8 @@ export const AddCenterCost = () => {
             });
             return false;
         }else{
-
             const { postDataApi } = useFech({ url: `create-center-cost/${id_customer}/` });
             const { error, status } = await postDataApi(form_data);
-
             if (error) {
                 $.alert(status.message);
             }else{
@@ -65,10 +62,10 @@ export const AddCenterCost = () => {
                     content: form_data,
                     buttons: {
                         continuar: function () {
-                            window.location.href = `/home/editar-centro-costo/${id_customer}/${cencost_id}`;
+                            navigate(`/home/editar-centro-costo/${id_customer}/${cencost_id}`);
                         }, 
                         nuevo: function () {
-                            window.location.href = `/home/agregar-centro-costo/${id_customer}`;
+                            setFormKey(Date.now());
                         }
                     }
                 });
@@ -129,7 +126,7 @@ export const AddCenterCost = () => {
                 </div>
                 <div className="card-body">
                     <div className="row">
-                        <Forms config_form={config_form}/>
+                        <Forms key={formKey} config_form={config_form}/>
                     </div>
                 </div>
             </div>

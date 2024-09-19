@@ -19,6 +19,9 @@ const useMenuMiddleware = () => {
         '/home/lista-areas': { item: 'ver_empresas', subItem: 'areas' },
         '/home/agregar-area': { item: 'ver_empresas', subItem: 'areas' },
         '/home/editar-area': { item: 'ver_empresas', subItem: 'areas' },
+        '/home/agregar-departamento': { item: 'ver_empresas', subItem: 'areas' },
+        '/home/editar-departamento': { item: 'ver_empresas', subItem: 'areas' },
+        '/home/editar-cargo': { item: 'ver_empresas', subItem: 'areas' },
         // Agrega el resto de las condiciones aquí...
     };
 

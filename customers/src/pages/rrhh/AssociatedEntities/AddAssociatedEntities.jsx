@@ -3,16 +3,16 @@ import { AppContext } from '../../../providers/AppProvider';
 import { useFormValidate } from '../../../hooks/useFormValidate';
 import { Forms } from "../../../components/forms/Forms"
 import { useFech } from '../../../hooks/useFech';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 
 export const AddAssociatedEntities = () => {
 
     const { id_customer } = useParams();
-
     const { validate } = useFormValidate();
-
     const { updateBreadcrumbs, updateTitulo, updateButtons } = useContext(AppContext);
+    const navigate = useNavigate();
+    const [formKey, setFormKey] = useState(Date.now());
 
     const dict_bread_crumb = [
         { "bread": "empresa" },
@@ -35,18 +35,14 @@ export const AddAssociatedEntities = () => {
 
     const [mutualSecurities, setMutualSecurities] = useState([]);
     const [boxesCompensation, setBoxesCompensation] = useState([]);
-
     const { getDataTable: list_mutualSecurities } = useFech({ url: 'mutual-security' });
     const { getDataTable: list_boxesCompensation } = useFech({ url: 'boxes-compensation' });
 
     const getDataFech = async (get_data_table, set_state, error_message, type_data_response) => {
-        
         const { error, status } = await get_data_table();
-
         if (error) {
             $.alert(error_message);
         }
-
         let list_data = [];
 
         if (type_data_response === 'mutual_security') {
@@ -68,9 +64,7 @@ export const AddAssociatedEntities = () => {
     }
 
     const send_form = async (form) => {
-
         const { error, form_data } = validate(form);
-
         if (error) {
             $.confirm({
                 title: 'Tienes errores en los siguientes campos!',
@@ -88,10 +82,8 @@ export const AddAssociatedEntities = () => {
             });
             return false;
         }else{
-
             const { updateDataApi } = useFech({ url: `create-associated-entities/${id_customer}/` });
             const { error, status } = await updateDataApi(form_data);
-
             if (error) {
                 $.alert(status.message);
             }else{
@@ -101,25 +93,13 @@ export const AddAssociatedEntities = () => {
                     content: form_data,
                     buttons: {
                         continuar: function () {
-                            window.location.href = `/home/editar-empresa/${id_customer}`;
+                            navigate(`/home/editar-empresa/${id_customer}`);
                         }
                     }
                 });
                 return false;
             }
         }
-    };
-
-    const clean_form = (id_form) => {
-        setTimeout(() => {
-            const form = document.getElementById(id_form);
-            const formData = new FormData(form);
-
-            formData.forEach((value, key) => {
-                const input = document.getElementsByName(key);
-                input[0].classList.remove('is-invalid');
-            });
-        }, 3000);
     };
 
     useEffect(() => {
@@ -166,7 +146,7 @@ export const AddAssociatedEntities = () => {
                 </div>
                 <div className="card-body">
                     <div className="row">
-                        <Forms config_form={config_form}/>
+                        <Forms key={formKey} config_form={config_form} />
                     </div>
                 </div>
             </div>

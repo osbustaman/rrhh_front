@@ -2,34 +2,13 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useFormValidate } from '../../../hooks/useFormValidate';
 import { Forms } from "../../../components/forms/Forms"
 import { useFech } from '../../../hooks/useFech';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
-export const FormAddArea = () => {
-
-    const { getDataList } = useFech({ url: `list-companies` });
-    const [dataCompanies, setDataCompanies] = useState([]);
+export const FormAddPosition = () => {
+    const { id_area, id_department } = useParams();
+    const { validate } = useFormValidate();
     const navigate = useNavigate();
     const [formKey, setFormKey] = useState(Date.now());
-    const { validate } = useFormValidate();
-
-    const get_list_companies = async () => {
-        try {
-            const { error, status } = await getDataList();
-            const list_data = [];
-            status.map((value) => {
-                list_data.push({
-                    value: value.com_id,
-                    label: value.com_name_company
-                });
-            });
-            setDataCompanies(list_data);
-        } catch (error) {
-            $.alert({
-                title: 'Alerta!',
-                content: error,
-            });
-        }
-    };
 
     const send_form = async (form) => {
         const { error, form_data } = validate(form);
@@ -50,19 +29,19 @@ export const FormAddArea = () => {
             });
             return false;
         }else{
-            const { postDataApi } = useFech({ url: `add-areas/create/` });
+            const { postDataApi } = useFech({ url: `add-position/create/` });
             const { error, status } = await postDataApi(form_data);
             if (error) {
                 $.alert(status.message);
             }else{
                 const { message } = status;
                 $.confirm({
-                    title: 'Área creada correctamente!',
-                    content: 'Click en continuar para ver la lista de áreas o en nuevo para agregar una nueva área.',
+                    title: 'Cargo creado correctamente!',
+                    content: 'Click en continuar o en nuevo para agregar una nuevo cargo.',
                     buttons: {
                         continuar: function () {
-                            navigate(`/home/lista-areas`);
-                        }, 
+                            navigate(`/home/editar-departamento/${id_area}/${id_department}/`);
+                        },
                         nuevo: function () {
                             setFormKey(Date.now());
                         }
@@ -71,38 +50,40 @@ export const FormAddArea = () => {
                 return false;
             }
         }
-
     };
 
-
     const config_form = {
-        number_row: 6,
-        id_form: 'form_area',
+        number_row: 12,
+        id_form: 'form_cargo',
         position_form: 'vertical',
-        def: (event) => { send_form('form_area'); },
+        def: (event) => { send_form('form_cargo'); },
         name_button: 'Guardar',
         inputs: [
             {
-                label: 'Nombre área',
+                label: 'Nombre  del cargo',
                 placeholder: '',
                 required: true,
-                name: 'ar_name',
+                name: 'pos_name_position',
                 type: 'text',
                 value: '',
             },{
-                label: 'Empresa',
+                label: 'Descripción del cargo',
+                placeholder: '',
                 required: true,
-                name: 'company',
-                type: 'select_autocomplete',
-                options: dataCompanies,
-                text_default: '-- Seleccione una empresa --',
-                value: ''
+                name: 'post_description',
+                type: 'textarea',
+                value: '',
+            },{
+                label: '',
+                required: true,
+                name: 'departament',
+                type: 'hidden',
+                value: id_department
             }
         ],
     }
 
     useEffect(() => {
-        get_list_companies();
     }, []);
 
     return (
