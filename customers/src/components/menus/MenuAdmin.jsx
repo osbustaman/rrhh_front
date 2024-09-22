@@ -44,7 +44,41 @@ export const MenuAdmin = () => {
                     
                 </nav>
             </div>
+
             
+            
+
+
+
+
+            <a 
+                aria-controls="collapseDashboards" 
+                aria-expanded={localStorage.getItem('item') === 'employees' ? 'true' : 'false'}
+                className={localStorage.getItem('item') === 'employees' ? 'nav-link' : 'nav-link collapsed'}
+                data-bs-target="#collapseDashboards" 
+                data-bs-toggle="collapse" 
+                href="#"
+            >
+                <div className="nav-link-icon">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+                <span className={localStorage.getItem('item') === 'employees' ? 'color-text-1' : ''}>Empleados</span>
+
+                <div className="sidenav-collapse-arrow">
+                    <i className="fas fa-angle-down">
+                    </i>
+                </div>
+            </a>
+            <div 
+                className={localStorage.getItem('item') === 'employees' ? 'collapse show' : 'collapse'}
+                data-bs-parent="#accordionSidenav" 
+                id="collapseDashboards"
+                >
+                <nav className="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                    <Link className='nav-link' to='#'> Ver empleados</Link>
+                    <Link className='nav-link' to='#'> Crear empleado</Link>                    
+                </nav>
+            </div>
         </>
     )
 }

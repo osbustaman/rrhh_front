@@ -16,7 +16,7 @@ export const EditArea = () => {
 
     const dict_bread_crumb = [
         { "bread": "empresa" },
-        { "bread": "editar área" }
+        { "bread": "área" }
     ];
 
     const dict_title = { "tittle": "Editar Área" };

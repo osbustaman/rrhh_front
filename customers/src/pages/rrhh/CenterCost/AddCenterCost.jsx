@@ -4,6 +4,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useFech } from '../../../hooks/useFech';
 import { useFormValidate } from '../../../hooks/useFormValidate';
 import { Forms } from "../../../components/forms/Forms"
+import { AppContexCompany } from '../../../providers/AppProvider';
+import { capitalizeFirstLetter } from '../../../js/validations';
 
 export const AddCenterCost = () => {
 
@@ -12,6 +14,7 @@ export const AddCenterCost = () => {
     const { updateBreadcrumbs, updateTitulo, updateButtons } = useContext(AppContext);
     const navigate = useNavigate();
     const [formKey, setFormKey] = useState(Date.now());
+    const { title } = useContext(AppContexCompany);
 
     const dict_bread_crumb = [
         { "bread": "empresa" },
@@ -19,7 +22,7 @@ export const AddCenterCost = () => {
         { "bread": "agregar centro de costo" }
     ];
 
-    const dict_title = { "tittle": "[Nombre empresa]" };
+    const dict_title = { "tittle": `${capitalizeFirstLetter(title)}` };
 
     const buttons_menu = [
         { 
@@ -91,7 +94,7 @@ export const AddCenterCost = () => {
         updateBreadcrumbs(dict_bread_crumb);
         updateTitulo(dict_title.tittle);
         updateButtons(buttons_menu);
-    }, []);
+    }, [title]);
 
     const config_form = {
         number_row: 6,

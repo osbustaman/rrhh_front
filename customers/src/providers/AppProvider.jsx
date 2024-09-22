@@ -27,3 +27,21 @@ export const AppProvider = ({ children }) => {
 };
 
 
+export const AppContexCompany = createContext();
+
+export const AppProviderCompany = ({ children }) => {
+
+    const [title, setTitle] = useState('');
+
+    const updateTitle = (newTitulo) => {
+        setTitle(newTitulo);
+    };
+
+    return (
+        <AppContexCompany.Provider value={{ title, updateTitle }}>
+            {children}
+        </AppContexCompany.Provider>
+    );
+};
+
+

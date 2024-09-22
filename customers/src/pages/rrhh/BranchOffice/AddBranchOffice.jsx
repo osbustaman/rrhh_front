@@ -4,12 +4,15 @@ import { useFormValidate } from '../../../hooks/useFormValidate';
 import { Forms } from "../../../components/forms/Forms"
 import { useFech } from '../../../hooks/useFech';
 import { useParams, useNavigate } from 'react-router-dom';
+import { AppContexCompany } from '../../../providers/AppProvider';
+import { capitalizeFirstLetter } from '../../../js/validations';
 
 export const AddBranchOffice = () => {
 
     const { id_customer } = useParams();
     const { validate } = useFormValidate();
     const { updateBreadcrumbs, updateTitulo, updateButtons } = useContext(AppContext);
+    const { title } = useContext(AppContexCompany);
 
     const dict_bread_crumb = [
         { "bread": "empresa" },
@@ -17,7 +20,7 @@ export const AddBranchOffice = () => {
         { "bread": "agregar sucursal" }
     ];
 
-    const dict_title = { "tittle": "[Nombre empresa]" };
+    const dict_title = { "tittle": `${capitalizeFirstLetter(title)}` };
 
     const buttons_menu = [
         { 
@@ -124,7 +127,7 @@ export const AddBranchOffice = () => {
         updateBreadcrumbs(dict_bread_crumb);
         updateTitulo(dict_title.tittle);
         updateButtons(buttons_menu);
-    }, []);
+    }, [title]);
 
     const config_form = {
         number_row: 3,

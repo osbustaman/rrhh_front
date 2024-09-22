@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Forms } from "../../components/forms/Forms";
 import { useFormValidate } from '../../hooks/useFormValidate';
 import { useFech } from '../../hooks/useFech';
 import { useParams } from 'react-router-dom';
 import { InputUploadImage } from '../../components/upload/InputUploadImage';
+
+import { AppContexCompany } from '../../providers/AppProvider';
 
 export const EditFormFactory = () => {
     const { id_customer } = useParams();
@@ -20,6 +22,8 @@ export const EditFormFactory = () => {
     const [comSocialReason, setComSocialReason] = useState([]);
     const [dataCompany, setDataCompany] = useState({});
     const [configForm, setConfigForm] = useState(null);
+
+    const { updateTitle } = useContext(AppContexCompany);
 
     const getDataFech = async (get_data_table, set_state, error_message, type_data_response) => {
         const { error, status } = await get_data_table();
@@ -142,6 +146,8 @@ export const EditFormFactory = () => {
                 com_mail_one,
                 com_mail_two
             } = dataCompany;
+
+            updateTitle(com_name_company);
 
             const newConfigForm = {
                 number_row: 6,

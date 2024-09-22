@@ -9,10 +9,10 @@ export const AddArea = () => {
 
     const dict_bread_crumb = [
         { "bread": "empresa" },
-        { "bread": "nueva área" }
+        { "bread": "área" }
     ];
 
-    const dict_title = { "tittle": "Empresa: [Nombre Empresa]" };
+    const dict_title = { "tittle": "Agregar nueva área" };
 
     const buttons_menu = [
         { 

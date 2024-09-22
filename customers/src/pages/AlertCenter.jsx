@@ -4,7 +4,7 @@ export const AlertCenter = () => {
             <li className="nav-item dropdown no-caret d-none d-sm-block me-3 dropdown-notifications">
                         <a aria-expanded="false" aria-haspopup="true" className="btn btn-icon btn-transparent-dark dropdown-toggle"
                             data-bs-toggle="dropdown" href="#" id="navbarDropdownAlerts" role="button">
-                            <i class="fa-solid fa-bell"></i>
+                            <i className="fa-solid fa-bell"></i>
                         </a>
                         <div aria-labelledby="navbarDropdownAlerts"
                             className="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up">

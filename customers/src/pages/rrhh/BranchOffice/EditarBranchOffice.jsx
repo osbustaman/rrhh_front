@@ -4,16 +4,18 @@ import { useFormValidate } from '../../../hooks/useFormValidate';
 import { Forms } from "../../../components/forms/Forms"
 import { useFech } from '../../../hooks/useFech';
 import { useParams } from 'react-router-dom';
+import { AppContexCompany } from '../../../providers/AppProvider';
+import { capitalizeFirstLetter } from '../../../js/validations';
 
 
 export const EditarBranchOffice = () => {
 
     const { id_customer, id_branch } = useParams();
-
     const { validate } = useFormValidate();
     const { getDataTable } = useFech({ url: `view-branch-office/${id_branch}/` });
 
     const { updateBreadcrumbs, updateTitulo, updateButtons } = useContext(AppContext);
+    const { title } = useContext(AppContexCompany);
 
     const dict_bread_crumb = [
         { "bread": "empresa" },
@@ -21,7 +23,7 @@ export const EditarBranchOffice = () => {
         { "bread": "editar sucursal" }
     ];
 
-    const dict_title = { "tittle": "[Nombre empresa]:[Nombre Sucursal]" };
+    const dict_title = { "tittle": `${capitalizeFirstLetter(title)} ` };
 
     const buttons_menu = [
         { 
@@ -41,9 +43,7 @@ export const EditarBranchOffice = () => {
     const [countries, setCountries] = useState([]);
     const [regions, setRegions] = useState([]);
     const [communes, setCommunes] = useState([]);
-
     const [dataBranchOffice, setDataBranchOffice] = useState([]);
-
     const [configForm, setConfigForm] = useState(null);
 
     const getDataFech = async (get_data_table, set_state, error_message, type_data_response) => {
@@ -122,19 +122,6 @@ export const EditarBranchOffice = () => {
         }
     };
 
-    const clean_form = (id_form) => {
-        setTimeout(() => {
-            const form = document.getElementById(id_form);
-            const formData = new FormData(form);
-
-            formData.forEach((value, key) => {
-                const input = document.getElementsByName(key);
-                //input[0].value = '';
-                input[0].classList.remove('is-invalid');
-            });
-        }, 3000);
-    };
-
     useEffect(() => {
         getDataFech(list_countries, setCountries, 'Error al cargar los datos de los paises', 'countries');
         getDataFech(list_regions, setRegions, 'Error al cargar los datos de las regiones', 'regions');
@@ -142,7 +129,7 @@ export const EditarBranchOffice = () => {
         updateBreadcrumbs(dict_bread_crumb);
         updateTitulo(dict_title.tittle);
         updateButtons(buttons_menu);
-    }, []);
+    }, [title]);
 
     useEffect(() => {
         get_data_branch_office();

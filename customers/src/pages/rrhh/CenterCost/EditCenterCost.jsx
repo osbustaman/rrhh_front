@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom';
 import { useFech } from '../../../hooks/useFech';
 import { useFormValidate } from '../../../hooks/useFormValidate';
 import { Forms } from "../../../components/forms/Forms"
+import { AppContexCompany } from '../../../providers/AppProvider';
+import { capitalizeFirstLetter } from '../../../js/validations';
 
 export const EditCenterCost = () => {
 
@@ -13,14 +15,15 @@ export const EditCenterCost = () => {
     const { getDataTable } = useFech({ url: `view-center-cost/${cencost_id}/` });
 
     const { updateBreadcrumbs, updateTitulo, updateButtons } = useContext(AppContext);
+    const { title } = useContext(AppContexCompany);
 
     const dict_bread_crumb = [
         { "bread": "empresa" },
         { "bread": "editar empresa" },
-        { "bread": "agregar centro de costo" }
+        { "bread": "editar centro de costo" }
     ];
 
-    const dict_title = { "tittle": "[Nombre empresa]:[Nombre Centro de Costo]" };
+    const dict_title = { "tittle": `${capitalizeFirstLetter(title)}` };
 
     const buttons_menu = [
         { 
@@ -93,7 +96,7 @@ export const EditCenterCost = () => {
         updateBreadcrumbs(dict_bread_crumb);
         updateTitulo(dict_title.tittle);
         updateButtons(buttons_menu);
-    }, []);
+    }, [title]);
 
     useEffect(() => {
         get_center_cost();

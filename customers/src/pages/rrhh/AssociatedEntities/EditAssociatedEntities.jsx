@@ -4,6 +4,8 @@ import { useFormValidate } from '../../../hooks/useFormValidate';
 import { Forms } from "../../../components/forms/Forms"
 import { useFech } from '../../../hooks/useFech';
 import { useParams } from 'react-router-dom';
+import { AppContexCompany } from '../../../providers/AppProvider';
+import { capitalizeFirstLetter } from '../../../js/validations';
 
 
 export const EditAssociatedEntities = () => {
@@ -21,6 +23,7 @@ export const EditAssociatedEntities = () => {
     };
 
     const { updateBreadcrumbs, updateTitulo, updateButtons } = useContext(AppContext);
+    const { title } = useContext(AppContexCompany);
 
     const dict_bread_crumb = [
         { "bread": "empresa" },
@@ -28,7 +31,7 @@ export const EditAssociatedEntities = () => {
         { "bread": "agregar entidades asociadas" }
     ];
 
-    const dict_title = { "tittle": "[Nombre empresa]" };
+    const dict_title = { "tittle": `${capitalizeFirstLetter(title)}` };
 
     const buttons_menu = [
         { 
@@ -126,11 +129,10 @@ export const EditAssociatedEntities = () => {
     useEffect(() => {
         getDataFech(list_mutualSecurities, setMutualSecurities, 'Error al cargar los datos de las mutuales', 'mutual_security');
         getDataFech(list_boxesCompensation, setBoxesCompensation, 'Error al cargar los datos de las cajas de compensación', 'boxes_compensation');
-
         updateBreadcrumbs(dict_bread_crumb);
         updateTitulo(dict_title.tittle);
         updateButtons(buttons_menu);
-    }, []);
+    }, [title]);
 
     useEffect(() => {
         get_data_company();

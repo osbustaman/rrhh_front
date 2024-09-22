@@ -247,14 +247,14 @@ export const FormFactory = () => {
 
     return (
         <>
-            <div class="row">
+            <div className="row">
                 <InputUploadImage />
-                <div class="col-xl-8">
-                    <div class="card mb-4">
-                        <div class="card-header">
+                <div className="col-xl-8">
+                    <div className="card mb-4">
+                        <div className="card-header">
                             Datos de la empresa
                         </div>
-                        <div class="card-body">
+                        <div className="card-body">
                             <Forms key={formKey} config_form={config_form} />
                         </div>
                     </div>

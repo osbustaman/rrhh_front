@@ -18,7 +18,7 @@ export const EditDepartment = () => {
         { "bread": "departamento" }
     ];
 
-    const dict_title = { "tittle": "Editar nuevo departamento" };
+    const dict_title = { "tittle": "Editar departamento" };
 
     const buttons_menu = [
         { 

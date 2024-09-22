@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { AppContext } from '../../providers/AppProvider';
+import { AppContext, AppContexCompany } from '../../providers/AppProvider';
 import { useParams } from 'react-router-dom';
 
 import { Tabs } from '../../components/tabs/Tabs';
@@ -7,19 +7,20 @@ import { EditFormFactory } from './EditFormFactory';
 import { ListBranchOffice } from './ListBranchOffice';
 import { ListCenterCost } from './ListCenterCost';
 import { ListAssociatedEntities } from './ListAssociatedEntities';
+import { capitalizeFirstLetter } from '../../js/validations';
 
 export const EditFactory = () => {
 
     const { id_customer } = useParams();
-
     const { updateBreadcrumbs, updateTitulo, updateButtons } = useContext(AppContext);
+    const { title } = useContext(AppContexCompany);
 
     const dict_bread_crumb = [
         { "bread": "empresa" },
         { "bread": "editar empresa" }
     ];
 
-    const dict_title = { "tittle": "[Nombre empresa]" };
+    const dict_title = { "tittle": capitalizeFirstLetter(title) };
 
     const buttons_menu = [
         { 
@@ -48,7 +49,7 @@ export const EditFactory = () => {
         updateBreadcrumbs(dict_bread_crumb);
         updateTitulo(dict_title.tittle);
         updateButtons(buttons_menu);
-    }, []);
+    }, [title]);
 
     const tabData = [
         { id: 'empresa', label: 'Empresa', content: <EditFormFactory /> },

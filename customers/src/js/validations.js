@@ -74,3 +74,12 @@ export const actionMap = {
     // Agrega más mapeos de acciones aquí según sea necesario
 };
 
+
+export const capitalizeFirstLetter = (string) => {
+
+    if (typeof string !== 'string') {
+        console.error('Expected a string but received:', typeof string);
+        return '';
+    }
+    return string.charAt(0).toUpperCase() + string.slice(1);
+};
