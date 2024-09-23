@@ -5,6 +5,9 @@ const useMenuMiddleware = () => {
     const path = location.pathname;
 
     const pathMappings = {
+
+        '/home/profile': { item: 'user', subItem: 'data_user' },
+
         '/home/lista-empresas': { item: 'ver_empresas', subItem: 'lista_empresas' },
         '/home/editar-empresa': { item: 'ver_empresas', subItem: 'lista_empresas' },
         '/home/agregar-sucursal': { item: 'ver_empresas', subItem: 'lista_empresas' },
@@ -21,6 +24,9 @@ const useMenuMiddleware = () => {
         '/home/editar-area': { item: 'ver_empresas', subItem: 'areas' },
         '/home/agregar-departamento': { item: 'ver_empresas', subItem: 'areas' },
         '/home/editar-departamento': { item: 'ver_empresas', subItem: 'areas' },
+        '/home/editar-cargo': { item: 'ver_empresas', subItem: 'areas' },
+
+
         '/home/editar-cargo': { item: 'ver_empresas', subItem: 'areas' },
         // Agrega el resto de las condiciones aquí...
     };

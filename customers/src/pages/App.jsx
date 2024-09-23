@@ -34,6 +34,7 @@ import { AddDepartment } from './rrhh/Area/AddDepartment';
 import { EditDepartment } from './rrhh/Area/EditDepartment';
 import { AddPosition } from './rrhh/Area/AddPosition';
 import { EditPosition } from './rrhh/Area/EditPosition';
+import { ListUsers } from './rrhh/Users/ListUsers';
 
 export const App = () => {
 
@@ -185,6 +186,8 @@ export const App = () => {
                                         
                                         <Route path="agregar-cargo/:id_area/:id_department" element={<AddPosition />} />
                                         <Route path="editar-cargo/:id_area/:id_department/:id_position" element={< EditPosition/>} />
+
+                                        <Route path="listado-colaboradores/" element={< ListUsers/>} />
 
                                         <Route path="*" element={<NotFound />} />
                                     </Routes>
