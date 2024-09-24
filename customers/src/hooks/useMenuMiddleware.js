@@ -27,7 +27,7 @@ const useMenuMiddleware = () => {
         '/home/editar-cargo': { item: 'ver_empresas', subItem: 'areas' },
 
 
-        '/home/editar-cargo': { item: 'ver_empresas', subItem: 'areas' },
+        '/home/listado-colaboradores': { item: 'employees', subItem: 'list_employees' },
         // Agrega el resto de las condiciones aquí...
     };
 

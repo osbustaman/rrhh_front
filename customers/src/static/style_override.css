@@ -1,46 +1,8 @@
-#layoutSidenav_nav {
-    overflow-y: auto;
-    max-height: 100vh; /* Asegura que no exceda la altura de la ventana */
-}
-
-#layoutSidenav_content {
-    overflow-y: auto;
-    max-height: 100vh;
-    padding-bottom: 1rem; /* Agrega espacio al final para el footer */
-}
-
 /* Asegura que el cuerpo de la página no exceda la altura de la ventana */
 html, body {
     height: 100%;
     margin: 0;
     overflow: hidden; /* Evita el scroll general */
-}
-
-#layoutSidenav {
-    display: flex;
-    height: 100vh; /* Ocupa toda la altura de la ventana */
-}
-
-#layoutSidenav_nav {
-    flex-shrink: 0;
-    width: 250px; /* Ancho fijo para el sidebar */
-    overflow-y: auto; /* Scroll solo para el menú lateral */
-    max-height: 100%; /* Asegura que no exceda la altura disponible */
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    transform: translateX(0);
-    opacity: 1;
-}
-
-#layoutSidenav_nav.hidden {
-    transform: translateX(-100%);
-    opacity: 0;
-}
-
-#layoutSidenav_content {
-    flex-grow: 1;
-    overflow-y: auto; /* Scroll solo para el contenido principal */
-    max-height: 100%; /* Asegura que no exceda la altura disponible */
-    padding: 20px; /* Espaciado interno opcional */
 }
 
 .page-header.page-header-dark .breadcrumb {

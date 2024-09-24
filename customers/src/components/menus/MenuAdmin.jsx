@@ -60,7 +60,7 @@ export const MenuAdmin = () => {
                 id="collapseEmpleados"
             >
                 <nav className="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                    <Link className='nav-link' to='listado-colaboradores'> Ver colaboradores</Link>
+                    <Link className={localStorage.getItem('sub-item') === 'list_employees' ? `active nav-link` : 'nav-link'} to='listado-colaboradores'>Ver colaboradores</Link>
                     <Link className='nav-link' to='#'> Crear empleado</Link>                    
                 </nav>
             </div>
