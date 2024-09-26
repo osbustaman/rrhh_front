@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-export const InputUploadImage = () => {
+export const InputUploadImage = ({ title='Logo empresa' }) => {
     const [imageSrc, setImageSrc] = useState("assets/img/illustrations/profiles/profile-1.png");
     const fileInputRef = useRef(null);
 
@@ -32,7 +32,7 @@ export const InputUploadImage = () => {
             <div className="col-xl-4">
                 <div className="card mb-4 mb-xl-0">
                     <div className="card-header">
-                        Logo empresa
+                        {title}
                     </div>
                     <div className="card-body text-center">
                         <img alt="" className="img-account-profile mb-2"

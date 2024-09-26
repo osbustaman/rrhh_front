@@ -28,6 +28,7 @@ const useMenuMiddleware = () => {
 
 
         '/home/listado-colaboradores': { item: 'employees', subItem: 'list_employees' },
+        '/home/agregar-colaborador': { item: 'employees', subItem: 'agregar_colaborador' },
         // Agrega el resto de las condiciones aquí...
     };
 

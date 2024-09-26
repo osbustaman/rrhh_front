@@ -50,7 +50,7 @@ export const ListUsers = () => {
     const get_data_table = useCallback(async () => {
         const startTime = performance.now();
 
-        const { getDataTable } = useFech({ url: 'list-companies' });
+        const { getDataTable } = useFech({ url: 'list-employees' });
         const { error, status } = await getDataTable();
 
         const element = status.map((item, index) => ({
