@@ -54,16 +54,15 @@ export const ListUsers = () => {
         const { error, status } = await getDataTable();
 
         const element = status.map((item, index) => ({
-            id: item.com_id,
-            nombre_empresa: item.com_name_company,
-            rut_empresa: item.com_rut,
-            empresa_ingresada: item.created.split('T')[0],
+            id: item.user_id,
+            rut: item.rut,
+            nombre_completo: item.full_name,
             acciones: <SmallButtons key={index} config_buttons={[
                 {
                     "class": "btn btn-green btn-icon",
                     "icon": "fa fa-pencil",
                     "label": "Editar",
-                    "url": `/home/editar-empresa/${item.com_id}`,
+                    "url": `/home/editar-empresa/${item.user_id}`,
                     "id": ``,
                     "def": ``
                 },
@@ -73,7 +72,7 @@ export const ListUsers = () => {
                     "label": "Eliminar",
                     "url": '#',
                     "id": ``,
-                    "def": () => delete_element(item.com_id)
+                    "def": () => delete_element(item.user_id)
                 }
             ]} />
         }));

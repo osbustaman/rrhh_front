@@ -191,7 +191,7 @@ export const App = () => {
 
                                         <Route path="listado-colaboradores/" element={< ListUsers/>} />
                                         <Route path="agregar-colaborador/" element={< AddUser/>} />
-                                        <Route path="editar-colaborador/" element={< EditUser/>} />
+                                        <Route path="editar-colaborador/:id_user/" element={< EditUser/>} />
 
                                         <Route path="*" element={<NotFound />} />
                                     </Routes>

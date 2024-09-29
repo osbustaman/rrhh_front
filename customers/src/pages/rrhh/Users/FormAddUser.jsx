@@ -3,10 +3,12 @@ import { InputUploadImage } from '../../../components/upload/InputUploadImage';
 import { Forms } from '../../../components/forms/Forms';
 import { useFormValidate } from '../../../hooks/useFormValidate';
 import { useFech } from '../../../hooks/useFech';
+import { useParams, useNavigate } from 'react-router-dom';
 
 export const FormAddUser = () => {
 
     const { validate } = useFormValidate();
+    const navigate = useNavigate();
 
     const [formKey, setFormKey] = useState(Date.now());
 
@@ -35,12 +37,13 @@ export const FormAddUser = () => {
                 $.alert(status.error);
             }else{
                 const { message } = status;
+                console.log(status)
                 $.confirm({
-                    title: message,
+                    title: 'usuario creado con exito',
                     content: form_data,
                     buttons: {
                         continuar: function () {
-                            //navigate(`/home/editar-empresa/${com_id}`);
+                            navigate(`/home/editar-colaborador/${status.id}`);
                         }
                     }
                 });
