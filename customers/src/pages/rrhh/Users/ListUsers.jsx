@@ -62,7 +62,7 @@ export const ListUsers = () => {
                     "class": "btn btn-green btn-icon",
                     "icon": "fa fa-pencil",
                     "label": "Editar",
-                    "url": `/home/editar-empresa/${item.user_id}`,
+                    "url": `/home/editar-colaborador/${item.user_id}`,
                     "id": ``,
                     "def": ``
                 },

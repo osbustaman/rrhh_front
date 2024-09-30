@@ -142,6 +142,21 @@ export const InputText = ({ config_input }) => {
                         {...eventProps}
                     />
                 );
+            
+            case "number":
+                return (
+                    <input
+                        type="number"
+                        id={key.id}
+                        className="form-control"
+                        name={name_input}
+                        required={!!key.required}
+                        value={formState[name_input] ?? key.value}
+                        onChange={onInputChange}
+                        {...eventProps}
+                    />
+                );
+            
             case "email":
                 return (
                     <input

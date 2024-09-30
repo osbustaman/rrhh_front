@@ -4,6 +4,9 @@ import { AppContext } from '../../../providers/AppProvider';
 import { Tabs } from '../../../components/tabs/Tabs';
 
 import { FormEditUSer } from './FormEditUser';
+import { PersonalData } from './PersonalData';
+import { EmploymentData } from './EmploymentData';
+import { BankDetails } from './BankDetails';
 
 
 export const EditUser = () => {
@@ -24,6 +27,9 @@ export const EditUser = () => {
 
     const tabData = [
         { id: 'user', label: 'Colaborador', content: <FormEditUSer/> },
+        { id: 'employee', label: 'Datos Personales', content: <PersonalData/> },
+        { id: 'user_employee', label: 'Datos Laborales', content: <EmploymentData/> },
+        { id: 'bank_details', label: 'Datos Bancarios', content: <BankDetails/> },
     ];
 
     return (
