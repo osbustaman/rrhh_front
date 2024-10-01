@@ -42,9 +42,23 @@ export const App = () => {
 
     useMenuMiddleware();
 
+    const [_first_name, setFirstName] = useState('');
+    const [_last_name, setLastName] = useState('');
+    const [_email, setEmail] = useState('');
+
     const get_data_user = async () => {
         const { getDataUser } = useDataUser(localStorage.getItem('user'));
-        const response = await getDataUser();
+        const { error, status } = await getDataUser();
+        const { first_name, last_name, email, user_company } = status;
+
+        console.log(user_company);
+
+        setFirstName(first_name);
+        setLastName(last_name);
+        setEmail(email);
+
+        localStorage.setItem('uc_type_user', user_company.uc_type_user);
+        localStorage.setItem('company', user_company.company);
     }
 
     get_data_user();
@@ -83,7 +97,7 @@ export const App = () => {
                         </button>
 
                         <a className="navbar-brand pe-3 ps-4 ps-lg-2" href="#">
-                            SB Admin Pro
+                            Aqui va la imagen
                         </a>
 
                         <form className="form-inline me-auto d-none d-lg-block me-3">
@@ -98,26 +112,32 @@ export const App = () => {
                         <ul className="navbar-nav align-items-center ms-auto">
                             <AlertCenter />
                             <AlertsMails />
-                            <Config />
+                            <Config data={
+                                { 
+                                    full_name: `${_first_name} ${_last_name}`, 
+                                    email: _email 
+                                }
+                            }/>
                         </ul>
                     </nav>
 
                     <div id="layoutSidenav">
                         <div id="layoutSidenav_nav" className={isSidebarVisible ? "" : "d-none"}>
                             <nav className="sidenav shadow-right sidenav-light">
-                                <div className="sidenav-menu">
+                                <div className="sidenav-menu scroll-div">
+
                                     <div className="nav accordion" id="accordionSidenav">
                                         <MenuAdmin />
                                     </div>
-                                </div>
 
+                                </div>
                                 <div className="sidenav-footer">
                                     <div className="sidenav-footer-content">
                                         <div className="sidenav-footer-subtitle">
                                             Bienvenid@:
                                         </div>
                                         <div className="sidenav-footer-title">
-                                            Valerie Luna
+                                            {`${_first_name} ${_last_name}`}
                                         </div>
                                     </div>
                                 </div>
@@ -125,7 +145,7 @@ export const App = () => {
                         </div>
 
                         <div id="layoutSidenav_content">
-                            <main>
+                            <main className='scroll-div'>
                                 <header className="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
                                     <div className="container-xl px-4">
                                         <div className="page-header-content pt-4">
@@ -182,33 +202,30 @@ export const App = () => {
                                         <Route path="lista-areas" element={< ListAreas/>} />
                                         <Route path="agregar-area" element={< AddArea/>} />
                                         <Route path="editar-area/:id_area" element={< EditArea/>} />
-
                                         <Route path="agregar-departamento/:id_area" element={< AddDepartment/>} />
                                         <Route path="editar-departamento/:id_area/:id_department" element={< EditDepartment/>} />
-                                        
                                         <Route path="agregar-cargo/:id_area/:id_department" element={<AddPosition />} />
                                         <Route path="editar-cargo/:id_area/:id_department/:id_position" element={< EditPosition/>} />
-
                                         <Route path="listado-colaboradores/" element={< ListUsers/>} />
                                         <Route path="agregar-colaborador/" element={< AddUser/>} />
                                         <Route path="editar-colaborador/:id_user/" element={< EditUser/>} />
-
                                         <Route path="*" element={<NotFound />} />
                                     </Routes>
                                 </div>
-                            </main>
-                            <footer className="footer-admin mt-auto footer-light">
-                                <div className="container-xl px-4">
-                                    <div className="row">
-                                        <div className="col-md-6 small">
-                                            [nombre cliente]
-                                        </div>
-                                        <div className="col-md-6 text-md-end small">
-                                            &copy; Solvix SPA. Marca registrada 2024-{currentYear}
+                                <footer className="footer-admin mt-auto footer-light">
+                                    <div className="container-xl px-4">
+                                        <div className="row">
+                                            <div className="col-md-6 small">
+                                                [nombre cliente]
+                                            </div>
+                                            <div className="col-md-6 text-md-end small">
+                                                &copy; Solvix SPA. Marca registrada 2024-{currentYear}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </footer>
+                                </footer>
+                            </main>
+                            
                         </div>
                     </div>
                 </AppProviderCompany>

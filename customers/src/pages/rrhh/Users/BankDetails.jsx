@@ -111,7 +111,7 @@ export const BankDetails = () => {
                         value: emp_paymentformat === null ? '' : emp_paymentformat
                     },{
                         label: 'Bancos',
-                        required: true,
+                        required: false,
                         name: 'bank',
                         type: 'select_autocomplete',
                         options: banks,
@@ -120,7 +120,7 @@ export const BankDetails = () => {
                     },{
                         
                         label: 'Tipo de cuenta bancaria',
-                        required: true,
+                        required: false,
                         name: 'emp_accounttype',
                         type: 'select_autocomplete',
                         options: [
@@ -133,14 +133,14 @@ export const BankDetails = () => {
                             { value: 7, label: 'Cuenta Corriente' }
                         ],
                         text_default: '-- Seleccione --',
-                        value: emp_accounttype === null ? '' : emp_accounttype
+                        value: emp_accounttype === null ? 0 : emp_accounttype
                     },{
                         label: 'Cuenta bancaria',
                         placeholder: '',
-                        required: true,
+                        required: false,
                         name: 'emp_bankaccount',
                         type: 'text',
-                        value: emp_bankaccount
+                        value: emp_bankaccount === null ? 'NN' : emp_bankaccount
                     }
                     
                     

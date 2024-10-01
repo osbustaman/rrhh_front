@@ -1,4 +1,4 @@
-export const Config = () => {
+export const Config = ({data}) => {
     return (
         <>
                                 <li className="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
@@ -12,12 +12,12 @@ export const Config = () => {
                                 <img className="dropdown-user-img" src="assets/img/illustrations/profiles/profile-1.png" />
                                 <div className="dropdown-user-details">
                                     <div className="dropdown-user-details-name">
-                                        Valerie Luna
+                                        {data.full_name}
                                     </div>
                                     <div className="dropdown-user-details-email">
                                         <a className="__cf_email__" data-cfemail="1b6d776e757a5b7a747735787476"
                                             href="/cdn-cgi/l/email-protection">
-                                            [email protected]
+                                            {data.email}
                                         </a>
                                     </div>
                                 </div>

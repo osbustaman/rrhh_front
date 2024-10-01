@@ -50,7 +50,9 @@ export const ListUsers = () => {
     const get_data_table = useCallback(async () => {
         const startTime = performance.now();
 
-        const { getDataTable } = useFech({ url: 'list-employees' });
+        const { getDataTable } = (localStorage.getItem('uc_type_user') == 1) || localStorage.getItem('uc_type_user')
+        ? useFech({ url: 'list-employees' })
+        : useFech({ url: `list-employees/${localStorage.getItem('company')}` }) ;
         const { error, status } = await getDataTable();
 
         const element = status.map((item, index) => ({
