@@ -7,7 +7,7 @@ import { useFech } from '../../../hooks/useFech';
 export const BankDetails = () => {
     const { id_user } = useParams();
 
-    const [dataEmployee, setDataEmployee] = useState({});
+    const [dataBankEmployee, setDataBankEmployee] = useState({});
     const [configForm, setConfigForm] = useState(null);
     const { getDataTable } = useFech({ url: `/employee/by-user/${id_user}/` });
     const { getDataTable: list_banks } = useFech({ url: 'list-banks' });
@@ -18,7 +18,7 @@ export const BankDetails = () => {
 
     const get_data_response = async () => {
         const { error, status } = await getDataTable();
-        setDataEmployee(status);
+        setDataBankEmployee(status);
     };
 
     const getDataFech = async (get_data_table, set_state, error_message, type_data_response) => {
@@ -81,13 +81,13 @@ export const BankDetails = () => {
     }, [id_user]);
 
     useEffect(() => {
-        if (Object.keys(dataEmployee).length > 0 ) {
+        if (Object.keys(dataBankEmployee).length > 0 ) {
             const {
                 emp_paymentformat,
                 emp_accounttype,
                 emp_bankaccount,
                 bank
-            } = dataEmployee;
+            } = dataBankEmployee;
 
             const config_form = {
                 number_row: 3,
@@ -149,7 +149,7 @@ export const BankDetails = () => {
 
             setConfigForm(config_form);
         }
-    }, [dataEmployee, banks]);
+    }, [dataBankEmployee, banks]);
 
     return (
         <div>

@@ -250,7 +250,7 @@ export const PersonalData = () => {
                     },{
                         label: 'Tipo de lLicencia',
                         placeholder: 'A, B, C, D, E',
-                        required: true,
+                        required: false,
                         name: 'emp_typelicense',
                         type: 'text',
                         value: emp_typelicense

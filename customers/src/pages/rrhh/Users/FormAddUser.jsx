@@ -87,6 +87,12 @@ export const FormAddUser = () => {
                 name: 'last_name',
                 type: 'text',
                 value: ''
+            }, {
+                label: '',
+                required: true,
+                name: 'username',
+                type: 'hidden',
+                value: 'NN'
             }
         ],
     }
