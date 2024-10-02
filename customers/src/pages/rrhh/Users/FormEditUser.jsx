@@ -4,8 +4,9 @@ import { Forms } from '../../../components/forms/Forms';
 import { useFormValidate } from '../../../hooks/useFormValidate';
 import { useParams } from 'react-router-dom';
 import { useFech } from '../../../hooks/useFech';
+import { AppContexCompany } from '../../../providers/AppProvider';
 
-export const FormEditUSer = () => {
+export const FormEditUser = () => {
 
     const { id_user } = useParams();
 
@@ -13,13 +14,14 @@ export const FormEditUSer = () => {
     const { getDataTable } = useFech({ url: `get-employee/${id_user}/` });
     const [configForm, setConfigForm] = useState(null);
     const [dataUser, setDataUser] = useState([]);
+    const [fullName, setFullName ] = useState(false);
 
+    const { updateTitle } = useContext(AppContexCompany);
+    
     const get_data_response = async () => {
-        const { error, status } = await getDataTable();
+        const { status } = await getDataTable();
         setDataUser(status);
     };
-
-    const [formKey, setFormKey] = useState(Date.now());
 
     const send_form = async (form) => {
 
@@ -57,6 +59,10 @@ export const FormEditUSer = () => {
     };
 
     useEffect(() => {
+        get_data_response();
+    }, [id_user]);
+
+    useEffect(() => {
         if (Object.keys(dataUser).length > 0) {
             const {
                 username,
@@ -65,7 +71,8 @@ export const FormEditUSer = () => {
                 last_name
             } = dataUser;
             
-
+            updateTitle(`${first_name} ${last_name}`);
+            
             const config_form = {
                 number_row: 6,
                 id_form: 'form_data_user',
@@ -109,16 +116,11 @@ export const FormEditUSer = () => {
                         value: username
                     }
                 ],
-
             }
-
+            
             setConfigForm(config_form);
         }
     }, [dataUser]);
-
-    useEffect(() => {
-        get_data_response();
-    }, [id_user]);
 
     return (
         <>

@@ -32,7 +32,6 @@ export const AppContexCompany = createContext();
 export const AppProviderCompany = ({ children }) => {
 
     const [title, setTitle] = useState('');
-
     const updateTitle = (newTitulo) => {
         setTitle(newTitulo);
     };
@@ -41,6 +40,25 @@ export const AppProviderCompany = ({ children }) => {
         <AppContexCompany.Provider value={{ title, updateTitle }}>
             {children}
         </AppContexCompany.Provider>
+    );
+};
+
+
+export const AppContexTitle = createContext();
+
+export const AppProviderTitle = ({ children }) => {
+
+    console.log(11);
+
+    const [bigTitle, setBigTitle] = useState('');
+    const updateBigTitle = (newTitulo) => {
+        setBigTitle(newTitulo);
+    };
+
+    return (
+        <AppContexTitle.Provider value={{ bigTitle, updateBigTitle }}>
+            {children}
+        </AppContexTitle.Provider>
     );
 };
 

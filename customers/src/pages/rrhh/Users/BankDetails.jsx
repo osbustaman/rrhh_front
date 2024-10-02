@@ -140,7 +140,7 @@ export const BankDetails = () => {
                         required: false,
                         name: 'emp_bankaccount',
                         type: 'text',
-                        value: emp_bankaccount === null ? 'NN' : emp_bankaccount
+                        value: emp_bankaccount
                     }
                     
                     

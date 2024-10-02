@@ -89,7 +89,7 @@ export const EmploymentData = () => {
                 uc_type_user
             } = dataEmployee;
 
-
+            console.log(company ? company : localStorage.getItem('company'), company);
 
             const config_form = {
                 number_row: 3,
@@ -105,7 +105,7 @@ export const EmploymentData = () => {
                         type: localStorage.getItem('uc_type_user') == 1 ? 'select_autocomplete' : 'hidden',
                         options: companies,
                         text_default: '-- Seleccione --',
-                        value: company
+                        value: company ? company : localStorage.getItem('company')
                     },{
                         label: 'Tipo de usuario',
                         required: true,

@@ -49,16 +49,12 @@ export const App = () => {
     const get_data_user = async () => {
         const { getDataUser } = useDataUser(localStorage.getItem('user'));
         const { error, status } = await getDataUser();
-        const { first_name, last_name, email, user_company } = status;
-
-        console.log(user_company);
+        const { first_name, last_name, email } = status;
 
         setFirstName(first_name);
         setLastName(last_name);
         setEmail(email);
 
-        localStorage.setItem('uc_type_user', user_company.uc_type_user);
-        localStorage.setItem('company', user_company.company);
     }
 
     get_data_user();
