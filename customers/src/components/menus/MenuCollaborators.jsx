@@ -17,9 +17,9 @@ export const MenuCollaborators = () => {
                 href="#"
             >
                 <div className="nav-link-icon">
-                    <i className="fa-solid fa-person"></i>
+                    <i className="fa-solid fa-book"></i>
                 </div>
-                <span className={localStorage.getItem('item') === 'collaborators' ? 'color-text-1' : ''}>Colaborador</span>
+                <span className={localStorage.getItem('item') === 'collaborators' ? 'color-text-1' : ''}>Mis datos</span>
                 <div className="sidenav-collapse-arrow">
                     <i className="fas fa-angle-down"></i>
                 </div>
@@ -30,10 +30,74 @@ export const MenuCollaborators = () => {
                 id="collapseColaborattor"
             >
                 <nav className="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                    <Link className={localStorage.getItem('sub-item') === '' ? `active nav-link` : 'nav-link'} to=''> Datos Colaborador</Link>
-                    <Link className={localStorage.getItem('sub-item') === '' ? `active nav-link` : 'nav-link'} to=''> Contratos</Link>
+                    <Link className={localStorage.getItem('sub-item') === '' ? `active nav-link` : 'nav-link'} to=''> Asignaciones</Link>
+                    <Link className={localStorage.getItem('sub-item') === '' ? `active nav-link` : 'nav-link'} to=''> Vacaciones</Link>
+                    <Link className={localStorage.getItem('sub-item') === '' ? `active nav-link` : 'nav-link'} to=''> Permisos</Link>
+                    <Link className={localStorage.getItem('sub-item') === '' ? `active nav-link` : 'nav-link'} to=''> Ausentismos</Link>
                 </nav>
             </div>
+
+
+
+            <a 
+                aria-controls="collapseMyRequest" 
+                aria-expanded={localStorage.getItem('item') === 'collaborators' ? 'true' : 'false'}
+                className={localStorage.getItem('item') === 'collaborators' ? 'nav-link' : 'nav-link collapsed'}
+                data-bs-target="#collapseMyRequest" 
+                data-bs-toggle="collapse" 
+                href="#"
+            >
+                <div className="nav-link-icon">
+                    <i className="fa-solid fa-pen-nib"></i>
+                </div>
+                <span className={localStorage.getItem('item') === 'collaborators' ? 'color-text-1' : ''}>Mis solicitudes</span>
+                <div className="sidenav-collapse-arrow">
+                    <i className="fas fa-angle-down"></i>
+                </div>
+            </a>
+            <div 
+                className={localStorage.getItem('item') === 'collaborators' ? 'collapse show' : 'collapse'}
+                data-bs-parent="#accordionSidenav" 
+                id="collapseMyRequest"
+            >
+                <nav className="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                <Link className={localStorage.getItem('sub-item') === '' ? `active nav-link` : 'nav-link'} to=''>En proceso</Link>
+                <Link className={localStorage.getItem('sub-item') === '' ? `active nav-link` : 'nav-link'} to=''>Historial</Link>   
+                </nav>
+            </div>
+
+
+
+            <a 
+                aria-controls="collapseDocuments" 
+                aria-expanded={localStorage.getItem('item') === 'collaborators' ? 'true' : 'false'}
+                className={localStorage.getItem('item') === 'collaborators' ? 'nav-link' : 'nav-link collapsed'}
+                data-bs-target="#collapseDocuments" 
+                data-bs-toggle="collapse" 
+                href="#"
+            >
+                <div className="nav-link-icon">
+                    <i className="fa-regular fa-folder"></i>
+                </div>
+                <span className={localStorage.getItem('item') === 'collaborators' ? 'color-text-1' : ''}>Documentos</span>
+                <div className="sidenav-collapse-arrow">
+                    <i className="fas fa-angle-down"></i>
+                </div>
+            </a>
+            <div 
+                className={localStorage.getItem('item') === 'collaborators' ? 'collapse show' : 'collapse'}
+                data-bs-parent="#accordionSidenav" 
+                id="collapseDocuments"
+            >
+                <nav className="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                <Link className={localStorage.getItem('sub-item') === '' ? `active nav-link` : 'nav-link'} to=''>Contratos</Link>
+                <Link className={localStorage.getItem('sub-item') === '' ? `active nav-link` : 'nav-link'} to=''>Remuneraciones</Link>
+                <Link className={localStorage.getItem('sub-item') === '' ? `active nav-link` : 'nav-link'} to=''>Documentos por revisar</Link>  
+                <Link className={localStorage.getItem('sub-item') === '' ? `active nav-link` : 'nav-link'} to=''>Mi certificado de antiguedad</Link>  
+                </nav>
+            </div>
+
+            
 
         </>
     )

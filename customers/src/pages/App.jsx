@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { MenuAdmin } from '../components/menus/MenuAdmin';
 import { NotFound } from '../components/NotFound';
 import { BreadCrumbs } from '../components/breadcrumbs/BreadCrumbs';
@@ -38,8 +38,8 @@ import { ListUsers } from './rrhh/Users/ListUsers';
 import { AddUser } from './rrhh/Users/AddUser';
 import { EditUser } from './rrhh/Users/EditUser';
 
-export const App = () => {
 
+export const App = () => {
     useMenuMiddleware();
 
     const [_first_name, setFirstName] = useState('');

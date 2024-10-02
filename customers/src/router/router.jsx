@@ -5,7 +5,11 @@ import { Profile } from "../pages/Profile";
 import { NotFound } from "../components/NotFound";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import { useValidateSesion } from '../hooks/useValidateSesion';
+
 export const Router = () => {
+
+
     return (
         <BrowserRouter>
             <Routes>
