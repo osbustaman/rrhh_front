@@ -22,9 +22,6 @@ export const EditUser = () => {
     const get_data_response = async () => {
         const { status } = await getDataTable();
         setDataUser(status);
-
-        console.log(status);
-
         setFullname(`${status.first_name} ${status.last_name}`);
         setUsernameCrumbs(status.username);
     };

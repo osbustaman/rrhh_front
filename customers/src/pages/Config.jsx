@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useFech } from '../hooks/useFech';
 
 export const Config = ({data}) => {
 
@@ -8,11 +9,17 @@ export const Config = ({data}) => {
     const handleLogout = async () => {
         $.confirm({
             title: 'Confirmación!',
-            content: 'Esta seguro de cerrar la sesión?',
+            content: '¿Está seguro de cerrar la sesión?',
             buttons: {
-                confirmar: function () {
-                    localStorage.clear();
-                    navigate(`/`);
+                confirmar: async function () {
+                    const { postDataApi } = useFech({ url: `logout` });
+                    const { error, status } = await postDataApi({});
+                    if (!error) {
+                        console.error('Error al cerrar sesión:', error);
+                    } else {
+                        localStorage.clear();
+                        navigate(`/`);
+                    }
                 },
                 cancelar: function () {
                 }

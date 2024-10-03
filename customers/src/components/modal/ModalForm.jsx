@@ -1,8 +1,6 @@
 export const ModalForm = ({ config_modal }) => {
     const { id_form, def, clean_form } = config_modal;
 
-    console.log(config_modal);
-
     return (
         <>
             <div className="modal fade bs-example-modal-lg" tabIndex="-1" role="dialog" aria-hidden="true" style={{display: 'none'}}>

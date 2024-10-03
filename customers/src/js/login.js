@@ -27,7 +27,6 @@ export const login = async ({ username, password }) => {
 
         if (status === 200 && ok) {
             const data = await response.json();
-            console.log(data);
             localStorage.setItem('user', data.user);
             localStorage.setItem('token', data.token);
             

@@ -89,8 +89,6 @@ export const EmploymentData = () => {
                 uc_type_user
             } = dataEmployee;
 
-            console.log(company ? company : localStorage.getItem('company'), company);
-
             const config_form = {
                 number_row: 3,
                 id_form: 'form_data_employee_company',

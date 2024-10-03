@@ -1,6 +1,24 @@
 import React, { useState, useRef } from 'react';
+import { useParams } from 'react-router-dom';
+import { useFech } from '../../hooks/useFech';
 
-export const InputUploadImage = ({ title='Logo empresa' }) => {
+export const InputUploadImageCollaborator = ({ title='Logo empresa' }) => {
+    const { id_user } = useParams();
+
+    console.log(id_user);
+
+    const send_image = async (form_data) => {
+        const { postDataApi } = useFech({ url: `upload-file/` });
+        const { error, status } = await postDataApi(form_data);
+    };
+
+
+    /*
+    file_base64 = serializers.CharField()
+    id = serializers.IntegerField()
+    
+    */
+
     const [imageSrc, setImageSrc] = useState("assets/img/illustrations/profiles/profile-1.png");
     const fileInputRef = useRef(null);
 
@@ -20,6 +38,15 @@ export const InputUploadImage = ({ title='Logo empresa' }) => {
             const reader = new FileReader();
             reader.onloadend = () => {
                 const base64String = reader.result;
+                console.log(base64String);
+
+                const form_data = {
+                    file_base64: base64String,
+                    user_id: id_user
+                };
+
+                send_image(form_data);
+
                 setImageSrc(base64String);
             };
             reader.readAsDataURL(file);

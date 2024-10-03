@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { InputUploadImage } from '../../../components/upload/InputUploadImage';
+import { InputUploadImageCollaborator } from '../../../components/upload/InputUploadImageCollaborator';
 import { Forms } from '../../../components/forms/Forms';
 import { useFormValidate } from '../../../hooks/useFormValidate';
 import { useParams } from 'react-router-dom';
@@ -125,7 +125,7 @@ export const FormEditUser = () => {
     return (
         <>
             <div className="row">
-                <InputUploadImage title={'Foto colaborador'} />
+                <InputUploadImageCollaborator title={'Foto colaborador'} />
                 <div className="col-xl-8">
                     <div className="card mb-4">
                         <div className="card-header">

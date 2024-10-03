@@ -47,9 +47,6 @@ export const AppProviderCompany = ({ children }) => {
 export const AppContexTitle = createContext();
 
 export const AppProviderTitle = ({ children }) => {
-
-    console.log(11);
-
     const [bigTitle, setBigTitle] = useState('');
     const updateBigTitle = (newTitulo) => {
         setBigTitle(newTitulo);

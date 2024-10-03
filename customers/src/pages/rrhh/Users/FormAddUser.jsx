@@ -36,8 +36,6 @@ export const FormAddUser = () => {
             if (error) {
                 $.alert(status.error);
             }else{
-                const { message } = status;
-                console.log(status)
                 $.confirm({
                     title: 'usuario creado con exito',
                     content: form_data,

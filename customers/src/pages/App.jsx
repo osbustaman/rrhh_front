@@ -40,6 +40,21 @@ import { EditUser } from './rrhh/Users/EditUser';
 
 
 export const App = () => {
+
+    const token = localStorage.getItem('token');
+    const navigate = useNavigate();
+    if (!token) {
+        $.confirm({
+            title: 'ERROR!',
+            content: 'Usuario no autenticado',
+            buttons: {
+                confirmar: async function () {
+                    navigate(`/`);
+                }
+            }
+        });
+    }
+
     useMenuMiddleware();
 
     const [_first_name, setFirstName] = useState('');
